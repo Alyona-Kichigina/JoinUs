@@ -2,12 +2,13 @@ import React from 'react';
 
 const Sidebar = () => (
     <div>
-        iqwjoiqjwoqwoije
+        <img src="/Screenshots/img.png" alt=""/>
+        <div>Описание</div>
     </div>
 )
 
 export default {
-    title: "component/sidebar",
+    title: "sidebar",
     component: Sidebar
 }
 
