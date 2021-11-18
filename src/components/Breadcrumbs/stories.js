@@ -3,7 +3,7 @@ import React from 'react';
 const Breadcrumbs = () => (
     <div>
         <img src="/Screenshots/breadcrumbs.png" alt=""/>
-        <div>6 ч</div>
+        <div>компонент и роутинг 4 часа</div>
     </div>
 )
 

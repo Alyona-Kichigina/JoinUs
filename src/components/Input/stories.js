@@ -8,7 +8,7 @@ const Input = () => (
             <div>Оценка: 2 часа.</div>
         </div>
         <div>
-            <h2>Инпут с выпадающим списком</h2>
+            <h2>Селект</h2>
             <img src="/Screenshots/input2.png" alt=""/>
             <div>Оценка: 4 часа.</div>
         </div>
