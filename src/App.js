@@ -1,13 +1,15 @@
 import './App.css';
+import NavContent from "./components/NavContent"
 
 function App() {
   return (
     <div className="App">
-        <a
-          className="bg-red-600"
-        >
-          Learn React
-        </a>
+        wqpokqowpkdoqwjodjqw
+        wqpokqowpkdoqwjodjqw
+        wqpokqowpkdoqwjodjqw
+        wqpokqowpkdoqwjodjqw
+        wqpokqowpkdoqwjodjqw
+        <NavContent />
     </div>
   );
 }
