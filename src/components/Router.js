@@ -1,14 +1,14 @@
 import React from "react"
-import { Route, Switch } from "react-router-dom"
-import App from "../App"
+import { Route, Switch, Redirect } from "react-router-dom"
 import Levels from "../pages/levels";
 import Programs from "../pages/programs";
+import EmptyPage from "../pages/EmptyPage";
 
 const Router = () => (
     <Switch>
-        <Route path="/levels" component={Levels} />
+        <Route exact path="/programs/levels" component={Levels} />
         <Route path="/programs" component={Programs} />
-        <Route path="/" component={App} />
+        <Route path="/" component={EmptyPage} />
     </Switch>
 )
 
