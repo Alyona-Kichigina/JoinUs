@@ -29,7 +29,8 @@ const settings = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xm
 export const tabNavigationMenu = [
   {
     alias: "Сотрудники",
-    picture: employees
+    picture: employees,
+    router: "/employees"
   },
   {
     alias: "Обращения",
@@ -48,3 +49,5 @@ export const tabNavigationMenu = [
     picture: settings
   },
 ]
+
+

@@ -21,24 +21,387 @@ body {
     font-size: 0.875rem;
     font-weight: 400;
     color: var(--color-darken-blue);
-    background: var(--color-light-blue);
+    background: var(--color-light-grey);
     font-family: var(--font);
+}
+
+#root, .flex-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#root, .flex-container.hidden {
+    overflow: hidden;
 }
 
 :root {
     --font: "Nunito", sans-serif;
 
-    --color-light-blue: #F4F6FA;
+    --color-blue: #009BF6;
+    --color-light-blue: #F2F9FF;
     --color-light-blue-2: #56809F;
     --color-darken-blue: #0C2B3E;
 
+    --color-light-grey: #F4F6FA;
+    --color-light-grey-2: #EBEFF2;
+
     --color-white: #ffffff;
+
+    --color-red: #FF3737;
+
+    --color-green: #2ED47A;
 
     --grey-gradient: linear-gradient(89.43deg, #000000 0.12%, rgba(0, 0, 0, 0) 99.82%);
     --blue-gradient: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
 }
 
-
 .icon-navigation-drawer path {
     fill: var(--color-light-blue-2);
+}
+
+/*Понять почему не работают классы tailwindui, использовать их и удалить эти стили*/
+
+.display-flex {
+    display: flex;
+}
+.display-grid {
+    display: grid;
+}
+.display-contents {
+    display: contents;
+}
+.display-block {
+    display: block;
+}
+.display-inline-flex {
+    display: inline-flex;
+}
+   .fd-column {
+       flex-direction: column;
+   }
+.fd-row-reverse {
+    flex-direction: row-reverse;
+}
+.flex-column {
+    flex-direction: column;
+}
+.fd-row {
+    flex-direction: row;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.a-i-center {
+    align-items: center;
+}
+.a-i-baseline {
+    align-items: baseline;
+}
+.a-i-first-baseline {
+    align-items: first-baseline;
+}
+
+.a-i-flex-start {
+    align-items: flex-start;
+}
+.a-i-flex-end {
+    align-items: flex-end;
+}
+.a-s-center {
+    align-self: center;
+}
+.a-s-flex-end {
+    align-self: flex-end;
+}
+
+.j-c-space-between {
+    justify-content: space-between;
+}
+.j-c-flex-end {
+    justify-content: flex-end;
+}
+.j-c-space-around {
+    justify-content: space-around;
+}
+.j-c-center {
+    justify-content: center;
+}
+.j-c-start {
+    justify-content: flex-start;
+}
+.jc-fe {
+    justify-content: flex-end;
+}
+.fd-rr {
+    flex-direction: row-reverse;
+}
+.vertical-center {
+    display: flex;
+    align-items: center;
+}
+.vertical-end {
+    display: flex;
+    align-items: flex-end;
+}
+.item-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display-i-b {
+    display: inline-block;
+}
+
+  .justify-self-end {
+      justify-self: end;
+  }
+.justify-self-start {
+    justify-self: start;
+}
+.justify-self-center {
+    justify-self: center;
+}
+.p-r-8 {
+    padding-right: 8px;
+}
+.p-r-15 {
+    padding-right: 15px;
+}
+.p-r-16 {
+    padding-right: 16px;
+}
+.p-r-24 {
+    padding-right: 24px;
+}
+.p-l-24 {
+    padding-left: 24px;
+}
+
+
+*,
+::before,
+::after {
+    box-sizing: inherit;
+}
+::before,
+::after {
+    text-decoration: inherit; /* Inherit text-decoration and vertical align to ::before and ::after pseudo elements */
+    vertical-align: inherit;
+}
+* {
+    background-repeat: no-repeat; /* Set `background-repeat: no-repeat` to all elements */
+    padding: 0; /* Reset `padding` and `margin` of all elements */
+    margin: 0;
+}
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+hr {
+    overflow: visible; /* Show the overflow in Edge and IE */
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+a {
+    background-color: transparent; /* Remove the gray background on active links in IE 10 */
+    -webkit-text-decoration-skip: objects; /* Remove gaps in links underline in iOS 8+ and Safari 8+ */
+}
+a:active,
+a:hover {
+    outline-width: 0; /* Remove the outline when hovering in all browsers */
+}
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace; /* Specify the font family of code elements */
+}
+b,
+strong {
+    font-weight: bolder; /* Correct style set to `bold` in Edge 12+, Safari 6.2+, and Chrome 18+ */
+}
+dfn {
+    font-style: italic; /* Address styling not present in Safari and Chrome */
+}
+mark {
+    background-color: #ff0;
+    color: #000;
+}
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sub {
+    bottom: -0.25em;
+}
+sup {
+    top: -0.5em;
+}
+input {
+    border-radius: 0;
+}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+[role="button"] {
+    cursor: pointer;
+}
+[disabled] {
+    cursor: default;
+}
+[type="number"] {
+    width: auto; /* Firefox 36+ */
+}
+[type="search"] {
+    -webkit-appearance: textfield; /* Safari 8+ */
+}
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none; /* Safari 8 */
+}
+textarea {
+    overflow: auto; /* Internet Explorer 11+ */
+    resize: none; /* Specify textarea resizability */
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+    font: inherit; /* Specify font inheritance of form elements */
+}
+optgroup {
+    font-weight: bold; /* Restore the font weight unset by the previous rule. */
+}
+button {
+    overflow: visible; /* Address `overflow` set to `hidden` in IE 8/9/10/11 */
+}
+
+  button::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner {
+      border-style: none;
+      padding: 0;
+  }
+button:-moz-focusring,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    outline: 0;
+    border: 0;
+}
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button; /* Correct the inability to style clickable types in iOS */
+}
+button,
+select {
+    text-transform: none; /* Firefox 40+, Internet Explorer 11- */
+}
+button,
+input,
+select,
+textarea {
+    background-color: transparent;
+    border-style: none;
+    color: inherit;
+}
+select {
+    -moz-appearance: none; /* Firefox 36+ */
+    -webkit-appearance: none; /* Chrome 41+ */
+}
+select::-ms-expand {
+    display: none; /* Internet Explorer 11+ */
+}
+select::-ms-value {
+    color: currentColor; /* Internet Explorer 11+ */
+}
+legend {
+    border: 0; /* Correct `color` not being inherited in IE 8/9/10/11 */
+    color: inherit; /* Correct the color inheritance from `fieldset` elements in IE */
+    display: table; /* Correct the text wrapping in Edge and IE */
+    max-width: 100%; /* Correct the text wrapping in Edge and IE */
+    white-space: normal; /* Correct the text wrapping in Edge and IE */
+}
+::-webkit-file-upload-button {
+    -webkit-appearance: button; /* Correct the inability to style clickable types in iOS and Safari */
+    font: inherit; /* Change font properties to `inherit` in Chrome and Safari */
+}
+[type="search"] {
+    -webkit-appearance: textfield; /* Correct the odd appearance in Chrome and Safari */
+    outline-offset: -2px; /* Correct the outline style in Safari */
+}
+img {
+    border-style: none; /* Remove border when inside `a` element in IE 8/9/10 */
+}
+progress {
+    vertical-align: baseline;
+}
+svg:not(:root) {
+    overflow: hidden; /* Internet Explorer 11- */
+}
+audio,
+canvas,
+progress,
+video {
+    display: inline-block; /* Internet Explorer 11+, Windows Phone 8.1+ */
+}
+[aria-busy="true"] {
+    cursor: progress;
+}
+[aria-controls] {
+    cursor: pointer;
+}
+[aria-disabled] {
+    cursor: default;
+}
+::-moz-selection {
+    background-color: #b3d4fc; /* Required when declaring ::selection */
+    color: #000;
+    text-shadow: none;
+}
+::selection {
+    background-color: #b3d4fc; /* Required when declaring ::selection */
+    color: #000;
+    text-shadow: none;
+}
+::-moz-focus-inner {
+border: 0;
+}
+summary {
+    display: list-item; /* Add the correct display in all browsers */
+}
+small {
+    font-size: 80%; /* Set font-size to 80% in `small` elements */
+}
+[hidden],
+template {
+    display: none; /* Add the correct display in IE */
+}
+abbr[title] {
+    border-bottom: 1px dotted; /* Add a bordered underline effect in all browsers */
+    text-decoration: none; /* Remove text decoration in Firefox 40+ */
 }

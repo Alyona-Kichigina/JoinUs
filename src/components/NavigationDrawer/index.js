@@ -3,6 +3,7 @@ import {
   LeftMenuContainer, LeftMenuLogo, LeftMenuItem, ToggleToolbar, ListTile, ImgBanner, OpenMenuItem
 } from "./styles"
 import {tabNavigationMenu} from "./constants"
+import {NavLink} from "react-router-dom";
 
 const NavigationDrawer = () => {
   const [leftWidth, setLeftWidth] = useState(256)
@@ -19,12 +20,21 @@ const NavigationDrawer = () => {
           <img src="/assets/minLogo.svg" alt="" />
         </OpenMenuItem>
       </LeftMenuLogo>
-      {tabNavigationMenu.map(({alias, picture}) => (
+      {tabNavigationMenu.map(({alias, picture, router}) => (
         <LeftMenuItem
         >
+          {/*<NavLink to={router}>*/}
+          {/*  <ListTile>*/}
+          {/*    <div className="icon-container transition-icon cursor a-i-center j-c-center display-flex">*/}
+          {/*      <div className="icon-navigation-drawer" dangerouslySetInnerHTML={{__html: picture}}/>*/}
+          {/*    </div>*/}
+          {/*    {alias}*/}
+          {/*  </ListTile>*/}
+          {/*</NavLink>*/}
+
           <ListTile>
             <div className="icon-container transition-icon cursor a-i-center j-c-center display-flex">
-              <div className="icon-navigation-drawer" dangerouslySetInnerHTML={{__html: picture}}></div>
+              <div className="icon-navigation-drawer" dangerouslySetInnerHTML={{__html: picture}}/>
             </div>
             {alias}
           </ListTile>

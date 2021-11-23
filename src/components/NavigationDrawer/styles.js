@@ -8,6 +8,7 @@ export const LeftMenuContainer = styled.div`
   transition: .3s;
   color: var(--color-light-blue-2);
   font-weight: 700;
+  border-right: 1px solid var(--color-light-grey-2);
 `
 export const LeftMenuLogo = styled.div`
   display: grid;
