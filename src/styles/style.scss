@@ -1,0 +1,572 @@
+html {
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+button, select {
+  text-transform: inherit;
+}
+button {
+  &:disabled {
+    cursor: not-allowed!important;
+    color: var(--color-grey-darken-0);
+  }
+}
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+body {
+  font-family: var(--font-helvetica);
+  color: var(--color-black-darken-1);
+  height: 100%;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+@keyframes dash {
+  from {
+   filter: drop-shadow( 1px 1px 2px rgba(161, 137, 69, 0.49));
+  }
+  to {
+    filter: drop-shadow( 2px 5px 4px rgba(161, 137, 69, 0.99))
+  }
+}
+// todo где-то используется?
+@keyframes bounce {
+  0% {
+    top: 150px;
+    border-radius: 60px 60px 20px 20px;
+    transform: scaleX(1.2);
+  }
+  35% {
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+  100% {
+    top: 0;
+  }
+}
+
+:root {
+  --font-helvetica: "Helvetica", sans-serif;
+
+  --shadow-1: 0px 1px 4px rgba(0, 0, 0, 0.25); // input for login, input for brif, стили списка тегов
+  --shadow-3: 0px 2px 6px rgba(0, 0, 0, 0.25); // menu for table mediaplan, active button tab
+  --shadow-4: 0px 0px 6px rgba(0, 0, 0, 0.25); // contextmenu triangle, title
+
+  --shadow-golden: 0px 4px 4px rgba(161, 137, 69, 0.49);
+  --shadow-black: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  --max-height: 100%;
+  --font-size-switch: 12px;
+  --height-input: 34px;
+  --border-color-input: var(--color-grey-darken-0);
+  --plachodler-font-size: 10px;
+  --background-input: inherit;
+  --width-input: 100%;
+  --flex-input: 1 1 auto;
+  --border-radius-input: 2px;
+  --padding-input: 5px 16px;
+  --text-aling-input: left;
+  --color-input: inherit;
+  --input-placeholder-color: var(--color-grey-darken-1);
+  --input-disabled-color: var(--color-grey-darken-0);
+  --validation-error-border-b: 1px solid var(--pink);
+  --max-height-input: unset;
+  --height-button: 30px;
+
+  --padding-search-in-filter: 0 0 15px 0;
+
+  --padding-toggle-icon-select: 0 15px 0 6px;
+
+  --indent-bottom-for-form: 20px;
+
+  --validation-color: var(--pink);
+
+  --pink: #FF7979;
+  --color-pink-light: #FFE4E4;
+  --color-grey: #7A7A7A;
+  --color-light-grey: #DCDEEF;
+  --color-grey-darken-0: #BDBDBD;
+  --color-grey-darken-1: #C4C4C4;
+  --color-grey-darken-2: #545454;
+  --color-grey-darken-3: #e4e4e4;
+  --color-grey-darken-4: #ababab;
+  --color-grey-darken-5: #535353;
+  --color-grey-darken-6: #686868;
+  --color-grey-darken-7: #DDDDDD;
+  --color-grey-darken-rgba: rgba(196, 196, 196, 0.4);
+
+  --color-grey-light-1: #e5e5e5;
+  --color-grey-light-2: #f2f2f2;
+  --color-grey-light-3: #e0e0e0;
+  --color-grey-Light-4: #f3f3f3;
+  --color-grey-Light-5: #dad8d8;
+  --color-grey-Light-6: #c5c5c5;
+  --color-grey-light-8: #cccccc;
+  --color-grey-Light-9: #EFE4C5;
+  --color-grey-Light-10: #F4F1E6;
+  --color-grey-Light-11: #E1EBDA;
+
+  --color-purple-light-1: #D6C0ED;
+  --color-purple-light-2: #FADCF8;
+  --color-purple-light-3: #ECCBEA;
+  --color-purple-light-4: #E8C7E6;
+  --color-purple-light-5: #DABAD9;
+
+  --color-black-darken-1: #333333;
+  --color-black-darken-2: #1d1d1d;
+
+  --color-white: #fff;
+  --color-black: #000;
+  --color-light-gold-1: #BFA764;
+  --color-light-gold-3: #F1DA99;
+  --color-light-gold-4: #ddd9c6;
+  --color-light-gold-5: #FAF4C1;
+  --color-light-gold-6: #F8EE99;
+  --color-light-gold-7: #DBD283;
+  --color-light-gold-8: #F8F4D1;
+  --color-gold: #a18946;
+  --color-gold-2: #A18945;
+  --color-gold-3: #d7cea5;
+
+  --color-light-blue: #A8D1CA;
+  --color-light-blue-2: #93C8BE;
+  --color-light-blue-3: #9FD7CC;
+  --color-light-blue-4: #A8E5D9;
+  --color-light-blue-5: #C7C9D6;
+  --color-light-blue-6: #D2F6EF;
+  --color-light-blue-7: #BCF3E8;
+  --color-darken-blue: #93BBC8;
+  --color-darken-blue-2: #9DCBDA;
+  --color-darken-blue-3: #99E2D4;
+
+  --color-light-green: #A7C297;
+  --color-light-green-2: #B7D3A5;
+  --color-light-green-3: #5dcc7c;
+
+  --color-light-yellow: #DBCEAA;
+  --color-darken-yellow-1: #D7B39F;
+  --color-darken-yellow-2: #C8A693;
+  --color-blue: #0052cc;
+
+
+
+
+  --layout-left-padding: 20px;
+  --layout-right-padding: 20px;
+  --layout-top-padding: 20px;
+  --layout-bottom-padding: 20px;
+  --list-item-shadow: 0px 4px 11px rgba(0, 0, 0, 0.09);
+  --separator-color: var(--color-grey-darken-6);
+  --separator-width: 1px;
+  --check-box-size: 16px;
+  --check-box-checked-bg: var(--color-light-gold-1);
+  --check-box-un-checked-bg: transparent;
+  --check-box-disabled-border: var(--color-grey-darken-7);
+  --switch-border-color: transparent;
+
+  --pagebar-padding-top: 14px;
+  --pageber-min-height: 54px;
+  --header-padding-bottom: 12px;
+  --header-padding-top: 12px;
+  --rowPadding: 10px;
+
+
+  --tip-icon-margin: 0 0 0 5px;
+  --input-constructor-color-btn: var(--color-light-gold-1);
+
+  --button-width-medium: 160px;
+  --button-width-min: 120px;
+
+}
+
+
+
+a {
+  color: inherit;
+}
+
+#root, .flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &.hidden {
+    overflow: hidden;
+  }
+}
+
+.cursor {
+  cursor: pointer;
+  transition: all .2s ease 0s;
+}
+
+.disabled {
+  cursor: not-allowed!important;
+  color: var(--color-grey-darken-0);
+}
+
+.display-flex {
+  display: flex;
+}
+.display-grid {
+  display: grid;
+}
+.display-contents {
+  display: contents;
+}
+.display-block {
+  display: block;
+}
+.display-inline-flex {
+  display: inline-flex;
+}
+// style flex
+.fd-column {
+  flex-direction: column;
+}
+.fd-row-reverse {
+  flex-direction: row-reverse;
+}
+.flex-column {
+  flex-direction: column;
+}
+.fd-row {
+  flex-direction: row;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.a-i-center {
+  align-items: center;
+}
+.a-i-baseline {
+  align-items: baseline;
+}
+.a-i-first-baseline {
+  align-items: first-baseline;
+}
+
+.a-i-flex-start {
+  align-items: flex-start;
+}
+.a-i-flex-end {
+  align-items: flex-end;
+}
+.a-s-center {
+  align-self: center;
+}
+.a-s-flex-end {
+  align-self: flex-end;
+}
+
+.j-c-space-between {
+  justify-content: space-between;
+}
+.j-c-flex-end {
+  justify-content: flex-end;
+}
+.j-c-space-around {
+  justify-content: space-around;
+}
+.j-c-center {
+  justify-content: center;
+}
+.j-c-start {
+  justify-content: flex-start;
+}
+.jc-fe {
+  justify-content: flex-end;
+}
+.fd-rr {
+  flex-direction: row-reverse;
+}
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+.vertical-end {
+  display: flex;
+  align-items: flex-end;
+}
+.item-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display-i-b {
+  display: inline-block;
+}
+//style grid
+.justify-self-end {
+  justify-self: end;
+}
+.justify-self-start {
+  justify-self: start;
+}
+.justify-self-center {
+  justify-self: center;
+}
+
+.WS-nowrap {
+  white-space: nowrap;
+}
+.no-white-space {
+  white-space: nowrap;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflowY-scroll {
+  overflow-y: scroll;
+}
+
+// стиль в сетингсе
+.container-rubber {
+  @media (min-width: 1440px) {
+    padding: 0 7%;
+  }
+  @media (min-width: 1600px) {
+    padding: 0 12%;
+  }
+}
+
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+::before,
+::after {
+  text-decoration: inherit; /* Inherit text-decoration and vertical align to ::before and ::after pseudo elements */
+  vertical-align: inherit;
+}
+* {
+  background-repeat: no-repeat; /* Set `background-repeat: no-repeat` to all elements */
+  padding: 0; /* Reset `padding` and `margin` of all elements */
+  margin: 0;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+hr {
+  overflow: visible; /* Show the overflow in Edge and IE */
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+summary {
+  display: list-item; /* Add the correct display in all browsers */
+}
+small {
+  font-size: 80%; /* Set font-size to 80% in `small` elements */
+}
+[hidden],
+template {
+  display: none; /* Add the correct display in IE */
+}
+abbr[title] {
+  border-bottom: 1px dotted; /* Add a bordered underline effect in all browsers */
+  text-decoration: none; /* Remove text decoration in Firefox 40+ */
+}
+a {
+  background-color: transparent; /* Remove the gray background on active links in IE 10 */
+  -webkit-text-decoration-skip: objects; /* Remove gaps in links underline in iOS 8+ and Safari 8+ */
+}
+a:active,
+a:hover {
+  outline-width: 0; /* Remove the outline when hovering in all browsers */
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace; /* Specify the font family of code elements */
+}
+b,
+strong {
+  font-weight: bolder; /* Correct style set to `bold` in Edge 12+, Safari 6.2+, and Chrome 18+ */
+}
+dfn {
+  font-style: italic; /* Address styling not present in Safari and Chrome */
+}
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+input {
+  border-radius: 0;
+}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+[role="button"] {
+  cursor: pointer;
+}
+[disabled] {
+  cursor: default;
+}
+[type="number"] {
+  width: auto; /* Firefox 36+ */
+}
+[type="search"] {
+  -webkit-appearance: textfield; /* Safari 8+ */
+}
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; /* Safari 8 */
+}
+textarea {
+  overflow: auto; /* Internet Explorer 11+ */
+  resize: none; /* Specify textarea resizability */
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  font: inherit; /* Specify font inheritance of form elements */
+}
+optgroup {
+  font-weight: bold; /* Restore the font weight unset by the previous rule. */
+}
+button {
+  overflow: visible; /* Address `overflow` set to `hidden` in IE 8/9/10/11 */
+}
+
+//noinspection CssInvalidPropertyValue
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+button:-moz-focusring,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  outline: 0;
+  border: 0;
+}
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; /* Correct the inability to style clickable types in iOS */
+}
+button,
+select {
+  text-transform: none; /* Firefox 40+, Internet Explorer 11- */
+}
+button,
+input,
+select,
+textarea {
+  background-color: transparent;
+  border-style: none;
+  color: inherit;
+}
+select {
+  -moz-appearance: none; /* Firefox 36+ */
+  -webkit-appearance: none; /* Chrome 41+ */
+}
+select::-ms-expand {
+  display: none; /* Internet Explorer 11+ */
+}
+select::-ms-value {
+  color: currentColor; /* Internet Explorer 11+ */
+}
+legend {
+  border: 0; /* Correct `color` not being inherited in IE 8/9/10/11 */
+  color: inherit; /* Correct the color inheritance from `fieldset` elements in IE */
+  display: table; /* Correct the text wrapping in Edge and IE */
+  max-width: 100%; /* Correct the text wrapping in Edge and IE */
+  white-space: normal; /* Correct the text wrapping in Edge and IE */
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* Correct the inability to style clickable types in iOS and Safari */
+  font: inherit; /* Change font properties to `inherit` in Chrome and Safari */
+}
+[type="search"] {
+  -webkit-appearance: textfield; /* Correct the odd appearance in Chrome and Safari */
+  outline-offset: -2px; /* Correct the outline style in Safari */
+}
+img {
+  border-style: none; /* Remove border when inside `a` element in IE 8/9/10 */
+}
+progress {
+  vertical-align: baseline;
+}
+svg:not(:root) {
+  overflow: hidden; /* Internet Explorer 11- */
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* Internet Explorer 11+, Windows Phone 8.1+ */
+}
+[aria-busy="true"] {
+  cursor: progress;
+}
+[aria-controls] {
+  cursor: pointer;
+}
+[aria-disabled] {
+  cursor: default;
+}
+::-moz-selection {
+  background-color: #b3d4fc; /* Required when declaring ::selection */
+  color: #000;
+  text-shadow: none;
+}
+::selection {
+  background-color: #b3d4fc; /* Required when declaring ::selection */
+  color: #000;
+  text-shadow: none;
+}
+::-moz-focus-inner { // remove FF dotted outline around <a> and <button>
+  border: 0;
+}

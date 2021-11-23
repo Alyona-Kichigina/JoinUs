@@ -1,15 +1,13 @@
 import './App.css';
-import NavContent from "./components/NavContent"
+import NavigationDrawer from "@Components/NavigationDrawer";
+import "@Styles/style.css"
+import "@Styles/fonts.css"
+
 
 function App() {
   return (
     <div className="App">
-        wqpokqowpkdoqwjodjqw
-        wqpokqowpkdoqwjodjqw
-        wqpokqowpkdoqwjodjqw
-        wqpokqowpkdoqwjodjqw
-        wqpokqowpkdoqwjodjqw
-        <NavContent />
+      {/*<NavigationDrawer/>*/}
     </div>
   );
 }
