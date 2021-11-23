@@ -7,7 +7,7 @@ import "@Styles/fonts.css"
 function App() {
   return (
     <div className="App">
-      {/*<NavigationDrawer/>*/}
+      <NavigationDrawer/>
     </div>
   );
 }

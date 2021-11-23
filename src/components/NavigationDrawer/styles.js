@@ -2,11 +2,11 @@ import styled from "styled-components"
 
 export const LeftMenuContainer = styled.div`
   position: relative;
-  background: #fff;
+  background: var(--color-white);
   height: 100%;
   flex: 0 0 auto;
   transition: .3s;
-  color: #56809F;
+  color: var(--color-light-blue-2);
   font-weight: 700;
 `
 export const LeftMenuLogo = styled.div`
@@ -23,12 +23,13 @@ export const LeftMenuItem = styled.div`
   border-radius: 8px;
   margin: 0 16px 0 16px;
   ${props => !props.current} {
-    background: linear-gradient(89.43deg, #000000 0.12%, rgba(0, 0, 0, 0) 99.82%);
+    background: var(--grey-gradient);
     color: var(--color-white);
   };
   &:hover {
-    color: #fff;
-    background: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
+    color: var(--color-white);
+    background: var(--blue-gradient);
+    --color-light-blue-2: var(--color-white);
   }
 `
 

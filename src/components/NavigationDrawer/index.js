@@ -19,10 +19,13 @@ const NavigationDrawer = () => {
           <img src="/assets/minLogo.svg" alt="" />
         </OpenMenuItem>
       </LeftMenuLogo>
-      {tabNavigationMenu.map(({alias}) => (
+      {tabNavigationMenu.map(({alias, picture}) => (
         <LeftMenuItem
         >
           <ListTile>
+            <div className="icon-container transition-icon cursor a-i-center j-c-center display-flex">
+              <div className="icon-navigation-drawer" dangerouslySetInnerHTML={{__html: picture}}></div>
+            </div>
             {alias}
           </ListTile>
         </LeftMenuItem>

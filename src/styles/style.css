@@ -20,7 +20,25 @@ body {
     line-height: 1;
     font-size: 0.875rem;
     font-weight: 400;
-    color: #0C2B3E;
-    background: #F4F6FA;
-    font-family: "Nunito", sans-serif;
+    color: var(--color-darken-blue);
+    background: var(--color-light-blue);
+    font-family: var(--font);
+}
+
+:root {
+    --font: "Nunito", sans-serif;
+
+    --color-light-blue: #F4F6FA;
+    --color-light-blue-2: #56809F;
+    --color-darken-blue: #0C2B3E;
+
+    --color-white: #ffffff;
+
+    --grey-gradient: linear-gradient(89.43deg, #000000 0.12%, rgba(0, 0, 0, 0) 99.82%);
+    --blue-gradient: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
+}
+
+
+.icon-navigation-drawer path {
+    fill: var(--color-light-blue-2);
 }
