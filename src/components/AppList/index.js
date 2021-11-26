@@ -11,27 +11,49 @@ class AppList extends Component {
                  "grid-template-columns": gridRowsSize
              }
 
-        const TableRows = () => {
+        const TableRows = (nestedKey) => {
             const result = []
 
-            // console.log("DATA", data)
+            console.log(data)
 
             for (let i = 0; i < data.length; i++) {
                 const rowData = data[i]
                 const rowKey = settings.key
-                console.log("rowKey", rowKey)
-                console.log("rowData", rowData)
+                // console.log(nestedKey)
+                // console.log(i, settings.map( a => data[i]))
+                // console.log(i, settings.map( a => data[i][a.key]))
                 result.push(
                     <div
                         key={rowKey}
                     >
                         {
                             settings.map( a => (
-                                <div
-                                    className="grid"
-                                    style={gridStyle}
-                                >
-                                    { data[i][a.key] }
+                                <div>
+                                    <div
+                                        className="grid"
+                                        style={gridStyle}
+                                    >
+                                        <div>
+                                            { console.log(i, data[i][a.key]) }
+                                            { console.log(i, data[i][nestedKey]) }
+                                            { data[i][a.key] }
+                                        </div>
+                                    </div>
+                                    {/*{*/}
+                                    {/*    data[i][a.key][nestedKey] ? (*/}
+                                    {/*        <div>*/}
+                                    {/*            <div*/}
+                                    {/*                className="grid"*/}
+                                    {/*                style={gridStyle}*/}
+                                    {/*            >*/}
+                                    {/*                <div>*/}
+                                    {/*                    { data[i][a.key] }*/}
+                                    {/*                </div>*/}
+                                    {/*            </div>*/}
+                                    {/*        </div>*/}
+                                    {/*    ) : ("")*/}
+                                    {/*}*/}
+
                                 </div>
                             ))
                         }
@@ -54,7 +76,7 @@ class AppList extends Component {
                     gridStyle={gridStyle}
                 />
                 <div>
-                    { TableRows() }
+                    { TableRows("data") }
                     {/*{*/}
                     {/*    settings.map( (a, index) => (*/}
                     {/*        <div>*/}
