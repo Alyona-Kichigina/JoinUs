@@ -11,10 +11,6 @@ class NavContent extends Component {
                 className="mx-8 mt-6 h-full"
                 style={{"border-radius": "4px"}}
             >
-                {/*<NavContentBtn*/}
-                {/*    links={links}*/}
-                {/*    className="bg-white"*/}
-                {/*/>*/}
                 <Router />
             </div>
         );
