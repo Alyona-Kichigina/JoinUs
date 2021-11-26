@@ -62,6 +62,11 @@ body {
 
 /*Понять почему не работают классы tailwindui, использовать их и удалить эти стили*/
 
+.cursor {
+    cursor: pointer;
+    transition: all .2s ease 0s;
+}
+
 .display-flex {
     display: flex;
 }
@@ -165,6 +170,20 @@ body {
 .justify-self-center {
     justify-self: center;
 }
+
+
+.pos-relative {
+    position: relative;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
 .p-r-8 {
     padding-right: 8px;
 }
@@ -173,6 +192,9 @@ body {
 }
 .p-r-16 {
     padding-right: 16px;
+}
+.p-l-16 {
+    padding-left: 16px;
 }
 .p-r-24 {
     padding-right: 24px;
@@ -185,7 +207,7 @@ body {
 *,
 ::before,
 ::after {
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 ::before,
 ::after {
@@ -221,6 +243,7 @@ summary {
 a {
     background-color: transparent; /* Remove the gray background on active links in IE 10 */
     -webkit-text-decoration-skip: objects; /* Remove gaps in links underline in iOS 8+ and Safari 8+ */
+    text-decoration: none;
 }
 a:active,
 a:hover {

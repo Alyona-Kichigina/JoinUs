@@ -1,3 +1,6 @@
+import {PATH_APPEAL, PATH_PROGRAM_LIST, PATH_EMPLOYEES_LIST, PATH_SETTINGS, PATH_REFERENCE} from "../../Permission";
+
+
 const employees = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.16602 5.83333C4.16602 7.67428 5.6584 9.16667 7.49935 9.16667C9.3403 9.16667 10.8327 7.67428 10.8327 5.83333C10.8327 3.99238 9.3403 2.5 7.49935 2.5C5.6584 2.5 4.16602 3.99238 4.16602 5.83333ZM12.4993 9.16667C12.4993 10.5474 13.6186 11.6667 14.9993 11.6667C16.3801 11.6667 17.4993 10.5474 17.4993 9.16667C17.4993 7.78595 16.3801 6.66667 14.9993 6.66667C13.6186 6.66667 12.4993 7.78595 12.4993 9.16667Z" fill="white"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.48612 10.833C3.55159 10.833 0.323549 12.8551 0.00054307 16.8323C-0.0170515 17.049 0.39726 17.4997 0.606252 17.4997H14.3722C14.9983 17.4997 15.008 16.9959 14.9983 16.833C14.7541 12.744 11.476 10.833 7.48612 10.833ZM19.5466 17.4997L16.3334 17.4997C16.3334 15.6239 15.7136 13.8929 14.6677 12.5002C17.5065 12.5312 19.8243 13.9665 19.9987 16.9997C20.0058 17.1218 19.9987 17.4997 19.5466 17.4997Z" fill="white"/>
@@ -30,23 +33,27 @@ export const tabNavigationMenu = [
   {
     alias: "Сотрудники",
     picture: employees,
-    router: "/employees"
+    router: PATH_EMPLOYEES_LIST
   },
   {
     alias: "Обращения",
-    picture: mail
+    picture: mail,
+    router: PATH_APPEAL
   },
   {
     alias: "Программы",
-    picture: programs
+    picture: programs,
+    router: PATH_PROGRAM_LIST
   },
   {
     alias: "Справочники",
-    picture: reference
+    picture: reference,
+    router: PATH_REFERENCE
   },
   {
     alias: "Настройки",
-    picture: settings
+    picture: settings,
+    router: PATH_SETTINGS
   },
 ]
 

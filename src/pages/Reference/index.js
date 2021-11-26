@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 
-class Employees extends Component {
+class Reference extends Component {
   render() {
     return (
       <div>
-        em
+        Reference
       </div>
     );
   }
-};
+}
 
-export default Employees;
+export default Reference;

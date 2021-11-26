@@ -1,0 +1,39 @@
+@keyframes openToolbar {
+    100% {
+        transform: translateX(133px);
+    }
+}
+@keyframes openImg {
+    100% {
+        /*transform: rotate(-180deg);*/
+    }
+}
+@keyframes closeToolbar {
+    0% {
+        transform: translateX(133px);
+    }
+    100% {
+        transform: translateX(13px);
+    }
+}
+@keyframes closeImg {
+    0% {
+        transform: rotate(180deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.transition-color {
+    transition: color ease-in-out 250ms;
+}
+
+.transition-icon {
+    transition-property: color, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 250ms;
+}

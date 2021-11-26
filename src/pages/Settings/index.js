@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 
-class Employees extends Component {
+class Settings extends Component {
   render() {
     return (
       <div>
-        em
+        settings
       </div>
     );
   }
-};
+}
 
-export default Employees;
+export default Settings;
