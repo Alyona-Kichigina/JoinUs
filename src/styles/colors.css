@@ -1,0 +1,16 @@
+
+.bg-color-light-blue {
+ background-color: var(--color-light-blue)
+}
+.color-light-blue-2 {
+ color: var(--color-light-blue-2);
+}
+.bg-color-light-blue-2 {
+ background-color: var(--color-light-blue-2);
+}
+.bg-color-light-grey {
+ background-color: var(--color-light-grey);
+}
+.color-light-grey {
+ color: var(--color-light-grey);
+}

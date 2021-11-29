@@ -116,7 +116,7 @@ const settings = [
         id: 1,
         key: "name",
         name: "уровень/этап",
-        size: "150px"
+        size: "300px"
     },
     {
         id: 2,

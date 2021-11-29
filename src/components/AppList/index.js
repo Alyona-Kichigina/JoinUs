@@ -14,56 +14,38 @@ class AppList extends Component {
         const TableRows = (nestedKey) => {
             const result = []
 
-            console.log(data)
-
             for (let i = 0; i < data.length; i++) {
                 const rowData = data[i]
-                const rowKey = settings.key
-                // console.log(nestedKey)
-                // console.log(i, settings.map( a => data[i]))
-                // console.log(i, settings.map( a => data[i][a.key]))
+                const rowKey = settings[i].key
+
                 result.push(
                     <div
                         key={rowKey}
                     >
                         {
-                            settings.map( a => (
-                                <div>
-                                    <div
-                                        className="grid"
-                                        style={gridStyle}
-                                    >
-                                        <div>
-                                            { console.log(i, data[i][a.key]) }
-                                            { console.log(i, data[i][nestedKey]) }
-                                            { data[i][a.key] }
-                                        </div>
-                                    </div>
-                                    {/*{*/}
-                                    {/*    data[i][a.key][nestedKey] ? (*/}
-                                    {/*        <div>*/}
-                                    {/*            <div*/}
-                                    {/*                className="grid"*/}
-                                    {/*                style={gridStyle}*/}
-                                    {/*            >*/}
-                                    {/*                <div>*/}
-                                    {/*                    { data[i][a.key] }*/}
-                                    {/*                </div>*/}
-                                    {/*            </div>*/}
-                                    {/*        </div>*/}
-                                    {/*    ) : ("")*/}
-                                    {/*}*/}
-
+                            <div>
+                                <div className="bg-color-light-blue">
+                                    <Row
+                                        className="color-light-blue"
+                                        settings={settings}
+                                        data={rowData}
+                                        gridStyle={gridStyle}
+                                        rowClass="font-bold my-4 ml-4 flex justify-start"
+                                    />
                                 </div>
-                            ))
+                                {
+                                    rowData[nestedKey].map( a => (
+                                        <Row
+                                            settings={settings}
+                                            data={a}
+                                            gridStyle={gridStyle}
+                                            rowClass="my-4 ml-8 flex justify-start font-semibold"
+                                        />
+                                    ))
+                                }
+                            </div>
                         }
-
-                        {/*{ rowKey ? rowData[rowKey] : "" }*/}
                     </div>
-                    // <Row
-                    //     data={rowData}
-                    //     rowKey={rowKey}
-                    // />
                 )
             }
             return result
@@ -77,13 +59,6 @@ class AppList extends Component {
                 />
                 <div>
                     { TableRows("data") }
-                    {/*{*/}
-                    {/*    settings.map( (a, index) => (*/}
-                    {/*        <div>*/}
-                    {/*            */}
-                    {/*        </div>*/}
-                    {/*    ))*/}
-                    {/*}*/}
                 </div>
             </div>
         );

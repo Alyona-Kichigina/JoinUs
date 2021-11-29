@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import "@Styles/style.css"
 import "@Styles/fonts.css"
 import "@Styles/animation.css"
+import "./styles/colors.css"
 
 
 function App() {
