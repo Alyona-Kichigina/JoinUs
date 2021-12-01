@@ -28,11 +28,11 @@ class Employees extends Component {
           onSubmit={this.submitForm}
         >
           <button
-            className="golden btn width-max m-l-a m-r-a m-t-20"
+            className="blue btn width-medium"
             name="Login"
             type="submit"
           >
-            Log in
+            Сохранить
           </button>
         </StateLessForm>
       </div>

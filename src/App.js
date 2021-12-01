@@ -6,18 +6,17 @@ import "@Styles/style.css"
 import "@Styles/fonts.css"
 import "@Styles/animation.css"
 import "@Styles/style-input.scss"
+import "@Styles/style-btn.scss"
 
 
 function App() {
   return (
       <BrowserRouter>
-        <div className="flex h-full">
-          <div className="flex-row flex-container w-full">
-            <NavigationDrawer/>
-            <div className="flex-container relative w-full overflow-hidden">
-              <Header/>
-              <NavContent />
-            </div>
+        <div className="flex-row flex h-full w-full">
+          <NavigationDrawer/>
+          <div className="flex-container relative w-full overflow-hidden">
+            <Header/>
+            <NavContent />
           </div>
         </div>
       </BrowserRouter>

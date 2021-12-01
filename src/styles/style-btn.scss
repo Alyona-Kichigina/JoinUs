@@ -1,0 +1,46 @@
+.btn {
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  transition: color, background-color;
+  transition-duration: 250ms;
+  min-height: var(--height-button);
+  border-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  &.blue {
+    background: var(--blue-gradient);
+    color: var(--color-white);
+  }
+  &.grey {
+    background: var(--color-light-grey);
+  }
+  &.white {
+    background: var(--color-white);
+    color: var(--color-blue);
+    border-color: var(--color-blue);
+    border-width: 2px;
+    border-style: solid;
+  }
+  &.width-mid {
+    width: 118px;
+    border-radius: 6px;
+  --height-button: 32px;
+    font-size: 13px;
+  }
+  &.width-midi {
+    width: 142px;
+  }
+  &.width-medium {
+    width: 240px;
+  }
+  &.width-max {
+    width: 290px;
+  }
+}
