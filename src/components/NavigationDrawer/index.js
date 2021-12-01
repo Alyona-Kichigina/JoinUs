@@ -36,13 +36,13 @@ const NavigationDrawer = () => {
     <LeftMenuContainer style={{ width: leftWidth }}>
       <LeftMenuLogo>
         {hideToolbar ? (
-          <OpenMenuItem hideToolbar={!hideToolbar} className="display-flex a-i-center">
+          <OpenMenuItem hideToolbar={!hideToolbar} className="flex items-center">
             <img src="/assets/minLogo.svg" alt="" />
           </OpenMenuItem>
         )
         :
         (
-          <OpenMenuItem hideToolbar={hideToolbar} className="display-flex a-i-center">
+          <OpenMenuItem hideToolbar={hideToolbar} className="flex items-center">
             <img src="/assets/logo.svg" alt="" />
           </OpenMenuItem>
         )
@@ -55,11 +55,11 @@ const NavigationDrawer = () => {
         >
           <NavLink to={router}>
             <ListTile hideToolbar={hideToolbar}>
-              <div className="icon-container transition-icon cursor a-i-center j-c-center display-flex">
+              <div className="icon-container transition-icon cursor items-center justify-center flex">
                 <div className="icon-navigation-drawer" dangerouslySetInnerHTML={{__html: picture}}/>
               </div>
               {!hideToolbar && (
-                <OpenMenuItem hideToolbar={hideToolbar} className="display-flex a-i-center">
+                <OpenMenuItem hideToolbar={hideToolbar} className="flex items-center">
                   <div className="">{alias}</div>
                 </OpenMenuItem>
               )}
@@ -73,7 +73,7 @@ const NavigationDrawer = () => {
       )}
       <ToggleToolbar
         onClick={toggleToolbar}
-        className={`display-flex ${toggleArrow} a-i-center`}
+        className={`flex ${toggleArrow} items-center`}
       >
         <img src="/assets/icons/angleDouble.svg" alt="" className={`icon-arrow ${iconArrowStyle}`}/>
         {!hideToolbar && (

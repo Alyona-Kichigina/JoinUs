@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 html {
     height: 100%;
     overflow: hidden;
@@ -52,8 +57,27 @@ body {
 
     --color-green: #2ED47A;
 
+    --pink: #FF7979;
+
     --grey-gradient: linear-gradient(89.43deg, #000000 0.12%, rgba(0, 0, 0, 0) 99.82%);
     --blue-gradient: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
+
+    --validation-color: var(--pink);
+    --flex-input: 1 1 auto;
+    --width-input: 100%;
+    --border-color-input: var(--color-light-grey-2);
+    --border-radius-input: 6px;
+    --background-input: var(--color-light-grey);
+    --height-input: 40px;
+    --padding-input: 8px 10px;
+    --text-aling-input: left;
+    --plachodler-font-size: 14px;
+    --input-placeholder-color: var(--color-light-blue-2);
+    --input-disabled-color: var(--color-red);
+    --validation-error-border-b: 1px solid var(--pink);
+
+    --indent-bottom-for-form: 20px;
+    --max-height-input: unset;
 }
 
 .icon-navigation-drawer path {
@@ -67,123 +91,9 @@ body {
     transition: all .2s ease 0s;
 }
 
-.display-flex {
-    display: flex;
-}
-.display-grid {
-    display: grid;
-}
-.display-contents {
-    display: contents;
-}
-.display-block {
-    display: block;
-}
-.display-inline-flex {
-    display: inline-flex;
-}
-   .fd-column {
-       flex-direction: column;
-   }
-.fd-row-reverse {
-    flex-direction: row-reverse;
-}
-.flex-column {
-    flex-direction: column;
-}
-.fd-row {
-    flex-direction: row;
-}
-
-.flex-wrap {
-    flex-wrap: wrap;
-}
-
-.a-i-center {
-    align-items: center;
-}
-.a-i-baseline {
-    align-items: baseline;
-}
-.a-i-first-baseline {
-    align-items: first-baseline;
-}
-
-.a-i-flex-start {
-    align-items: flex-start;
-}
-.a-i-flex-end {
-    align-items: flex-end;
-}
-.a-s-center {
-    align-self: center;
-}
-.a-s-flex-end {
-    align-self: flex-end;
-}
-
-.j-c-space-between {
-    justify-content: space-between;
-}
-.j-c-flex-end {
-    justify-content: flex-end;
-}
-.j-c-space-around {
-    justify-content: space-around;
-}
-.j-c-center {
-    justify-content: center;
-}
-.j-c-start {
-    justify-content: flex-start;
-}
-.jc-fe {
-    justify-content: flex-end;
-}
-.fd-rr {
-    flex-direction: row-reverse;
-}
-.vertical-center {
-    display: flex;
-    align-items: center;
-}
-.vertical-end {
-    display: flex;
-    align-items: flex-end;
-}
-.item-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.display-i-b {
-    display: inline-block;
-}
-
-  .justify-self-end {
-      justify-self: end;
-  }
-.justify-self-start {
-    justify-self: start;
-}
-.justify-self-center {
-    justify-self: center;
-}
-
-
-.pos-relative {
-    position: relative;
-}
-
-.w-100 {
-    width: 100%;
-}
-
-.overflow-hidden {
-    overflow: hidden;
-}
-
+/*использовать классы tailwindui для отступов*/
+/*и похоже надо будет добавлять свои классы для них в tailwind.config*/
+/*потому что они задаются в rem*/
 .p-r-8 {
     padding-right: 8px;
 }

@@ -1,4 +1,3 @@
-import './App.css';
 import NavigationDrawer from "@Components/NavigationDrawer";
 import Header from "@Components/Header";
 import NavContent from "./components/NavContent"
@@ -6,15 +5,16 @@ import { BrowserRouter } from "react-router-dom";
 import "@Styles/style.css"
 import "@Styles/fonts.css"
 import "@Styles/animation.css"
+import "@Styles/style-input.scss"
 
 
 function App() {
   return (
       <BrowserRouter>
-        <div className="App">
-          <div className="fd-row flex-container">
+        <div className="flex h-full">
+          <div className="flex-row flex-container w-full">
             <NavigationDrawer/>
-            <div className="flex-container pos-relative w-100 overflow-hidden">
+            <div className="flex-container relative w-full overflow-hidden">
               <Header/>
               <NavContent />
             </div>
