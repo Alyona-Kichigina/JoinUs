@@ -1,21 +1,3 @@
-@keyframes openToolbar {
-    100% {
-        transform: translateX(133px);
-    }
-}
-@keyframes openImg {
-    100% {
-        /*transform: rotate(-180deg);*/
-    }
-}
-@keyframes closeToolbar {
-    0% {
-        transform: translateX(133px);
-    }
-    100% {
-        transform: translateX(13px);
-    }
-}
 @keyframes closeImg {
     0% {
         transform: rotate(180deg);
