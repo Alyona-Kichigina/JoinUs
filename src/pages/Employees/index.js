@@ -14,27 +14,41 @@ class Employees extends Component {
     console.log(login, password)
   }
 
+  addEmployees = () => {
+
+  }
+
   handleInput = (payload) => { this.setState(({ value }) => ({ value: { ...value, ...payload } })) }
   render() {
     const { state: { value } } = this
     return (
-      <div className="bg-white">
-        em
-        <StateLessForm
-          fields={fieldMap}
-          rules={rules}
-          value={value}
-          onInput={this.handleInput}
-          onSubmit={this.submitForm}
-        >
+      <div className="">
+        <div className="flex justify-between">
+          <h1>Сотрудники</h1>
           <button
-            className="blue btn width-medium"
-            name="Login"
+            className="blue btn width-m"
+            name="addEmployees"
             type="submit"
+            onClick={this.addEmployees}
           >
-            Сохранить
+            + Создать сотрудника
           </button>
-        </StateLessForm>
+        </div>
+        {/*<StateLessForm*/}
+        {/*  fields={fieldMap}*/}
+        {/*  rules={rules}*/}
+        {/*  value={value}*/}
+        {/*  onInput={this.handleInput}*/}
+        {/*  onSubmit={this.submitForm}*/}
+        {/*>*/}
+        {/*  <button*/}
+        {/*    className="blue btn width-medium"*/}
+        {/*    name="Login"*/}
+        {/*    type="submit"*/}
+        {/*  >*/}
+        {/*    Сохранить*/}
+        {/*  </button>*/}
+        {/*</StateLessForm>*/}
       </div>
     );
   }

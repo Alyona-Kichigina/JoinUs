@@ -47,6 +47,7 @@ body {
     --color-light-blue: #F2F9FF;
     --color-light-blue-2: #56809F;
     --color-darken-blue: #0C2B3E;
+    --color-darken-blue-2: #334D6E;
 
     --color-light-grey: #F4F6FA;
     --color-light-grey-2: #EBEFF2;
@@ -86,6 +87,12 @@ body {
     fill: var(--color-light-blue-2);
 }
 
+h1 {
+    font-size: 24px;
+    color: var(--color-darken-blue-2);
+    font-weight: 700;
+}
+
 /*Понять почему не работают классы tailwindui, использовать их и удалить эти стили*/
 
 .cursor {
@@ -115,6 +122,16 @@ body {
     padding-left: 24px;
 }
 
+.p-t-24 {
+    padding-top: 24px;
+}
+
+.p-l-32 {
+    padding-left: 32px;
+}
+.p-r-32 {
+    padding-right: 32px;
+}
 
 *,
 ::before,
