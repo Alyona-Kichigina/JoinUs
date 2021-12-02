@@ -1,0 +1,28 @@
+
+.edit-icon {
+    fill: var(--color-light-blue-2);
+}
+
+.edit-icon:hover {
+    fill: var(--color-blue);
+}
+.arrow-icon {
+    fill: var(--color-light-blue-2);
+}
+
+.arrow-down {
+    transform: rotate(180deg);
+}
+
+.arrow-icon:hover {
+    fill: var(--color-darken-blue);
+}
+
+
+.trash-icon {
+    fill: var(--color-light-blue-2);
+}
+
+.trash-icon:hover {
+    fill: var(--color-red);
+}

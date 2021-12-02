@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import NavContentBtn from "../../components/NavContentButton";
 import { CONTENT_LINKS } from "../../components/Constants"
-import Breadcrumbs from "../../components/Breadcrumbs";
+// import Breadcrumbs from "../../components/Breadcrumbs";
 import AppList from "../../components/AppList";
+import { ActiveIcon } from "../Constants"
+import Actions from "./Actions";
+import PageHeader from "../../components/PageHeader";
 
 const pageData = {
     pageName: "Программа для разработчиков"
@@ -104,41 +107,53 @@ const levelsList = [
 
 ]
 
-const testComponent = () => (
-    <h1>
-        TEST TEST TEST TEST
-        TEST TEST TEST TEST
-        TEST TEST TEST TEST
-    </h1>
-)
+const ActiveIndicator = ({ data } ) => data ? (
+    <div className="flex justify-between items-center">
+        <div
+            dangerouslySetInnerHTML={{__html: ActiveIcon}}
+        />
+        <div
+            className="ml-2"
+        >
+            {`${data > 0 ? "Активен" : "Неактивен"}`}
+        </div>
+    </div>
+) : ""
 const settings = [
     {
         id: 1,
         key: "name",
         name: "уровень/этап",
-        size: "300px"
+        size: "30%"
     },
     {
         id: 2,
         key: "days",
         name: "дней этапа",
-        size: "110px"
+        nestedLevel: 1,
+        size: "15%"
     },
     {
         id: 3,
         key: "points",
         name: "баллов",
+        nestedLevel: 1,
+        size: "15%"
     },
     {
         id: 4,
         key: "status",
         name: "статус",
-        size: "100px"
+        component: ActiveIndicator,
+        nestedLevel: 1,
+        size: "15%"
     },
     {
         id: 5,
         name: "действия",
-        component: testComponent
+        nestedLevel: 1,
+        size: "25%",
+        component: Actions
     },
 ]
 
@@ -148,21 +163,25 @@ class Levels extends Component {
         return (
             <div className="h-full">
                 <div>
+                    <PageHeader
+                        {...this.props}
+                        pageData={pageData}
+                    />
+                    {/*<div>*/}
+                    {/*    <Breadcrumbs*/}
+                    {/*        {...this.props}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
+                    {/*<div className="flex justify-between mb-6 mt-4">*/}
+                    {/*    <div>*/}
+                    {/*        { pageData.pageName }*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <div>
-                        <Breadcrumbs
-                            {...this.props}
-                        />
-                    </div>
-                    <div className="flex justify-between mb-6 mt-4">
-                        <div>
-                            { pageData.pageName }
-                        </div>
-                    </div>
-                    <div>
-                        <NavContentBtn
-                            links={CONTENT_LINKS}
+                        {/*<NavContentBtn*/}
+                        {/*    links={CONTENT_LINKS}*/}
 
-                        />
+                        {/*/>*/}
                          <div className="bg-white h-full">
                              Levels Levels Levels Levels Levels Levels Levels
                              Levels Levels Levels Levels Levels Levels Levels
@@ -177,6 +196,7 @@ class Levels extends Component {
                              <AppList
                                  settings={settings}
                                  data={levelsList}
+                                 nestedKey="data"
                              />
                          </div>
                     </div>

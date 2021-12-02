@@ -9,12 +9,8 @@ export const CONTENT_LINKS = [
         link: "programs/levels"
     },
     {
-        name: "программы",
-        link: "programs"
-    },
-    {
         name: "контакты",
-        link: "контакты"
+        link: "programs/contacts"
     },
     {
         name: "документы",

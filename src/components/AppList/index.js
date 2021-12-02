@@ -4,7 +4,7 @@ import Row from "./row"
 
 class AppList extends Component {
     render() {
-        const { data, settings } = this.props
+        const { data, settings, nestedKey } = this.props
 
         const gridRowsSize = `${settings.map(a => a.size ? `${a.size}` : "auto")}`.replace(/,/gi, " ")
         const gridStyle = {
@@ -29,19 +29,24 @@ class AppList extends Component {
                                         className="color-light-blue"
                                         settings={settings}
                                         data={rowData}
+                                        rowIndex={i}
                                         gridStyle={gridStyle}
                                         rowClass="font-bold my-4 ml-4 flex justify-start"
                                     />
                                 </div>
                                 {
-                                    rowData[nestedKey].map( a => (
+                                    nestedKey && rowData[nestedKey].map( (a, index) => {
+                                        return (
                                         <Row
                                             settings={settings}
                                             data={a}
+                                            nestedLevel={1}
+                                            rowIndex={index}
+                                            parentIndex={i}
                                             gridStyle={gridStyle}
-                                            rowClass="my-4 ml-8 flex justify-start font-semibold"
+                                            rowClass="my-4 flex justify-start font-semibold"
                                         />
-                                    ))
+                                    )})
                                 }
                             </div>
                         }
@@ -58,7 +63,7 @@ class AppList extends Component {
                     gridStyle={gridStyle}
                 />
                 <div>
-                    { TableRows("data") }
+                    { TableRows(nestedKey) }
                 </div>
             </div>
         );

@@ -14,3 +14,9 @@
 .color-light-grey {
  color: var(--color-light-grey);
 }
+.color-green {
+ color: var(--color-green);
+}
+.bg-color-green {
+ background-color: var(--color-green);
+}
