@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import StateLessForm from "@Components/Forms/StateLessForm"
 import { rules, fieldMap } from "./formConfig"
+import CardForUser from "../../components/CardForUser";
 
 class Employees extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class Employees extends Component {
             + Создать сотрудника
           </button>
         </div>
+        <CardForUser></CardForUser>
         {/*<StateLessForm*/}
         {/*  fields={fieldMap}*/}
         {/*  rules={rules}*/}

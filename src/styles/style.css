@@ -93,6 +93,12 @@ h1 {
     font-weight: 700;
 }
 
+.color-light-blue-2 {
+    color: var(--color-light-blue-2);
+}
+.color-darken-blue {
+    color: var(--color-darken-blue);
+}
 /*Понять почему не работают классы tailwindui, использовать их и удалить эти стили*/
 
 .cursor {
@@ -105,6 +111,9 @@ h1 {
 /*потому что они задаются в rem*/
 .p-r-8 {
     padding-right: 8px;
+}
+.p-l-12 {
+    padding-left: 12px;
 }
 .p-r-15 {
     padding-right: 15px;

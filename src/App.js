@@ -7,6 +7,7 @@ import "@Styles/fonts.css"
 import "@Styles/animation.css"
 import "@Styles/style-input.scss"
 import "@Styles/style-btn.scss"
+import "@Styles/typography.scss"
 
 
 function App() {
