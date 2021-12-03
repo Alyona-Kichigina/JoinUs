@@ -6,6 +6,7 @@ class Breadcrumbs extends Component {
         const { history } = this.props
         const path = history.location.pathname.split("/")
         path.shift()
+
         return (
             <div className="flex">
                 { path.map( (a, index) => (

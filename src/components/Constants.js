@@ -14,7 +14,7 @@ export const CONTENT_LINKS = [
     },
     {
         name: "документы",
-        link: "документы"
+        link: "programs/documents"
     },
     {
         name: "цели",

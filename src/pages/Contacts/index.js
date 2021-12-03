@@ -74,7 +74,6 @@ const Contact = ({data}) => {
 }
 
 const ContactsComp = ({data}) => {
-    console.log(data)
     return (
         <div>
             {
@@ -131,13 +130,8 @@ class Contacts extends Component {
                          CONTACTS CONTACTS CONTACTS
                          CONTACTS CONTACTS CONTACTS
                      </div>
-                     {/*<NavContentBtn*/}
-                     {/*    links={CONTENT_LINKS}*/}
-
-                     {/*/>*/}
                      <div>
                          <AppList
-                             // settings={settings}
                              settings={settings}
                              data={data}
                          />
