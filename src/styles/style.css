@@ -77,14 +77,33 @@ body {
     --input-disabled-color: var(--color-red);
     --validation-error-border-b: 1px solid var(--pink);
 
+    --check-box-size: 24px;
+    --check-box-checked-bg: var(--color-blue);
+    --check-box-un-checked-bg: transparent;
+    --check-box-disabled-border: var(--pink);
+    --switch-border-color: transparent;
+
+    --padding-toggle-icon-select: 0 15px 0 6px;
+
     --indent-bottom-for-form: 20px;
     --max-height-input: unset;
 
     --height-button: 53px;
+
 }
+
+/*flex-col*/
+/* w-full - w-100*/
+/*pos-relative - relative*/
+/*a-i-center - items-center*/
+/*no-white-space - whitespace-nowrap*/
 
 .icon-navigation-drawer path {
     fill: var(--color-light-blue-2);
+}
+
+.no-user-select {
+    user-select: none;
 }
 
 h1 {
@@ -106,18 +125,47 @@ h1 {
     transition: all .2s ease 0s;
 }
 
+.flex-full-with {
+    flex: 1 1 auto;
+}
+
 /*использовать классы tailwindui для отступов*/
 /*и похоже надо будет добавлять свои классы для них в tailwind.config*/
 /*потому что они задаются в rem*/
+
+.p-5 {
+    padding: 5px;
+}
+
+.p-l-3 {
+    padding-left: 3px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px;
+}
+
 .p-r-8 {
     padding-right: 8px;
 }
+
 .p-l-12 {
     padding-left: 12px;
 }
+
 .p-r-15 {
     padding-right: 15px;
 }
+.p-l-15 {
+    padding-left: 15px;
+}
+.p-t-15 {
+    padding-top: 15px;
+}
+.p-b-15 {
+    padding-bottom: 15px;
+}
+
 .p-r-16 {
     padding-right: 16px;
 }
@@ -135,11 +183,47 @@ h1 {
     padding-top: 24px;
 }
 
+.p-b-25 {
+    padding-bottom: 25px;
+}
+
 .p-l-32 {
     padding-left: 32px;
 }
 .p-r-32 {
     padding-right: 32px;
+}
+
+
+.m-t-3 {
+    margin-top: 3px;
+}
+.m-b-3 {
+    margin-bottom: 3px;
+}
+.m-r-3 {
+    margin-right: 3px;
+}
+.m-l-3 {
+    margin-left: 3px;
+}
+
+.m-l-10 {
+    margin-left: 10px;
+}
+.m-r-10 {
+    margin-right: 10px;
+}
+.m-t-10 {
+    margin-top: 10px;
+}
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+
+.pointer-events-all {
+    pointer-events: all;
 }
 
 *,
@@ -282,10 +366,15 @@ button,
 select {
     text-transform: none; /* Firefox 40+, Internet Explorer 11- */
 }
-button,
+
 input,
 select,
 textarea {
+    background-color: transparent;
+    border-style: none;
+    color: inherit;
+}
+button {
     background-color: transparent;
     border-style: none;
     color: inherit;

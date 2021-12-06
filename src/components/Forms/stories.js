@@ -1,7 +1,7 @@
 import React from "react"
 
 import DefaultInputWrapper from "@/Components/Forms/InputWrappers/DefaultInputWrapper"
-import BsInput from "@/Components/Fields/BsInput"
+import BsInput from "@/Components/Fields/Input"
 import Form from "./index"
 
 const fieldsForm = [

@@ -49,9 +49,8 @@ const NavigationDrawer = () => {
         }
       </LeftMenuLogo>
       {tabNavigationMenu.map(({alias, picture, router}) => (
-        <NavLink to={router}>
+        <NavLink to={router} key={alias}>
           <LeftMenuItem
-            key={alias}
             hideToolbar={hideToolbar}
           >
             <ListTile hideToolbar={hideToolbar}>

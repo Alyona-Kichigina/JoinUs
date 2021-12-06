@@ -1,4 +1,4 @@
-import BsInput from "@Components/Fields/BsInput"
+import BsInput from "@Components/Fields/Input"
 
 export const fieldMap = [
   {

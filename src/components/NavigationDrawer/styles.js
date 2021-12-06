@@ -58,6 +58,7 @@ export const ListTile = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all .3s ease 0s;
   ${props => props.hideToolbar} {
     width: 100%;
     display: grid;

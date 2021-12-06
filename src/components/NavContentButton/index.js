@@ -34,7 +34,7 @@ class NavContentBtn extends Component {
         return (
             <div
                 className="bg-white"
-                style={{"border-radius": "4px 4px 0 0"}}
+                style={{"borderRadius": "4px 4px 0 0"}}
             >
                 <div className="flex flex-1">
                     {

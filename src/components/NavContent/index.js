@@ -9,7 +9,7 @@ class NavContent extends Component {
         return (
             <div
                 className="p-l-32 p-t-24 p-r-32 h-full"
-                style={{"border-radius": "4px"}}
+                style={{"borderRadius": "4px"}}
             >
                 <Router />
             </div>

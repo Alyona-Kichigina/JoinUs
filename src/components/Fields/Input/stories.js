@@ -3,7 +3,7 @@ import React from "react"
 import BsInput from "./index"
 
 export default {
-  title: "Components/Fields/BsInput",
+  title: "Components/Fields/Input",
   component: BsInput,
   argTypes: {
     value: {
