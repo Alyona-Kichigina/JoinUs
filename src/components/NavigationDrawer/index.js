@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   LeftMenuContainer, LeftMenuLogo, LeftMenuItem, ToggleToolbar, ListTile, ImgBanner, OpenMenuItem
 } from "./styles"
 import {tabNavigationMenu} from "./constants"
-import NavigationButton from "../PermissionLink/NavigationButton"
 import { NavLink } from "react-router-dom"
+
 
 const NavigationDrawer = () => {
   const [leftWidth, setLeftWidth] = useState(84)
@@ -27,45 +27,44 @@ const NavigationDrawer = () => {
   }, [getHidden])
   const hideToolbar = leftWidth === 84
   const toggleToolbar = () => {
-    localStorage.setItem("APP_NAVBAR", getHidden === "close" ? "open" : "close")
-    setToggleArrow(getHidden === "close" ? "open" : "close")
-    setIconArrowStyle(getHidden === "close" ? "open" : "close")
+    localStorage.setItem("APP_NAVBAR", getHidden === "close" ? "" : "close")
+    setToggleArrow(getHidden === "close" ? "" : "close")
+    setIconArrowStyle(getHidden === "close" ? "" : "close")
     setGetHidden(localStorage.getItem("APP_NAVBAR"))
   }
   return (
     <LeftMenuContainer style={{ width: leftWidth }}>
       <LeftMenuLogo>
         {hideToolbar ? (
-          <OpenMenuItem hideToolbar={!hideToolbar} className="display-flex a-i-center">
+          <OpenMenuItem hideToolbar={!hideToolbar} className="flex items-center">
             <img src="/assets/minLogo.svg" alt="" />
           </OpenMenuItem>
         )
         :
         (
-          <OpenMenuItem hideToolbar={hideToolbar} className="display-flex a-i-center">
+          <OpenMenuItem hideToolbar={hideToolbar} className="flex items-center">
             <img src="/assets/logo.svg" alt="" />
           </OpenMenuItem>
         )
         }
       </LeftMenuLogo>
       {tabNavigationMenu.map(({alias, picture, router}) => (
-        <LeftMenuItem
-          key={alias}
-          hideToolbar={hideToolbar}
-        >
-          <NavLink to={router}>
+        <NavLink to={router} key={alias}>
+          <LeftMenuItem
+            hideToolbar={hideToolbar}
+          >
             <ListTile hideToolbar={hideToolbar}>
-              <div className="icon-container transition-icon cursor a-i-center j-c-center display-flex">
+              <div className="icon-container transition-icon cursor items-center justify-center flex">
                 <div className="icon-navigation-drawer" dangerouslySetInnerHTML={{__html: picture}}/>
               </div>
               {!hideToolbar && (
-                <OpenMenuItem hideToolbar={hideToolbar} className="display-flex a-i-center">
+                <OpenMenuItem hideToolbar={hideToolbar} className="flex items-center">
                   <div className="">{alias}</div>
                 </OpenMenuItem>
               )}
             </ListTile>
-          </NavLink>
-        </LeftMenuItem>
+          </LeftMenuItem>
+        </NavLink>
         )
       )}
       {!hideToolbar && (
@@ -73,9 +72,9 @@ const NavigationDrawer = () => {
       )}
       <ToggleToolbar
         onClick={toggleToolbar}
-        className={`display-flex ${toggleArrow} a-i-center`}
+        className={`flex ${toggleArrow} items-center`}
       >
-        <img src="/assets/icons/angleDouble.svg" alt="" className={`icon-arrow ${iconArrowStyle}`}/>
+        <img src="/assets/icons/angleDouble.svg" alt="" className={`${iconArrowStyle}`}/>
         {!hideToolbar && (
           <span className="p-l-16">
             Свернуть

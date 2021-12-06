@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+# Контролер валидации
+<Meta title="Core/Валидатор" />
+
+#### Назначение
+
+Кэширование и сокращение одновременного запроса одного и того же ресурса
+
+#### Методы
+
+| Название | Аргументы | Описание |
+|---|---|---|
+| `bigDateThen` | ключ поля для сравнения | Проверка дат, значение поля должно быть больше даты условия |
+| `lessDateThen` | ключ поля для сравнения | Проверка дат, значение поля должно быть меньше даты условия |
+| `same`| ключ поля для сравнения | Загрузчик статики преобразующий ее в Blob для доступа к данным |
+| `password`| | удовлетворяет ли значение набору символов необходимых для пароля |
+| `required`| | Поле не пустое |
+
+
+
+#### Пример конфигурации
+
+```
+export const rules = {
+    "PRACTICE_NAME": "required",
+    "START_DATE": "required|lessDateThen:END_DATE",
+    "END_DATE": "required|bigDateThen:START_DATE",
+    NEW_PASSWORD_1: "required|same:NEW_PASSWORD_2",
+    NEW_PASSWORD_2: "required|password|same:NEW_PASSWORD_1"
+}
+```
