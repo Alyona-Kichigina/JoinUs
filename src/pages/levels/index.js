@@ -183,16 +183,6 @@ class Levels extends Component {
 
                         {/*/>*/}
                          <div className="bg-white h-full">
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
-                             Levels Levels Levels Levels Levels Levels Levels
                              <AppList
                                  settings={settings}
                                  data={levelsList}

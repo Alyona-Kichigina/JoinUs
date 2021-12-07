@@ -8,8 +8,8 @@ class NavContent extends Component {
     render() {
         return (
             <div
-                className="mx-8 mt-6 h-full"
-                style={{"border-radius": "4px"}}
+                className="p-l-32 p-t-24 p-r-32 h-full"
+                style={{"borderRadius": "4px"}}
             >
                 <Router />
             </div>

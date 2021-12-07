@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+# Контейнер закрытия окон
+<Meta title="Core/RenderProps/withCloseWindow" />
+
+#### Назначение
+
+Позволят автоматический закрывать окна(модальные, контекстные, сайд-бары)
+
+#### Подключение
+
+```
+import WithCloseWindow from "@/Core/RenderProps/withCloseWindow"
+
+<WithCloseWindow
+    closeWindow={closeContextMenu}
+    byKey={renderContextMenu}
+>
+    {(onMouseDown) => renderContextMenu && (
+        <div onMouseDown={onMouseDown}>
+            ....
+        </div>
+    )}
+</WithCloseWindow>
+```
+
+onMouseDown => возвращаемая функция которую необходимо передать как обработчик в верхний контейнер
+
+#### Аргументы
+
+| Название | обязательна | Описание |
+|---|---|---|
+| `children` | + | функция в которую передается перехватчик события клика |
+| `closeWindow` | + | функция которая будет вызываться, когда необходимо закрыть окно |
+| `byKey`  | - | Пропс по которому переопределяется стандартное поведение, перехватчики событий добавляются только тогда когда он == **true** |
+
+
+
+
+#### Используется в компоненте боковых фильтров по всему приложению
+
+* главные страницы разделов
+* таблица
+* права
