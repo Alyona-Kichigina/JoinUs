@@ -1,37 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import { NavLink, useRouteMatch  } from "react-router-dom"
 
-// const links = [
-//     {
-//         name: "общие",
-//         link: "/"
-//     },
-//     {
-//         name: "уровни",
-//         link: "levels"
-//     },
-//     {
-//         name: "программы",
-//         link: "programs"
-//     },
-//     {
-//         name: "контакты",
-//         link: "контакты"
-//     },
-//     {
-//         name: "документы",
-//         link: "документы"
-//     },
-//     {
-//         name: "цели",
-//         link: "цели"
-//     }
-// ]
 
-class NavContentBtn extends Component {
-    render() {
-        const { links } = this.props
-        return (
+export default function NavContentBtn(props) {
+    // path = useRouteMatch()
+    const { links } = props
+    let  match = useRouteMatch()
+
+    console.log(match)
+    return  (
             <div
                 className="bg-white"
                 style={{"border-radius": "4px 4px 0 0"}}
@@ -41,7 +19,8 @@ class NavContentBtn extends Component {
                         links.map( a => (
                             <Link
                                 className="ml-8 mt-2 mb-1.5"
-                                to={a.link}
+                                // to={`${match.url}/${a.link}`}
+                                to={`/programs/${a.link}`}
                             >
                                 { a.name }
                             </Link>
@@ -50,8 +29,7 @@ class NavContentBtn extends Component {
                 </div>
                 <div className="w-full h-px bg-gray-300" />
             </div>
-        );
-    }
+    )
 }
 
-export default NavContentBtn;
+// export default NavContentBtn;

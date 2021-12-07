@@ -6,15 +6,15 @@ export const CONTENT_LINKS = [
     },
     {
         name: "уровни",
-        link: "programs/levels"
+        link: "levels"
     },
     {
         name: "контакты",
-        link: "programs/contacts"
+        link: "contacts"
     },
     {
         name: "документы",
-        link: "programs/documents"
+        link: "documents"
     },
     {
         name: "цели",
