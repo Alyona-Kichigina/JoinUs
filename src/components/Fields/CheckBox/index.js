@@ -36,7 +36,7 @@ function emitCheckboxValue(id, onBlur, onFocus, onInput, normalizeCheckBoxVal, v
 
 const BsCheckBox = ({
   value, returnObjects, reverseMode, disabled, label, checkBoxLabel, checkBoxValue, valueKey,
-  id, onBlur, onFocus, onInput, className, style
+  id, onBlur, onFocus, onInput, className, style, iconLabel
 }) => {
   const normalizeCheckBoxVal = useMemo(
     () => resolveCheckboxValue(checkBoxValue, valueKey),
@@ -53,7 +53,7 @@ const BsCheckBox = ({
     [checkBoxValue, value, valueKey, normalizeCheckBoxVal, returnObjects, reverseMode]
   )
 
-  const updateValue = useCallback(() => emitCheckboxValue(
+  const  updateValue = useCallback(() => emitCheckboxValue(
     id, onBlur, onFocus, onInput, normalizeCheckBoxVal, value, checked, valueKey, checkBoxValue, returnObjects, reverseMode
   ),
   [id, onBlur, onFocus, onInput, normalizeCheckBoxVal, value, checked, valueKey, checkBoxValue, returnObjects, reverseMode])
@@ -67,16 +67,25 @@ const BsCheckBox = ({
       onMouseDown={updateValue}
       name={checkBoxLabel || label}
     >
-      <BoxContainer>
-        <CheckBox checked={checked} />
-      </BoxContainer>
       {label && (
-        <div
-          className="p-l-15 fz14"
-        >
-          { checkBoxLabel || label }
+        <div className="flex items-center">
+          {iconLabel && (
+            <img src={iconLabel} alt="" className="p-r-8"/>
+          )}
+          <div
+            className="p-r-15 fz14"
+          >
+            { checkBoxLabel || label }
+          </div>
         </div>
       )}
+      <BoxContainer checked={checked}>
+        <CheckBox checked={checked}>
+          {checked && (
+            <img src="./assets/icons/checkbox.jpg" alt=""/>
+          )}
+        </CheckBox>
+      </BoxContainer>
     </CheckBoxContainer>
   )
 }
@@ -95,7 +104,8 @@ BsCheckBox.propTypes = {
   onInput: PropTypes.func,
   className: PropTypes.string,
   style: PropTypes.object,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  iconLabel: PropTypes.string,
 }
 
 BsCheckBox.defaultProps = {

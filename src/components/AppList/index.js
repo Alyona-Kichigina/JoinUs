@@ -57,7 +57,7 @@ class AppList extends Component {
         }
 
         return (
-            <div>
+            <div className="bg-white">
                 <Header
                     settings={settings}
                     gridStyle={gridStyle}

@@ -145,6 +145,20 @@ h1 {
     padding-bottom: 5px;
 }
 
+.p-r-6 {
+    padding-right: 6px;
+}
+.p-l-6 {
+    padding-left: 6px;
+}
+.p-t-6 {
+    padding-top: 6px;
+}
+.p-b-6 {
+    padding-bottom: 6px;
+}
+
+
 .p-r-8 {
     padding-right: 8px;
 }
@@ -172,6 +186,20 @@ h1 {
 .p-l-16 {
     padding-left: 16px;
 }
+
+.p-r-18 {
+    padding-right: 18px;
+}
+.p-l-18 {
+    padding-left: 18px;
+}
+.p-t-18 {
+    padding-top: 18px;
+}
+.p-b-18 {
+    padding-bottom: 18px;
+}
+
 .p-r-24 {
     padding-right: 24px;
 }
