@@ -10,9 +10,12 @@ class Header extends Component {
                 className="grid color-light-blue-2"
                 style={gridStyle}>
                 {
-                    settings.map( a => (
-                        <div className="my-4 flex justify-start ml-4">
-                            { a.name }
+                    settings.map(({name, key}) => (
+                        <div
+                          className="my-4 flex justify-start mx-4"
+                          key={key}
+                        >
+                            { name }
                         </div>
                     ))
                 }

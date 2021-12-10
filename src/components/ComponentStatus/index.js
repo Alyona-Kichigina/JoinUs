@@ -3,6 +3,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 const Status = ({value}) => {
   const [icon, setIcon] = useState("")
   const [title, setTitle] = useState("")
+  console.log(value)
 
   const getData = useCallback(() => {
     switch (value) {

@@ -3,10 +3,9 @@ import React, {Component} from 'react';
 class Row extends Component {
     render() {
         const {rowKey, settings, rowClass, gridStyle, nestedLevel, rowIndex, parentIndex, data = []  } = this.props
-
         return (
             <div
-                className="grid"
+                className="grid border-top"
                 style={gridStyle}
                 key={rowKey}
             >
@@ -17,6 +16,7 @@ class Row extends Component {
                     return (
                              <div
                                  className={`${rowClass} ${nestedLevel > 0 && index === 0 ? "ml-8" : "ml-4"}`}
+                                 key={a.key}
                              >
                                  <div className="flex a-i-center">
                                       {

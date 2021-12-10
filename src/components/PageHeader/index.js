@@ -20,7 +20,7 @@ class PageHeader extends Component {
                 </div>
                 <div
                     className="bg-white"
-                    style={{"border-radius": "4px"}}
+                    style={{"borderRadius": "4px"}}
                 >
                     <NavContentBtn
                         links={CONTENT_LINKS}

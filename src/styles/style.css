@@ -92,6 +92,14 @@ body {
 
 }
 
+.border-top {
+    border-top: 1px solid var(--color-light-grey-2);
+}
+
+.border-radius-4 {
+    border-radius: 4px;
+}
+
 /*flex-col*/
 /* w-full - w-100*/
 /*pos-relative - relative*/
@@ -186,6 +194,12 @@ h1 {
 .p-l-16 {
     padding-left: 16px;
 }
+.p-t-16 {
+    padding-top: 16px;
+}
+.p-b-16 {
+    padding-bottom: 16px;
+}
 
 .p-r-18 {
     padding-right: 18px;
@@ -247,6 +261,19 @@ h1 {
 }
 .m-b-10 {
     margin-bottom: 10px;
+}
+
+.m-t-16 {
+    margin-top: 16px;
+}
+.m-b-16 {
+    margin-bottom: 16px;
+}
+.m-r-16 {
+    margin-right: 16px;
+}
+.m-l-16 {
+    margin-left: 16px;
 }
 
 

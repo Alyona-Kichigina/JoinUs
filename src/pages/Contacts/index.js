@@ -17,6 +17,7 @@ const data = [
         },
         role: "Наставник",
         contacts: {
+            id: 1,
             mail: "petrova.darya@gmail.com",
             phone: [
                 "+7 999 787 7868"
@@ -30,6 +31,7 @@ const data = [
         },
         role: "HR",
         contacts: {
+            id: 2,
             mail: "petrova.darya@gmail.com",
             phone: [
                 "+7 999 787 7868"
@@ -43,6 +45,7 @@ const data = [
         },
         role: "Гуру",
         contacts: {
+            id: 3,
             mail: "petrova.darya@gmail.com",
             phone: [
                 "+7 999 787 7868",
@@ -57,7 +60,7 @@ const Contact = ({data}) => {
         <div className="flex ml-1.5">
             <div
                 className="h-7 w-7 bg-color-green"
-                style={{"border-radius": "50%"}}
+                style={{"borderRadius": "50%"}}
             />
             <div className="flex fd-column ml-3">
                 <div className="flex j-c-start">
@@ -78,7 +81,9 @@ const ContactsComp = ({data}) => {
         <div>
             {
                 data.phone.map( a => (
-                    <div className="flex j-c-start mb-1">
+                    <div
+                      className="flex j-c-start mb-1"
+                    >
                         { a }
                     </div>
                 ))

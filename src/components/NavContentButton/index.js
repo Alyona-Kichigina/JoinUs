@@ -38,12 +38,13 @@ class NavContentBtn extends Component {
             >
                 <div className="flex flex-1">
                     {
-                        links.map( a => (
+                        links.map( ({link, name, id}) => (
                             <Link
+                              key={id}
                                 className="ml-8 mt-2 mb-1.5"
-                                to={a.link}
+                                to={link}
                             >
-                                { a.name }
+                                { name }
                             </Link>
                         ))
                     }

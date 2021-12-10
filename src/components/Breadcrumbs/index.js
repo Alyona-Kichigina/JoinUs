@@ -10,7 +10,10 @@ class Breadcrumbs extends Component {
         return (
             <div className="flex">
                 { path.map( (a, index) => (
-                    <div className="pr-3 capitalize">
+                    <div
+                      key={a}
+                      className="pr-3 capitalize"
+                    >
                      <Link
                          className={path.length !== index +1 ? "text-gray-400" : ""}
                          to={a}
