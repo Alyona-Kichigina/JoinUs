@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 
 class AppList extends Component {
     render() {
-        const { data, settings, nestedKey } = this.props
+        const { data, settings, nestedKey, nestedData } = this.props
 
         const gridRowsSize = `${settings.map(a => a.size ? `${a.size}` : "auto")}`.replace(/,/gi, " ")
         const gridStyle = {"gridTemplateColumns": gridRowsSize}
@@ -25,10 +25,12 @@ class AppList extends Component {
                               {/* todo почему тут этот класс?*/}
                                 <div className="bg-color-light-blue">
                                     <Row
-                                        className="color-light-blue"
+                                        className=""
                                         settings={settings}
                                         data={rowData}
+                                        nestedLevel={0}
                                         rowIndex={i}
+                                        nestedData={nestedData}
                                         gridStyle={gridStyle}
                                         rowClass="font-bold my-4 mx-4 flex justify-start"
                                     />

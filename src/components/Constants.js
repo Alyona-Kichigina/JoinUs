@@ -8,21 +8,21 @@ export const CONTENT_LINKS = [
     {
         id: 2,
         name: "уровни",
-        link: "programs/levels"
+        link: "levels"
     },
     {
         id: 3,
         name: "контакты",
-        link: "programs/contacts"
+        link: "contacts"
     },
     {
         id: 4,
         name: "документы",
-        link: "programs/documents"
+        link: "documents"
     },
     {
         id: 5,
         name: "цели",
-        link: "цели"
+        link: "goals"
     }
 ]

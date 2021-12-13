@@ -1,58 +1,32 @@
-import React, {Component} from 'react';
-import {Link} from "react-router-dom";
+import React from 'react';
+import {Link, NavLink} from "react-router-dom";
+import { NawContentBtn, NawContentItem } from "./style"
 
-// const links = [
-//     {
-//         name: "общие",
-//         link: "/"
-//     },
-//     {
-//         name: "уровни",
-//         link: "levels"
-//     },
-//     {
-//         name: "программы",
-//         link: "programs"
-//     },
-//     {
-//         name: "контакты",
-//         link: "контакты"
-//     },
-//     {
-//         name: "документы",
-//         link: "документы"
-//     },
-//     {
-//         name: "цели",
-//         link: "цели"
-//     }
-// ]
+export default function NavContentBtn(props) {
+    const { links } = props
 
-class NavContentBtn extends Component {
-    render() {
-        const { links } = this.props
-        return (
+    return  (
             <div
                 className="bg-white"
-                style={{"borderRadius": "4px 4px 0 0"}}
+                style={{"border-radius": "4px 4px 0 0"}}
             >
-                <div className="flex flex-1">
+                <NawContentBtn className="flex flex-1 pt-4 pb-4">
                     {
-                        links.map( ({link, name, id}) => (
-                            <Link
-                              key={id}
-                                className="ml-8 mt-2 mb-1.5"
-                                to={link}
-                            >
-                                { name }
-                            </Link>
+                        links.map( a => (
+                            <NawContentItem>
+                                <NavLink
+                                    className="ml-8 h-full font-semibold capitalize"
+                                    to={`/programs/${a.link}`}
+                                >
+                                    { a.name }
+                                </NavLink>
+                            </NawContentItem>
                         ))
                     }
-                </div>
+                </NawContentBtn>
                 <div className="w-full h-px bg-gray-300" />
             </div>
-        );
-    }
+    )
 }
 
-export default NavContentBtn;
+// export default NavContentBtn;

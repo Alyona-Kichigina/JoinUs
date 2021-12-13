@@ -12,7 +12,7 @@ class Header extends Component {
                 {
                     settings.map(({name, key}) => (
                         <div
-                          className="my-4 flex justify-start mx-4"
+                          className="my-4 flex justify-start mx-4 fs-14"
                           key={key}
                         >
                             { name }

@@ -9,12 +9,16 @@ import Reference from "../pages/Reference"
 import Settings from "../pages/Settings"
 import Contacts from "../pages/Contacts"
 import Documents from "../pages/Documents";
+import Goals from "../pages/Goals";
+import NewProgramm from "../pages/NewProgramm";
 
 const Router = () => (
     <Switch>
         <Route exact path="/programs/levels" component={Levels} />
         <Route path="/programs/contacts" component={Contacts} />
         <Route path="/programs/documents" component={Documents} />
+        <Route path="/programs/goals" component={Goals} />
+        <Route path="/programs/new_programm" component={NewProgramm} />
         <Route path="/programs" component={Programs} />
         <Route path="/employees" component={Employees} />
         <Route path="/appeal" component={Appeal} />

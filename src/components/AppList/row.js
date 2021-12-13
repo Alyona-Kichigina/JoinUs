@@ -1,13 +1,24 @@
 import React, {Component} from 'react';
+import { RowContainer } from "./style"
 
 class Row extends Component {
     render() {
         const {
-            rowKey, settings, rowClass, gridStyle, nestedLevel, rowIndex, parentIndex, data = [], active
+            rowKey,
+            settings,
+            nestedData,
+            rowClass,
+            gridStyle,
+            nestedLevel,
+            rowIndex,
+            parentIndex,
+            data = [],
+            active
         } = this.props
+
         return (
-            <div
-                className={`grid border-top items-center ${ active ? "bg-color-light-blue" : ""}`}
+            <RowContainer
+                className={`grid border-top items-center ${nestedData && active && nestedLevel === 0 && "bg-color-light-blue"}`}
                 style={gridStyle}
                 key={rowKey}
             >
@@ -16,33 +27,33 @@ class Row extends Component {
                         const renderLevel = a.nestedLevel ? nestedLevel === a.nestedLevel : true
                         const Comp = a.component ? a.component : "div"
                     return (
-                         <div
-                             className={`${rowClass} ${nestedLevel > 0 && index === 0 ? "ml-8" : "ml-4"}`}
-                             key={a.key}
-                         >
-                             <div className="flex a-i-center">
-                                  {
-                                     index === 0 &&
-                                         (<div className="mr-1">
-                                             { `${ parentIndex || parentIndex === 0 ? `${parentIndex + 1 }.${ rowIndex + 1}` : rowIndex + 1 }.` }
-                                         </div>)
-                                  }
-                                  {
-                                      renderLevel &&
-                                      (<Comp
-                                          data={data[a.key]}
-                                          nestedLevel={nestedLevel}
-                                          rowIndex={rowIndex}
-                                      >
-                                          {data[a.key]}
-                                      </Comp>)
-                                  }
+                             <div
+                                 className={`${rowClass} ${nestedLevel > 0 && index === 0 ? "ml-8" : "ml-4"}`}
+                             >
+                                 <div className="flex items-center">
+                                      {
+                                         index === 0 &&
+                                             (<div className="mr-1">
+                                                 { `${ parentIndex || parentIndex === 0 ? `${parentIndex + 1 }.${ rowIndex + 1}` : rowIndex + 1 }.` }
+                                             </div>)
+                                      }
+                                      {
+                                          renderLevel &&
+                                          (<Comp
+                                              className="flex items-center"
+                                              data={data[a.key]}
+                                              nestedLevel={nestedLevel}
+                                              rowIndex={rowIndex}
+                                          >
+                                              {data[a.key]}
+                                          </Comp>)
+                                      }
+                                 </div>
                              </div>
-                         </div>
-                        )
+                            )
                     })
                 }
-            </div>
+            </RowContainer>
         );
     }
 }

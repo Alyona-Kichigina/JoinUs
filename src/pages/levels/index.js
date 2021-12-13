@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import NavContentBtn from "../../components/NavContentButton";
 import { CONTENT_LINKS } from "../../components/Constants"
 // import Breadcrumbs from "../../components/Breadcrumbs";
@@ -158,8 +158,48 @@ const settings = [
 ]
 
 class Levels extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            error: false,
+            isLoaded: false,
+            items: []
+        }
+    }
+
+    // 192.168.0.4:5430/AdaptationLevel
+
+    componentDidMount() {
+        const source1 = "adaptationcontact"
+        // const source1 = "adaptationlevel"
+        // http://localhost:9000/api/adaptationlevel/
+        fetch(`http://localhost:9000/api/${source1}`, {
+            mode: 'no-cors',
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                                    isLoaded: true,
+                                    items: result
+                    })
+                },
+                (error) => {
+                    this.setState({
+                                    isLoaded: true,
+                                    error
+                    })
+                }
+            )
+    }
     render() {
         const { history } = this.props
+        // const [modalIsOpen, setIsOpen] = useState(false);
         return (
             <div className="h-full">
                 <div>
@@ -167,24 +207,23 @@ class Levels extends Component {
                         {...this.props}
                         pageData={pageData}
                     />
-                    {/*<div>*/}
-                    {/*    <Breadcrumbs*/}
-                    {/*        {...this.props}*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-                    {/*<div className="flex justify-between mb-6 mt-4">*/}
-                    {/*    <div>*/}
-                    {/*        { pageData.pageName }*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                     <div>
-                        {/*<NavContentBtn*/}
-                        {/*    links={CONTENT_LINKS}*/}
-
-                        {/*/>*/}
                          <div className="bg-white h-full">
+                             <div className="pt-6 mb-4 ml-4">
+                                 <button
+                                     className="blue btn width-m pt-1.5"
+                                 >
+                                     + Добавить уровень
+                                 </button>
+                                 <button
+                                     className="white btn width-m pt-1.5 ml-4"
+                                 >
+                                     Выбрать уровень
+                                 </button>
+                             </div>
                              <AppList
                                  settings={settings}
+                                 nestedData={true}
                                  data={levelsList}
                                  nestedKey="data"
                              />
