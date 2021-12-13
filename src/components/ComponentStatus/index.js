@@ -1,12 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
+import PropTypes from "prop-types"
 
-const Status = ({value}) => {
+const Status = ({data}) => {
   const [icon, setIcon] = useState("")
   const [title, setTitle] = useState("")
-  console.log(value)
 
   const getData = useCallback(() => {
-    switch (value) {
+    switch (data) {
       case "end":
         setIcon("/assets/icons/iconStatus/iconStatusEnd.svg")
         setTitle("Завершена")
@@ -24,7 +24,7 @@ const Status = ({value}) => {
         setTitle("Error")
         break;
     }
-  }, [icon, setIcon, title, setTitle, value])
+  }, [icon, setIcon, title, setTitle, data])
 
   useEffect(() => {
     getData()
@@ -36,5 +36,9 @@ const Status = ({value}) => {
     </div>
   );
 };
+
+Status.propTypes = {
+  data: PropTypes.string,
+}
 
 export default Status;

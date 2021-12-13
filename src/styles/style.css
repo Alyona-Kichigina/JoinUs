@@ -120,6 +120,10 @@ h1 {
     font-weight: 700;
 }
 
+.bg-color-light-blue {
+    background: var(--color-light-blue);
+}
+
 .color-light-blue-2 {
     color: var(--color-light-blue-2);
 }

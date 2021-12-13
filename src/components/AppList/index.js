@@ -22,6 +22,7 @@ class AppList extends Component {
                     >
                         {
                             <div>
+                              {/* todo почему тут этот класс?*/}
                                 <div className="bg-color-light-blue">
                                     <Row
                                         className="color-light-blue"

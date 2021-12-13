@@ -15,39 +15,39 @@ export const settings = [
     key: "number",
     name: "№",
     // component: numberComponent,
-    size: "5%"
+    size: "50px"
   },
   {
     id: 1,
     key: "EMPLOYEES",
     component: CardForUser,
     name: "Сотрудник",
-    size: "15%"
+    size: "2fr"
   },
   {
     id: 2,
     key: "RELEASE_DATE",
     name: "Дата выхода",
-    size: "15%"
+    size: "1fr",
   },
   {
     id: 3,
     key: "ACTIVATION_DATE",
     name: "Дата активации",
-    size: "30%"
+    size: "1fr"
   },
   {
     id: 4,
     key: "STATUS",
     name: "Статус",
     component: Status,
-    size: "15%"
+    size: "1fr"
   },
   {
     id: 5,
     key: "PROGRESS",
     name: "Прогресс",
-    size: "25%",
+    size: "1.2fr",
     component: Progress
   },
 ]
@@ -55,26 +55,77 @@ export const settings = [
 export const data = [
   {
     id: 1,
-    EMPLOYEES: "",
+    EMPLOYEES: {
+      img: "./assets/img/associated_photo.png",
+      name: "Петрова Дарья",
+      role: "Директор по техническому развитию"
+    },
     RELEASE_DATE: "01.03.2021",
     ACTIVATION_DATE: "03.03.2021",
     STATUS: "end",
-    PROGRESS: ""
+    PROGRESS: {
+      name: "Для руководителей проектов",
+      progress: 1
+    }
   },
   {
     id: 2,
-    EMPLOYEES: "",
+    EMPLOYEES: {
+      img: "./assets/img/associated_photo.png",
+      name: "Петрова Дарья",
+      role: "Заместитель генерального директора по статегическому развитию"
+    },
     RELEASE_DATE: "01.03.2021",
     ACTIVATION_DATE: "03.03.2021",
-    STATUS: "end",
-    PROGRESS: ""
+    STATUS: "wait",
+    PROGRESS: {
+      name: "Для менеджеров",
+      progress: 2
+    }
   },
   {
     id: 3,
-    EMPLOYEES: "",
+    EMPLOYEES: {
+      img: "./assets/img/associated_photo.png",
+      name: "Петрова Дарья",
+      role: "Директор по техническому развитию"
+    },
     RELEASE_DATE: "01.03.2021",
     ACTIVATION_DATE: "03.03.2021",
-    STATUS: "end",
-    PROGRESS: ""
+    STATUS: "work",
+    PROGRESS: {
+      name: "Для руководителей проектов",
+      progress: 3
+    }
+  },
+  {
+    id: 4,
+    EMPLOYEES: {
+      img: "./assets/img/associated_photo.png",
+      name: "Петрова Дарья",
+      role: "Директор по техническому развитию"
+    },
+    RELEASE_DATE: "01.03.2021",
+    ACTIVATION_DATE: "03.03.2021",
+    STATUS: "work",
+    PROGRESS: {
+      name: "Для руководителей проектов",
+      progress: 4
+    }
+  },
+  {
+    id: 5,
+    EMPLOYEES: {
+      img: "./assets/img/associated_photo.png",
+      name: "Петрова Дарья",
+      role: "Директор по техническому развитию"
+    },
+    RELEASE_DATE: "01.03.2021",
+    ACTIVATION_DATE: "03.03.2021",
+    STATUS: "work",
+    PROGRESS: {
+      name: "Для руководителей проектов",
+      progress: 0
+    }
   }
 ]
