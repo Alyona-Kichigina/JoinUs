@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import PageHeader from "../../components/PageHeader";
 import AppList from "../../components/AppList";
-import "../levels/style.css"
 import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../Constants";
-import Modal from "../../components/ModalWindow";
+
 
 const pageData = {
     pageName: "Программа для разработчиков"
@@ -12,15 +11,11 @@ const pageData = {
 const data = [
     {
         id: 1,
-        name: "Договор"
+        name: "Повышение мотивации"
     },
     {
         id: 2,
-        name: "Презентация о компании"
-    },
-    {
-        id: 3,
-        name: "Что необходимо"
+        name: "увеличение продаж"
     }
 ]
 
@@ -64,6 +59,7 @@ const DocumentActions = () => {
     )
 }
 
+
 const settings = [
     {
         id: 1,
@@ -88,22 +84,19 @@ const settings = [
     }
 ]
 
-// AdaptationDocument
-
-class Documents extends Component {
+class Goals extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             error: false,
             isLoaded: false,
-            editModal: false,
             items: []
         }
     }
 
     componentDidMount() {
-        const source1 = "adaptationdocument"
+        const source1 = "adaptationbgoal"
         fetch(`http://localhost:9000/api/${source1}`, {
             mode: 'no-cors',
             method: "GET",
@@ -129,25 +122,18 @@ class Documents extends Component {
                 }
             )
     }
+
     render() {
-        const { editModal, items = [] } = this.state
-        // const  newData = items.map(({ document_name, document_link }) => (
-        //     {
-        //         document_name,
-        //         document_link
-        //     }
-        // ))
+        const { items = [] } = this.state
+        const newData = items.map(a => {
+            console.log(a)
+        })
         return (
             <div>
                 <PageHeader
                     {...this.props}
                     pageData={pageData}
                 >
-                    <Modal
-                        isOpen={editModal}
-                        title="редактирование документа"
-                        closeModal={() => this.setState({editModal: false})}
-                    />
                     <div className="pt-8 pb-6 pl-4">
                         <button
                             className="blue btn width-m pt-1.5"
@@ -156,7 +142,6 @@ class Documents extends Component {
                         </button>
                         <button
                             className="white btn width-m pt-1.5 ml-4"
-                            onClick={() => this.setState({ editModal: true })}
                         >
                             Выбрать документ
                         </button>
@@ -171,4 +156,4 @@ class Documents extends Component {
     }
 }
 
-export default Documents;
+export default Goals;

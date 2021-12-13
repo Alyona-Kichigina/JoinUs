@@ -20,3 +20,6 @@
 .bg-color-green {
  background-color: var(--color-green);
 }
+.bg-color-white {
+ background-color: var(--color-white);
+}

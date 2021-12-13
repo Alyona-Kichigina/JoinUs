@@ -1,32 +1,29 @@
-import React, {Component} from 'react';
-import {Link} from "react-router-dom";
-import { NavLink, useRouteMatch  } from "react-router-dom"
-
+import React from 'react';
+import {Link, NavLink} from "react-router-dom";
+import { NawContentBtn, NawContentItem } from "./style"
 
 export default function NavContentBtn(props) {
-    // path = useRouteMatch()
     const { links } = props
-    let  match = useRouteMatch()
 
-    console.log(match)
     return  (
             <div
                 className="bg-white"
                 style={{"border-radius": "4px 4px 0 0"}}
             >
-                <div className="flex flex-1">
+                <NawContentBtn className="flex flex-1 pt-4 pb-4">
                     {
                         links.map( a => (
-                            <Link
-                                className="ml-8 mt-2 mb-1.5"
-                                // to={`${match.url}/${a.link}`}
-                                to={`/programs/${a.link}`}
-                            >
-                                { a.name }
-                            </Link>
+                            <NawContentItem>
+                                <NavLink
+                                    className="ml-8 h-full font-semibold capitalize"
+                                    to={`/programs/${a.link}`}
+                                >
+                                    { a.name }
+                                </NavLink>
+                            </NawContentItem>
                         ))
                     }
-                </div>
+                </NawContentBtn>
                 <div className="w-full h-px bg-gray-300" />
             </div>
     )

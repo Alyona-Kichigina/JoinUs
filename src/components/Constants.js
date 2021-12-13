@@ -18,6 +18,6 @@ export const CONTENT_LINKS = [
     },
     {
         name: "цели",
-        link: "цели"
+        link: "goals"
     }
 ]

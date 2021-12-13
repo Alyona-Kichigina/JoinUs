@@ -4,7 +4,7 @@ import Row from "./row"
 
 class AppList extends Component {
     render() {
-        const { data, settings, nestedKey } = this.props
+        const { data, settings, nestedKey, nestedData } = this.props
 
         const gridRowsSize = `${settings.map(a => a.size ? `${a.size}` : "auto")}`.replace(/,/gi, " ")
         const gridStyle = {
@@ -24,12 +24,14 @@ class AppList extends Component {
                     >
                         {
                             <div>
-                                <div className="bg-color-light-blue">
+                                <div className="">
                                     <Row
-                                        className="color-light-blue"
+                                        className=""
                                         settings={settings}
                                         data={rowData}
+                                        nestedLevel={0}
                                         rowIndex={i}
+                                        nestedData={nestedData}
                                         gridStyle={gridStyle}
                                         rowClass="font-bold my-4 ml-4 flex justify-start"
                                     />

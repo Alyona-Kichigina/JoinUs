@@ -11,7 +11,7 @@ class Header extends Component {
                 style={gridStyle}>
                 {
                     settings.map( a => (
-                        <div className="my-4 flex justify-start ml-4">
+                        <div className="my-4 flex justify-start ml-4 fs-14">
                             { a.name }
                         </div>
                     ))

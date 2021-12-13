@@ -13,7 +13,7 @@ class PageHeader extends Component {
                         {...this.props}
                     />
                 </div>
-                <div className="flex justify-between mb-6 mt-4">
+                <div className="flex mb-6 mt-4">
                     <div className="text-2xl font-bold">
                         { pageData.pageName }
                     </div>

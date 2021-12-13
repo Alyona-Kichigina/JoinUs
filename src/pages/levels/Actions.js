@@ -5,7 +5,7 @@ import { EditIcon, ArrowUP, ArrowDown, Trash } from "../Constants";
 class Actions extends Component {
     render() {
         return (
-            <div className="icon-container transition-icon cursor a-i-center j-c-center display-flex">
+            <div className="icon-container transition-icon cursor a-i-center j-c-center flex">
                 <div
                     className="edit-icon"
                     dangerouslySetInnerHTML={{__html: EditIcon}}
