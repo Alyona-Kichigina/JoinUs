@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
 import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../Constants";
+import {CONTENT_LINKS} from "../NewProgramm/Constants";
 
 
 const pageData = {
@@ -132,6 +133,8 @@ class Goals extends Component {
             <div>
                 <PageHeader
                     {...this.props}
+                    url="programs"
+                    links={CONTENT_LINKS}
                     pageData={pageData}
                 >
                     <div className="pt-8 pb-6 pl-4">

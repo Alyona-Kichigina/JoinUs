@@ -2,27 +2,27 @@
 export const CONTENT_LINKS = [
     {
         id: 1,
-        name: "общие",
+        name: "Общие",
         link: "/"
     },
     {
         id: 2,
-        name: "уровни",
+        name: "Уровни",
         link: "levels"
     },
     {
         id: 3,
-        name: "контакты",
+        name: "Контакты",
         link: "contacts"
     },
     {
         id: 4,
-        name: "документы",
+        name: "Документы",
         link: "documents"
     },
     {
         id: 5,
-        name: "цели",
+        name: "Цели",
         link: "goals"
     }
 ]

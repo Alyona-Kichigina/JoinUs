@@ -4,6 +4,7 @@ import Input from "@Components/Fields/Input"
 import PageHeader from "../../../components/PageHeader";
 import { FormContainer } from "./style";
 import InputForm from "../inputForm";
+import {CONTENT_LINKS} from "./Constants";
 
 const pageData = {
     pageName: "Новая программа"
@@ -61,6 +62,8 @@ class NewProgramm extends Component {
             <div>
                 <PageHeader
                     {...this.props}
+                  url="programs"
+                  links={CONTENT_LINKS}
                     pageData={pageData}
                 >
                     <InputForm

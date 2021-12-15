@@ -58,14 +58,13 @@ class AppList extends Component {
         }
 
         return (
-            <div className="bg-white flex-container border-radius-4 m-b-16">
+            <div className="bg-white flex-container border-radius-4 m-b-16 h-full">
                 <Header
                     settings={settings}
                     gridStyle={gridStyle}
                 />
-                <div>
+
                     { TableRows(nestedKey) }
-                </div>
             </div>
         );
     }

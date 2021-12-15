@@ -54,6 +54,7 @@ class Calendar extends Component {
 
   static getDerivedStateFromProps({ value, range, dateFormat, initDate }, { prevVal }) {
     if (value !== prevVal) {
+      console.log(value, prevVal)
       const startDate = Array.isArray(value) ? value[0] : value
       const parsedDate = dayjs(startDate === undefined || startDate === "" || startDate === 0 ? initDate : startDate, dateFormat)
       return {
@@ -153,6 +154,7 @@ class Calendar extends Component {
       },
       state: { calendarView, currentYear, currentMonth, normalizedVal, castedToValueInitDay, containerWidth }
     } = this
+    console.log(currentMonth)
     const CurrentView = CalendarViews[calendarView]
     const normalizedDateRange = this.castDateRangesToValue(dateRange)
     return (

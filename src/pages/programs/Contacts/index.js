@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
-import {CONTENT_LINKS} from "../../../components/Constants";
+import {CONTENT_LINKS} from "../NewProgramm/Constants";
 
 
 const pageData = {
@@ -176,6 +176,8 @@ class Contacts extends Component {
             <div>
                 <PageHeader
                 {...this.props}
+                url="programs"
+                links={CONTENT_LINKS}
                 pageData={pageData}
                  >
                     <div

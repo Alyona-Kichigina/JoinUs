@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from "react-router-dom";
-import { CONTENT_LINKS } from "../Constants";
+import { CONTENT_LINKS } from "../../pages/programs/NewProgramm/Constants";
 
 class Breadcrumbs extends Component {
     render() {

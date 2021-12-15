@@ -19,6 +19,7 @@ module.exports = {
             '@Utils': resolvePath( 'src/utils'),
             '@constants': resolvePath( 'src/constants'),
             '@Core': resolvePath( 'src/Core'),
+            '@Pages': resolvePath( 'src/pages'),
         }
     },
     style: {

@@ -120,16 +120,7 @@ h1 {
     font-weight: 700;
 }
 
-.bg-color-light-blue {
-    background: var(--color-light-blue);
-}
 
-.color-light-blue-2 {
-    color: var(--color-light-blue-2);
-}
-.color-darken-blue {
-    color: var(--color-darken-blue);
-}
 /*Понять почему не работают классы tailwindui, использовать их и удалить эти стили*/
 
 .cursor {
@@ -139,6 +130,14 @@ h1 {
 
 .flex-full-with {
     flex: 1 1 auto;
+}
+
+
+
+.site-calendar-customize-header-wrapper {
+    width: 300px;
+    border: 1px solid #f0f0f0;
+    border-radius: 2px;
 }
 
 /*использовать классы tailwindui для отступов*/
@@ -278,6 +277,10 @@ h1 {
 }
 .m-l-16 {
     margin-left: 16px;
+}
+
+.m-b-24 {
+    margin-bottom: 24px;
 }
 
 

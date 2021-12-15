@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavContentBtn from "../../components/NavContentButton";
-import { CONTENT_LINKS } from "../../components/Constants"
+import { CONTENT_LINKS } from "./NewProgramm/Constants"
 import AppList from "../../components/AppList";
 import {NavLink} from "react-router-dom";
 

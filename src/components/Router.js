@@ -11,6 +11,7 @@ import Contacts from "../pages/programs/Contacts"
 import Documents from "../pages/programs/Documents";
 import Goals from "../pages/programs/Goals";
 import NewProgramm from "../pages/programs/NewProgramm";
+import Employ from "../pages/Employees/item";
 
 const Router = () => (
     <Switch>
@@ -20,6 +21,7 @@ const Router = () => (
         <Route path="/programs/goals" component={Goals} />
         <Route path="/programs/new_programm" component={NewProgramm} />
         <Route path="/programs" component={Programs} />
+    <Route path="/employees/new_employ" component={Employ} />
         <Route path="/employees" component={Employees} />
         <Route path="/appeal" component={Appeal} />
         <Route path="/reference" component={Reference} />

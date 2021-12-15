@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import NavContentBtn from "../../../components/NavContentButton";
-import { CONTENT_LINKS } from "../../../components/Constants"
+import { CONTENT_LINKS } from "../NewProgramm/Constants"
 // import Breadcrumbs from "../../components/Breadcrumbs";
 import AppList from "../../../components/AppList";
 import { ActiveIcon } from "../../Constants"
@@ -202,33 +202,31 @@ class Levels extends Component {
         // const [modalIsOpen, setIsOpen] = useState(false);
         return (
             <div className="h-full">
-                <div>
-                    <PageHeader
-                        {...this.props}
-                        pageData={pageData}
-                    />
-                    <div>
-                         <div className="bg-white h-full">
-                             <div className="pt-6 mb-4 ml-4">
-                                 <button
-                                     className="blue btn width-m pt-1.5"
-                                 >
-                                     + Добавить уровень
-                                 </button>
-                                 <button
-                                     className="white btn width-m pt-1.5 ml-4"
-                                 >
-                                     Выбрать уровень
-                                 </button>
-                             </div>
-                             <AppList
-                                 settings={settings}
-                                 nestedData={true}
-                                 data={levelsList}
-                                 nestedKey="data"
-                             />
-                         </div>
+                <PageHeader
+                  {...this.props}
+                  url="programs"
+                  links={CONTENT_LINKS}
+                  pageData={pageData}
+                />
+                <div className="bg-white h-full">
+                    <div className="pt-6 mb-4 ml-4">
+                        <button
+                          className="blue btn width-m pt-1.5"
+                        >
+                            + Добавить уровень
+                        </button>
+                        <button
+                          className="white btn width-m pt-1.5 ml-4"
+                        >
+                            Выбрать уровень
+                        </button>
                     </div>
+                    <AppList
+                      settings={settings}
+                      nestedData={true}
+                      data={levelsList}
+                      nestedKey="data"
+                    />
                 </div>
             </div>
         );

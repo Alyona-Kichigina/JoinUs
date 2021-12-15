@@ -2,6 +2,7 @@ import NavigationDrawer from "@Components/NavigationDrawer";
 import Header from "@Components/Header";
 import NavContent from "./components/NavContent"
 import { BrowserRouter } from "react-router-dom";
+import 'antd/dist/antd.css';
 import "@Styles/style.css"
 import "@Styles/fonts.css"
 import "@Styles/animation.css"

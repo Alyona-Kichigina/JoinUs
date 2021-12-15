@@ -1,12 +1,14 @@
 import React, { useCallback, useState, useRef, useEffect } from "react"
 import debounce from "lodash/debounce"
 import Input from "@Components/Fields/Input"
-import Select from "../../../../components/Fields/Select";
+// import Select from "../../../../components/Fields/Select";
 import {FilterContainer} from "./style"
-import Calendar from "@Components/Calendar";
 import CheckBox from "@Components/Fields/CheckBox";
+import { Calendar, Select, Col, Row } from 'antd';
 
 const options = [{ID: 1, SYS_NAME: "aaa"}]
+
+const { Option } = Select;
 
 const arrayStatus = [
   {
@@ -50,6 +52,9 @@ const FilterForEmployees = () => {
   const onCalendarInput = (value) => {
     console.log(value)
   }
+  const onPanelChange = (value) => {
+    console.log(value, 55255)
+  }
   return (
     <FilterContainer className="flex m-b-16">
       <div>
@@ -65,16 +70,92 @@ const FilterForEmployees = () => {
       </div>
       <div>
         <div className="fs-12 color-light-blue-2 p-b-5">Статус</div>
-        <Select
-          id="status"
-          placeholder="Выберите статус"
-          onInput={handleSelect}
-          value={valueSelect}
-          onFocus={onFocus}
-          onBlur={toggleSearch}
-          options={options}
-          clearable={false}
-        />
+        {/*<Select*/}
+        {/*  id="status"*/}
+        {/*  placeholder="Выберите статус"*/}
+        {/*  onInput={handleSelect}*/}
+        {/*  value={valueSelect}*/}
+        {/*  onFocus={onFocus}*/}
+        {/*  onBlur={toggleSearch}*/}
+        {/*  options={options}*/}
+        {/*  clearable={false}*/}
+        {/*/>*/}
+
+
+        {/*<Select>*/}
+        {/*  <div className="site-calendar-customize-header-wrapper">*/}
+        {/*    <Calendar*/}
+        {/*      fullscreen={false}*/}
+        {/*      headerRender={({ value, type, onChange, onTypeChange }) => {*/}
+        {/*        const start = 0;*/}
+        {/*        const end = 12;*/}
+        {/*        const monthOptions = [];*/}
+
+        {/*        const current = value.clone();*/}
+        {/*        const localeData = value.localeData();*/}
+        {/*        const months = [];*/}
+        {/*        for (let i = 0; i < 12; i++) {*/}
+        {/*          current.month(i);*/}
+        {/*          months.push(localeData.monthsShort(current));*/}
+        {/*        }*/}
+
+        {/*        for (let index = start; index < end; index++) {*/}
+        {/*          monthOptions.push(*/}
+        {/*            <Select.Option className="month-item" key={`${index}`}>*/}
+        {/*              {months[index]}*/}
+        {/*            </Select.Option>,*/}
+        {/*          );*/}
+        {/*        }*/}
+        {/*        const month = value.month();*/}
+
+        {/*        const year = value.year();*/}
+        {/*        const options = [];*/}
+        {/*        for (let i = year - 10; i < year + 10; i += 1) {*/}
+        {/*          options.push(*/}
+        {/*            <Select.Option key={i} value={i} className="year-item">*/}
+        {/*              {i}*/}
+        {/*            </Select.Option>,*/}
+        {/*          );*/}
+        {/*        }*/}
+        {/*        return (*/}
+        {/*          <div style={{ padding: 8 }}>*/}
+        {/*            <Row gutter={8}>*/}
+        {/*              <Col>*/}
+        {/*                <Select*/}
+        {/*                  size="small"*/}
+        {/*                  dropdownMatchSelectWidth={false}*/}
+        {/*                  value={String(month)}*/}
+        {/*                  onChange={selectedMonth => {*/}
+        {/*                    const newValue = value.clone();*/}
+        {/*                    newValue.month(parseInt(selectedMonth, 10));*/}
+        {/*                    onChange(newValue);*/}
+        {/*                  }}*/}
+        {/*                >*/}
+        {/*                  {monthOptions}*/}
+        {/*                </Select>*/}
+        {/*              </Col>*/}
+        {/*              <Col>*/}
+        {/*                <Select*/}
+        {/*                  size="small"*/}
+        {/*                  dropdownMatchSelectWidth={false}*/}
+        {/*                  className="my-year-select"*/}
+        {/*                  onChange={newYear => {*/}
+        {/*                    const now = value.clone().year(newYear);*/}
+        {/*                    onChange(now);*/}
+        {/*                  }}*/}
+        {/*                  value={String(year)}*/}
+        {/*                >*/}
+        {/*                  {options}*/}
+        {/*                </Select>*/}
+        {/*              </Col>*/}
+        {/*            </Row>*/}
+        {/*          </div>*/}
+        {/*        );*/}
+        {/*      }}*/}
+        {/*      onChange={onPanelChange}*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</Select>*/}
       </div>
       {arrayStatus.map(({label, icon, id}) => (
         <CheckBox
@@ -87,11 +168,79 @@ const FilterForEmployees = () => {
           className="p-b-18"
         />
       ))}
+      <div className="site-calendar-customize-header-wrapper">
+        <Calendar
+          fullscreen={false}
+          headerRender={({ value, type, onChange, onTypeChange }) => {
+            const start = 0;
+            const end = 12;
+            const monthOptions = [];
 
-      {/*<Calendar*/}
-      {/*  onInput={this.onCalendarInput}*/}
-      {/*  dateFormat="DD.MM.YYYY"*/}
-      {/*/>*/}
+            const current = value.clone();
+            const localeData = value.localeData();
+            const months = [];
+            for (let i = 0; i < 12; i++) {
+              current.month(i);
+              months.push(localeData.monthsShort(current));
+            }
+
+            for (let index = start; index < end; index++) {
+              monthOptions.push(
+                <Select.Option className="month-item" key={`${index}`}>
+                  {months[index]}
+                </Select.Option>,
+              );
+            }
+            const month = value.month();
+
+            const year = value.year();
+            const options = [];
+            for (let i = year - 10; i < year + 10; i += 1) {
+              options.push(
+                <Select.Option key={i} value={i} className="year-item">
+                  {i}
+                </Select.Option>,
+              );
+            }
+            return (
+              <div style={{ padding: 8 }}>
+                <Row gutter={8}>
+                  <Col>
+                    <Select
+                      size="small"
+                      dropdownMatchSelectWidth={false}
+                      value={String(month)}
+                      onChange={selectedMonth => {
+                        const newValue = value.clone();
+                        newValue.month(parseInt(selectedMonth, 10));
+                        onChange(newValue);
+                      }}
+                    >
+                      {monthOptions}
+                    </Select>
+                  </Col>
+                  <Col>
+                    <Select
+                      size="small"
+                      dropdownMatchSelectWidth={false}
+                      className="my-year-select"
+                      onChange={newYear => {
+                        const now = value.clone().year(newYear);
+                        onChange(now);
+                      }}
+                      value={String(year)}
+                    >
+                      {options}
+                    </Select>
+                  </Col>
+                </Row>
+              </div>
+            );
+          }}
+          onChange={onPanelChange}
+        />
+      </div>
+
     </FilterContainer>
   );
 };

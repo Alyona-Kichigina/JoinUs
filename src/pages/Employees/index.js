@@ -9,6 +9,7 @@ import Status from "../../components/ComponentStatus";
 import Progress from "../../components/ComponentProgress";
 import AppList from "../../components/AppList";
 import {settings, data} from "./TableConfig"
+import {NavLink} from "react-router-dom";
 
 const BACK_END_URL = "192.168.0.102:9000"
 
@@ -45,14 +46,12 @@ class Employees extends Component {
       <div className="flex-container">
         <div className="flex justify-between p-b-25">
           <h1>Сотрудники</h1>
-          <button
-            className="blue btn width-m"
-            name="addEmployees"
-            type="submit"
-            onClick={this.addEmployees}
+          <NavLink
+            className="blue btn width-m flex items-center"
+            to="/employees/new_employ"
           >
             + Создать сотрудника
-          </button>
+          </NavLink>
         </div>
         <FilterForEmployees/>
 

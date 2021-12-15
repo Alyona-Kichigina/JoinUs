@@ -4,6 +4,7 @@ import AppList from "../../../components/AppList";
 import "../levels/style.css"
 import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../Constants";
 import Modal from "../../../components/ModalWindow";
+import {CONTENT_LINKS} from "../NewProgramm/Constants";
 
 const pageData = {
     pageName: "Программа для разработчиков"
@@ -142,6 +143,8 @@ class Documents extends Component {
                 <PageHeader
                     {...this.props}
                     pageData={pageData}
+                    url="programs"
+                    links={CONTENT_LINKS}
                 >
                     <Modal
                         isOpen={editModal}
