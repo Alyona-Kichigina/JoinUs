@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import PageHeader from "../../components/PageHeader";
-import AppList from "../../components/AppList";
-import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../Constants";
+import PageHeader from "../../../components/PageHeader";
+import AppList from "../../../components/AppList";
+import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../Constants";
 
 
 const pageData = {

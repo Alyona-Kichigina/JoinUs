@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import PageHeader from "../../components/PageHeader";
-import AppList from "../../components/AppList";
+import PageHeader from "../../../components/PageHeader";
+import AppList from "../../../components/AppList";
 import "../levels/style.css"
-import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../Constants";
-import Modal from "../../components/ModalWindow";
+import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../Constants";
+import Modal from "../../../components/ModalWindow";
 
 const pageData = {
     pageName: "Программа для разработчиков"

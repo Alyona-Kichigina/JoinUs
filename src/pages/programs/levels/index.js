@@ -1,11 +1,11 @@
 import React, {Component, useState} from 'react';
-import NavContentBtn from "../../components/NavContentButton";
-import { CONTENT_LINKS } from "../../components/Constants"
+import NavContentBtn from "../../../components/NavContentButton";
+import { CONTENT_LINKS } from "../../../components/Constants"
 // import Breadcrumbs from "../../components/Breadcrumbs";
-import AppList from "../../components/AppList";
-import { ActiveIcon } from "../Constants"
+import AppList from "../../../components/AppList";
+import { ActiveIcon } from "../../Constants"
 import Actions from "./Actions";
-import PageHeader from "../../components/PageHeader";
+import PageHeader from "../../../components/PageHeader";
 
 const pageData = {
     pageName: "Программа для разработчиков"

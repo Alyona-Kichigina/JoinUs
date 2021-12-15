@@ -1,16 +1,16 @@
 import React from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
-import Levels from "../pages/levels";
+import Levels from "../pages/programs/levels";
 import Programs from "../pages/programs";
 import EmptyPage from "../pages/EmptyPage";
 import Employees from "../pages/Employees";
 import Appeal from "../pages/Аppeal"
 import Reference from "../pages/Reference"
 import Settings from "../pages/Settings"
-import Contacts from "../pages/Contacts"
-import Documents from "../pages/Documents";
-import Goals from "../pages/Goals";
-import NewProgramm from "../pages/NewProgramm";
+import Contacts from "../pages/programs/Contacts"
+import Documents from "../pages/programs/Documents";
+import Goals from "../pages/programs/Goals";
+import NewProgramm from "../pages/programs/NewProgramm";
 
 const Router = () => (
     <Switch>
