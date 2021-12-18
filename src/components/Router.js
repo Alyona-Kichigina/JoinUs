@@ -14,7 +14,7 @@ import NewProgramm from "../pages/programs/NewProgramm";
 
 const Router = () => (
     <Switch>
-        <Route exact path="/programs/levels" component={Levels} />
+        <Route exact path="/programs/:programName/levels" component={Levels} />
         <Route path="/programs/contacts" component={Contacts} />
         <Route path="/programs/documents" component={Documents} />
         <Route path="/programs/goals" component={Goals} />

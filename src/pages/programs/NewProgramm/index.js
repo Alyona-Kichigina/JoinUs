@@ -17,13 +17,17 @@ const settings = {
             key: "name",
             Component: Input,
             props: {
-                placeholder: "123123"
+                placeholder: ""
             }
         },
         {
             id: 2,
             name: "Описание",
             key: "description",
+            props: {
+                minHeight: "178px",
+                type: "textarea"
+            },
             Component: Input
         }
     ],
@@ -55,43 +59,68 @@ const settings = {
     ]
 }
 
-class NewProgramm extends Component {
+class NewProgram extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            description: "",
+            time: "",
+            client: "",
+            date: "",
+            creator: ""
+        }
+        this.handleInputChange = this.handleInputChange.bind(this)
+    }
+
+    handleInputChange (value, id) {
+
+        this.setState({
+            [id]: value
+        });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
+    saveNewProgram () {
+        console.log(this.state)
+    }
+
     render() {
         return (
-            <div>
-                <PageHeader
-                    {...this.props}
-                    pageData={pageData}
-                >
+            <PageHeader
+                {...this.props}
+                pageData={pageData}
+            >
+                <div className="h-full flex flex-col justify-between">
                     <InputForm
+                        state={this.state}
                         settings={settings}
+                        onInput={this.handleInputChange}
                     />
-                    {/*<div className="flex">*/}
-                    {/*    <FormContainer>*/}
-                    {/*        <div>*/}
-                    {/*            <div>*/}
-                    {/*                Наименование*/}
-                    {/*            </div>*/}
-                    {/*            <Input*/}
-                    {/*                id="name"*/}
-                    {/*                placeholder="Программа для разработчиков"*/}
-                    {/*            />*/}
-                    {/*        </div>*/}
-                    {/*    </FormContainer>*/}
-                    {/*    <FormContainer>*/}
-                    {/*        <button*/}
-                    {/*            className="blue btn width-m"*/}
-                    {/*        >*/}
-                    {/*            + Добавить контакт*/}
-                    {/*        </button>*/}
-                    {/*    </FormContainer>*/}
-                    {/*</div>*/}
-                </PageHeader>
-            </div>
+                    <div
+                        className="flex justify-end pb-20 pr-8"
+                    >
+                        <button
+                            className="white btn width-m mr-4"
+                        >
+                            Отмена
+                        </button>
+                        <button
+                            className="blue btn width-m"
+                            onClick={() => this.saveNewProgram()}
+                        >
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
+            </PageHeader>
         );
     }
 }
 
-NewProgramm.propTypes = {};
+NewProgram.propTypes = {};
 
-export default NewProgramm;
+export default NewProgram;

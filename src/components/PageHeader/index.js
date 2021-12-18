@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Breadcrumbs from "../Breadcrumbs";
+// import Breadcrumbs from "../Breadcrumbs";
+import BreadCrumbs from "../Breadcrumbs/bredCrumbs"
 import {CONTENT_LINKS} from "../Constants";
 import NavContentBtn from "../NavContentButton";
 
@@ -7,9 +8,9 @@ class PageHeader extends Component {
     render() {
         const { pageData } = this.props
         return (
-            <div>
+            <div className="h-full">
                 <div>
-                    <Breadcrumbs
+                    <BreadCrumbs
                         {...this.props}
                     />
                 </div>
@@ -19,8 +20,11 @@ class PageHeader extends Component {
                     </div>
                 </div>
                 <div
-                    className="bg-white"
-                    style={{"borderRadius": "4px"}}
+                    className="bg-white h-5/6"
+                    style={{
+                        "border-radius": "4px",
+                        "height": "90%"
+                    }}
                 >
                     <NavContentBtn
                         links={CONTENT_LINKS}

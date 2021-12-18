@@ -2,54 +2,12 @@ import React, {Component} from 'react';
 import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
 import {CONTENT_LINKS} from "../../../components/Constants";
+import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../components/APIList";
 
 
 const pageData = {
     pageName: "Программа для разработчиков"
 }
-
-const data = [
-    {
-        value: {
-            name: "Петрова Дарья",
-            role: "Директор по техническому развитию"
-        },
-        role: "Наставник",
-        contacts: {
-            mail: "petrova.darya@gmail.com",
-            phone: [
-                "+7 999 787 7868"
-            ]
-        }
-    },
-    {
-        value: {
-            name: "Егоров Михаил",
-            role: "Заместитель генерального директора по стратегическому развитию"
-        },
-        role: "HR",
-        contacts: {
-            mail: "petrova.darya@gmail.com",
-            phone: [
-                "+7 999 787 7868"
-            ]
-        }
-    },
-    {
-        value: {
-            name: "Петрова Дарья",
-            role: "Директор по техническому развитию"
-        },
-        role: "Гуру",
-        contacts: {
-            mail: "petrova.darya@gmail.com",
-            phone: [
-                "+7 999 787 7868",
-                "+7 999 787 7868"
-            ]
-        }
-    },
-]
 
 const Contact = ({data}) => {
     return (
@@ -133,7 +91,7 @@ class Contacts extends Component {
         }
     }
     componentDidMount() {
-        fetch(`http://localhost:9000/api/adaptationcontact`, {
+        fetch(`${DEFAULT_URL}/${ADAPTATION_CONTACTS}`, {
             method: "GET",
         })
             .then(res => res.json())

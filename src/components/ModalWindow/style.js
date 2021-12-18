@@ -17,5 +17,5 @@ export const ModalContainer = styled.div`
 export const Modal = styled.div`
   background-color: var(--color-white);
   border-radius: 24px;
-
+  min-width: 500px;
 `

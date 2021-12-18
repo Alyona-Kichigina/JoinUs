@@ -6,6 +6,11 @@ export const CONTENT_LINKS = [
         link: "/"
     },
     {
+        id: 5,
+        name: "программы",
+        link: "programs"
+    },
+    {
         id: 2,
         name: "уровни",
         link: "levels"
