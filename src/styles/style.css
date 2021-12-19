@@ -105,6 +105,8 @@ body {
 /*pos-relative - relative*/
 /*a-i-center - items-center*/
 /*no-white-space - whitespace-nowrap*/
+/* no-pointer-events - pointer-events-auto */
+/* flex-full-with - flex-auto*/
 
 .icon-navigation-drawer path {
     fill: var(--color-light-blue-2);

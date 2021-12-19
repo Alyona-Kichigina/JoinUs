@@ -15,11 +15,20 @@
  background-color: var(--color-light-grey);
 }
 
+.color-white {
+ color: var(--color-white);
+}
 .color-light-grey {
  color: var(--color-light-grey);
 }
 .color-green {
  color: var(--color-green);
+}
+.color-red {
+  color: var(--color-red);
+}
+.color-pink {
+ color: var(--pink);
 }
 .color-light-blue-2 {
  color: var(--color-light-blue-2);
