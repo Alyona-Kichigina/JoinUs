@@ -4,13 +4,11 @@ import Input from "@Components/Fields/Input"
 // import Select from "../../../../components/Fields/Select";
 import {FilterContainer} from "./style"
 import CheckBox from "@Components/Fields/CheckBox";
-// import { Calendar, Select, Col, Row } from 'antd';
-import DatePicker from "../../../../components/Fields/Calendar";
+import DatePicker from "../../../../components/Fields/DatePicker";
 import {PRESENT_DATE_FORMAT} from "@constants"
 
 const options = [{ID: 1, SYS_NAME: "aaa"}]
 
-// const { Option } = Select;
 
 const arrayStatus = [
   {
@@ -36,7 +34,7 @@ const FilterForEmployees = () => {
   const [valueSelect, setValueSelect] = useState({})
   const [value, setValue] = useState(false)
   const[date, setDate] = useState({DATE: []})
-  const[dateValue, setDateValue] = useState([])
+  const[dateValue, setDateValue] = useState("")
 
   const toggleSearch = useCallback(debounce(() => updateToggle(!toggle), 150), [toggle, updateToggle])
   const handleInput = useCallback((value) => {
@@ -54,7 +52,7 @@ const FilterForEmployees = () => {
   }
 
   const onInputDatePicker = (value) => {
-    setDateValue([value])
+    setDateValue(value)
   }
   return (
     <FilterContainer className="flex m-b-16">
@@ -95,87 +93,13 @@ const FilterForEmployees = () => {
       ))}
       <div className="flex-auto">
         <DatePicker
-          formPayload={date}
           dateFormat={PRESENT_DATE_FORMAT}
           onInput={onInputDatePicker}
           id="calendar"
-          placeholder="dfgsdfsd"
+          placeholder="Дата выхода"
           value={dateValue}
         />
       </div>
-
-      {/*<div className="site-calendar-customize-header-wrapper">*/}
-      {/*  <Calendar*/}
-      {/*    fullscreen={false}*/}
-      {/*    headerRender={({ value, type, onChange, onTypeChange }) => {*/}
-      {/*      const start = 0;*/}
-      {/*      const end = 12;*/}
-      {/*      const monthOptions = [];*/}
-
-      {/*      const current = value.clone();*/}
-      {/*      const localeData = value.localeData();*/}
-      {/*      const months = [];*/}
-      {/*      for (let i = 0; i < 12; i++) {*/}
-      {/*        current.month(i);*/}
-      {/*        months.push(localeData.monthsShort(current));*/}
-      {/*      }*/}
-
-      {/*      for (let index = start; index < end; index++) {*/}
-      {/*        monthOptions.push(*/}
-      {/*          <Select.Option className="month-item" key={`${index}`}>*/}
-      {/*            {months[index]}*/}
-      {/*          </Select.Option>,*/}
-      {/*        );*/}
-      {/*      }*/}
-      {/*      const month = value.month();*/}
-
-      {/*      const year = value.year();*/}
-      {/*      const options = [];*/}
-      {/*      for (let i = year - 10; i < year + 10; i += 1) {*/}
-      {/*        options.push(*/}
-      {/*          <Select.Option key={i} value={i} className="year-item">*/}
-      {/*            {i}*/}
-      {/*          </Select.Option>,*/}
-      {/*        );*/}
-      {/*      }*/}
-      {/*      return (*/}
-      {/*        <div style={{ padding: 8 }}>*/}
-      {/*          <Row gutter={8}>*/}
-      {/*            <Col>*/}
-      {/*              <Select*/}
-      {/*                size="small"*/}
-      {/*                dropdownMatchSelectWidth={false}*/}
-      {/*                value={String(month)}*/}
-      {/*                onChange={selectedMonth => {*/}
-      {/*                  const newValue = value.clone();*/}
-      {/*                  newValue.month(parseInt(selectedMonth, 10));*/}
-      {/*                  onChange(newValue);*/}
-      {/*                }}*/}
-      {/*              >*/}
-      {/*                {monthOptions}*/}
-      {/*              </Select>*/}
-      {/*            </Col>*/}
-      {/*            <Col>*/}
-      {/*              <Select*/}
-      {/*                size="small"*/}
-      {/*                dropdownMatchSelectWidth={false}*/}
-      {/*                className="my-year-select"*/}
-      {/*                onChange={newYear => {*/}
-      {/*                  const now = value.clone().year(newYear);*/}
-      {/*                  onChange(now);*/}
-      {/*                }}*/}
-      {/*                value={String(year)}*/}
-      {/*              >*/}
-      {/*                {options}*/}
-      {/*              </Select>*/}
-      {/*            </Col>*/}
-      {/*          </Row>*/}
-      {/*        </div>*/}
-      {/*      );*/}
-      {/*    }}*/}
-      {/*    onChange={onPanelChange}*/}
-      {/*  />*/}
-      {/*</div>*/}
 
     </FilterContainer>
   );

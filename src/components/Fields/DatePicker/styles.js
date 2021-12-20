@@ -1,27 +1,14 @@
 import styled from "styled-components"
 
-export const SuggestDataInput = styled.input`
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  &:focus {
-    background: var(--color-light-gold-3);
-  }
-`
-
 export const DatePickerCalendarContainer = styled.div`
-  position: ${props => props.containerStatic ? "static" : "relative"};
+  position:  relative;
   top: 100%;
   width: 392px;
   z-index: 1000;
   background-color: var(--color-white);
-  padding: 5% 10%;
-  /*box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);*/
-  border-radius: 2px;
-  border: 1px solid var(--color-grey-Light-4);
+  padding: 13px 16px;
+  border-radius: 0px 0px 6px 6px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15)
   ${props => props.allWaysOpen && `
     position: relative;
     width: auto;
@@ -32,4 +19,10 @@ export const DatePickerCalendarContainer = styled.div`
   `}
 `
 
-// DatePickerInputContainer.withComponent("p")
+export const ToggleIcon = styled.button`
+  transition: color 250ms ease-in-out;
+  margin-right: 9px;
+  path, rect {
+    fill: ${props => props.open ? `var(--color-blue)` : `var(--color-light-blue-2)`};
+  }
+`

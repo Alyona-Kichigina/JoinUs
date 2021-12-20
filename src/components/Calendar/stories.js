@@ -3,7 +3,7 @@ import { DEFAULT_DATE_FORMAT } from "@/constants"
 import Calendar from "./index"
 
 export default {
-  title: "Components/Calendar",
+  title: "Components/DatePicker",
   component: Calendar,
   argTypes: {
     startTimerDate: {
