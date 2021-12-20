@@ -132,6 +132,7 @@ class Goals extends Component {
             <div>
                 <PageHeader
                     {...this.props}
+                    section="programs"
                     pageData={pageData}
                 >
                     <div className="pt-8 pb-6 pl-4">

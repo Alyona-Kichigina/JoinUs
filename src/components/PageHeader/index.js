@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-// import Breadcrumbs from "../Breadcrumbs";
-import BreadCrumbs from "../Breadcrumbs/bredCrumbs"
-import {CONTENT_LINKS} from "../Constants";
+import BreadCrumbs from "../Breadcrumbs"
+import {NAV_BUTTON_LINKS} from "../Constants";
 import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {
     render() {
-        const { pageData } = this.props
+        const { pageData, section, children } = this.props
         return (
             <div className="h-full">
                 <div>
                     <BreadCrumbs
+                        section={section}
                         {...this.props}
                     />
                 </div>
@@ -27,10 +27,11 @@ class PageHeader extends Component {
                     }}
                 >
                     <NavContentBtn
-                        links={CONTENT_LINKS}
+                        {...this.props}
+                        links={NAV_BUTTON_LINKS}
 
                     />
-                    {this.props.children}
+                    {children}
                 </div>
             </div>
         );

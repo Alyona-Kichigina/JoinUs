@@ -19,7 +19,7 @@ const settings = [
         component: ({data}) => {
             return (
                 <NavLink
-                    to={`programs/${data}/levels`}
+                    to={`/programs/${data}/levels`}
                 >
                     {data}
                 </NavLink>
@@ -81,7 +81,7 @@ class Programs extends Component {
                     </div>
                     <NavLink
                         className="blue btn width-m flex items-center"
-                        to="/programs/new_programm"
+                        to="/programs/new_programm/general"
                     >
                         + Создать программу
                     </NavLink>

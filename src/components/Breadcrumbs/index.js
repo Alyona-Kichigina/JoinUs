@@ -1,45 +1,50 @@
-import React, {Component} from 'react';
-import { Link } from "react-router-dom";
+import React from "react";
+import { NavLink, withRouter } from "react-router-dom";
 import { CONTENT_LINKS } from "../Constants";
+import {ArrowBack} from "../../pages/Constants";
+import { BreadcrumbsDot } from "./style";
 
-class Breadcrumbs extends Component {
-    render() {
-        const { history } = this.props
-        const path = history.location.pathname.split("/")
-        path.shift()
-        // const linkName = (a) => CONTENT_LINKS.find((e) => {
-        //     // console.log("e", e.link,"a", a, e === a )
-        //     if (e.link === a) {
-        //         return e
-        //     }
-        // })
-        const linkName = (a) => CONTENT_LINKS.find((e) => {
-            // console.log("e", e.link,"a", a, e === a )
-            console.log(path)
-            if (e.link === a) {
-                return e
-            }
-        })
-
-        return (
-            <div className="flex">
-                {
-                    path.map( (a, index) => {
+const BreadCrumbs = props => {
+    const { location: { pathname }, section } = props
+    const pathnames = pathname.split("/").filter(x => x)
+    const newPath = CONTENT_LINKS.filter(a => pathnames.some(e => e === a.link))
+    return (
+        <div className="flex">
+            {
+                newPath.map(({name, link}, index) => {
+                    // console.log(link)
+                    const activeLink = newPath.length === index + 1
                     return (
-                    <div className="pr-3 capitalize">
-                        <Link
-                            className={path.length !== index + 1 ? "text-gray-400" : ""}
-                            to={a}
-                        >
-                            {`${a}`}
-                        </Link>
-                    </div>
-                )}) }
-            </div>
-        );
-    }
+                        <div
+                            className="flex items-center">
+                            {
+                                !!index ? (
+                                    <BreadcrumbsDot
+                                        className="ml-4"
+                                    />
+                                ) : (
+                                    <NavLink
+                                        to={`${newPath[0].link}`}
+                                    >
+                                        <div
+                                            className="mr-3"
+                                            dangerouslySetInnerHTML={{__html: ArrowBack}}
+                                        />
+                                    </NavLink>
+                                )
+                            }
+                            <NavLink
+                                to={`/${section}/${link}`}
+                                className={`${activeLink ? "pointer-events-none" : "color-light-blue-2"} capitalize`}
+                            >
+                                {name}
+                            </NavLink>
+                        </div>
+                    )
+                })
+            }
+        </div>
+    );
 }
 
-Breadcrumbs.propTypes = {};
-
-export default Breadcrumbs;
+export default withRouter(BreadCrumbs)

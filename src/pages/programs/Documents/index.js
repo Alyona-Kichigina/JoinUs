@@ -136,16 +136,11 @@ class Documents extends Component {
                 [id]: value
             })
         }
-       // const updateInputValue = (evt) => {
-       //     this.setState({
-       //         modalData: evt.target.value
-       //     })
-       // }
-
         return (
             <div>
                 <PageHeader
                     {...this.props}
+                    section="programs"
                     pageData={pageData}
                 >
                     <Modal

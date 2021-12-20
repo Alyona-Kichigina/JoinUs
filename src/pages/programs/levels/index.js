@@ -198,13 +198,12 @@ class Levels extends Component {
             )
     }
     render() {
-        const { history } = this.props
-        // const [modalIsOpen, setIsOpen] = useState(false);
         return (
             <div className="h-full">
                 <div>
                     <PageHeader
                         {...this.props}
+                        section="programs"
                         pageData={pageData}
                     />
                     <div>

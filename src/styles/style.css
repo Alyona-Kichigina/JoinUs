@@ -92,6 +92,10 @@ body {
 
 }
 
+.border-list {
+    border-bottom: 1px solid var(--color-light-grey-2);
+}
+
 .border-top {
     border-top: 1px solid var(--color-light-grey-2);
 }

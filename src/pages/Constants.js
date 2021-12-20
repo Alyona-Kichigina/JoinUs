@@ -32,3 +32,13 @@ export const CloseIcon = `<svg width="18" height="18" viewBox="0 0 18 18" fill="
 export const ArrowBack = `<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.47206 9.52892C6.73241 9.78927 6.73241 10.2114 6.47206 10.4717C6.21171 10.7321 5.7896 10.7321 5.52925 10.4717L1.52925 6.47173C1.27686 6.21934 1.26803 5.81295 1.50922 5.54984L5.17588 1.54984C5.42468 1.27843 5.84639 1.26009 6.1178 1.50889C6.38921 1.75768 6.40755 2.1794 6.15876 2.45081L2.92341 5.98028L6.47206 9.52892Z" fill="#56809F" stroke="#56809F"/>
 </svg>`
+export const SmallArrow = `<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.52794 1.52892C9.78829 1.26857 10.2104 1.26857 10.4708 1.52892C10.7311 1.78927 10.7311 2.21138 10.4708 2.47173L6.47075 6.47173C6.21837 6.72412 5.81198 6.73295 5.54887 6.49176L1.54887 2.82509C1.27745 2.5763 1.25912 2.15459 1.50791 1.88317C1.75671 1.61176 2.17842 1.59342 2.44983 1.84222L5.9793 5.07757L9.52794 1.52892Z" fill="#56809F" stroke="#56809F"/>
+</svg>`
+export const RadioOn = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="11" stroke="#009BF6" stroke-width="2"/>
+<circle cx="12" cy="12" r="6" fill="#009BF6"/>
+</svg>`
+export const RadioOff = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="11" stroke="#EBEFF2" stroke-width="2"/>
+</svg>`
