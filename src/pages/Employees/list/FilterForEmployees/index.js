@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef, useEffect } from "react"
 import debounce from "lodash/debounce"
 import Input from "@Components/Fields/Input"
-// import Select from "../../../../components/Fields/Select";
+import Select from "../../../../components/Fields/Select";
 import {FilterContainer} from "./style"
 import CheckBox from "@Components/Fields/CheckBox";
 import DatePicker from "../../../../components/Fields/DatePicker";
@@ -69,16 +69,16 @@ const FilterForEmployees = () => {
       </div>
       <div>
         <div className="fs-12 color-light-blue-2 p-b-5">Статус</div>
-        {/*<Select*/}
-        {/*  id="status"*/}
-        {/*  placeholder="Выберите статус"*/}
-        {/*  onInput={handleSelect}*/}
-        {/*  value={valueSelect}*/}
-        {/*  onFocus={onFocus}*/}
-        {/*  onBlur={toggleSearch}*/}
-        {/*  options={options}*/}
-        {/*  clearable={false}*/}
-        {/*/>*/}
+        <Select
+          id="status"
+          placeholder="Выберите статус"
+          onInput={handleSelect}
+          value={valueSelect}
+          onFocus={onFocus}
+          onBlur={toggleSearch}
+          options={options}
+          clearable={false}
+        />
       </div>
       {arrayStatus.map(({label, icon, id}) => (
         <CheckBox
