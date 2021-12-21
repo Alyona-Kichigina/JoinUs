@@ -35,7 +35,7 @@ class AppList extends Component {
                                     />
                                 </div>
                                 {
-                                    nestedKey && rowData[nestedKey].length > 0 && rowData[nestedKey].map( (a, index) => {
+                                    nestedKey && rowData[nestedKey] && rowData[nestedKey].length > 0 && rowData[nestedKey].map( (a, index) => {
                                         return (
                                         <Row
                                             settings={settings}

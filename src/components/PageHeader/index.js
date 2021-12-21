@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BreadCrumbs from "../Breadcrumbs"
-import {NAV_BUTTON_LINKS} from "../Constants";
+import { NAV_BUTTON_LINKS } from "@Pages/programs/NewProgramm/Constants";
 import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {
@@ -22,7 +22,7 @@ class PageHeader extends Component {
                 <div
                     className="bg-white h-5/6"
                     style={{
-                        "border-radius": "4px",
+                        "borderRadius": "4px",
                         "height": "90%"
                     }}
                 >
