@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { CONTENT_LINKS } from "../Constants";
+import { CONTENT_LINKS } from "../../pages/programs/Constants";
 import {ArrowBack} from "../../pages/Constants";
 import { BreadcrumbsDot } from "./style";
 

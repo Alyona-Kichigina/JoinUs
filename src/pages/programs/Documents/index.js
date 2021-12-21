@@ -1,5 +1,4 @@
-import React, {Component, useCallback} from 'react';
-import memoizeOne from "memoize-one"
+import React, {Component} from 'react';
 import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
 import "../levels/style.css"
@@ -8,7 +7,7 @@ import Modal from "../../../components/ModalWindow";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
 import axios from "axios";
-import {CONTENT_LINKS} from "../NewProgramm/Constants";
+import {CONTENT_LINKS} from "../Constants";
 import {ADAPTATION_DOCUMENT, DEFAULT_URL} from "../../../components/APIList";
 import { ModalTableHeader, ModalTableBody } from "./style";
 
@@ -123,7 +122,7 @@ class Documents extends Component {
             )
     }
     render() {
-        const { editModal, items, modalData, documentSelection, selectedDocuments } = this.state
+        const { editModal, items, modalData: {document_name}, modalData, documentSelection, selectedDocuments } = this.state
         const handleEdit = (data) => this.setState({
             editModal: true,
             modalData: data
@@ -131,6 +130,14 @@ class Documents extends Component {
         const openDocumentSelection = () => this.setState({
             documentSelection: !documentSelection
         })
+        const handleInputChange = (value, id) => {
+            this.setState({
+                modalData: {[id]: value}
+            })
+        }
+        const saveEditDocument = (data) => {
+            console.log(data)
+        }
         const closeModal = () => this.setState({editModal: false})
         const checkDocument = (value, id) => {
             this.setState({
@@ -150,6 +157,7 @@ class Documents extends Component {
                         isOpen={editModal}
                         title="редактирование документа"
                         closeModal={closeModal}
+                        handleSave={() => saveEditDocument(modalData)}
                     >
                         <div>
                             <div className="pt-8">
@@ -159,8 +167,10 @@ class Documents extends Component {
                             Наименование документа
                         </span>
                                 <Input
-                                    value={modalData.document_name}
-                                    onInput={modalData.document_name}
+                                    value={document_name}
+                                    key="document_name"
+                                    id="document_name"
+                                    onInput={() => handleInputChange(document.getElementById('document_name').value, "document_name")}
                                     className="mt-2 font-normal"
                                 />
                             </div>
@@ -180,6 +190,7 @@ class Documents extends Component {
                         isOpen={documentSelection}
                         title="Выбор документа"
                         closeModal={openDocumentSelection}
+                        handleSave={() => saveEditDocument(selectedDocuments)}
                     >
                         <ModalTableHeader>
                             <div>№</div>

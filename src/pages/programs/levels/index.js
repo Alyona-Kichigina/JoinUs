@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import NavContentBtn from "../../../components/NavContentButton";
-import { CONTENT_LINKS } from "../../../components/Constants"
+import { CONTENT_LINKS } from "../../programs/Constants"
 // import Breadcrumbs from "../../components/Breadcrumbs";
 import AppList from "../../../components/AppList";
 import { ActiveIcon } from "../../Constants"

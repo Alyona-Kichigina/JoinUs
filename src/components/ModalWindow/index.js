@@ -6,7 +6,7 @@ import {CloseIcon} from "../../pages/Constants";
 class ModalWindow extends Component {
 
     render() {
-        const { isOpen, closeModal, title, children } = this.props
+        const { isOpen, closeModal, title, children, handleSave } = this.props
         return isOpen ? (
             <ModalContainer
                 onClick={closeModal}
@@ -36,6 +36,7 @@ class ModalWindow extends Component {
                              </button>
                              <button
                                  className="blue btn width-m"
+                                 onClick={() => handleSave()}
                              >
                                  Сохранить
                              </button>

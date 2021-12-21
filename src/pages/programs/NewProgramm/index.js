@@ -6,7 +6,7 @@ import InputForm from "../inputForm";
 import ModalSelectInput from "../../../components/ModalSelectInput";
 import ModalSidebar from "../../../components/ModalSidebar";
 import RadioButton from "../../../components/RadioButton";
-import {CONTENT_LINKS} from "./Constants";
+import {CONTENT_LINKS} from "../Constants";
 
 const pageData = {
     pageName: "Новая программа"
@@ -31,7 +31,34 @@ const clients = [
     },
 ]
 
-const settings = (toggleModal, client) => {
+const users = [
+    {
+        id: 1,
+        name: "Максимов И.И"
+    },
+    {
+        id: 2,
+        name: "Иванов И.И"
+    },
+    {
+        id: 3,
+        name: "Сидоров И.И"
+    },
+    {
+        id: 4,
+        name: "Максимов И.В"
+    },
+    {
+        id: 5,
+        name: "Иванов И.В"
+    },
+    {
+        id: 6,
+        name: "Сидоров И.В"
+    },
+]
+
+const settings = (toggleModal, client, toggleCreatorModal, creator) => {
    return {
         1: [
             {
@@ -84,7 +111,14 @@ const settings = (toggleModal, client) => {
                 id: 6,
                 name: "создатель",
                 key: "creator",
-                Component: Input
+                Component: ({onInput}) =>
+                    <ModalSelectInput
+                        id="6"
+                        key="creator"
+                        value={creator}
+                        onInput={onInput}
+                        toggleModal={toggleCreatorModal}
+                    />
             },
         ]
     }
@@ -94,7 +128,8 @@ class NewProgram extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalOpen: false,
+            clientModal: false,
+            creatorModal: false,
             modalState: {},
             name: "",
             description: "",
@@ -130,9 +165,12 @@ class NewProgram extends Component {
 
     render() {
         const { history: { goBack } } = this.props
-        const { modalOpen, client, modalState } = this.state
+        const { clientModal, creatorModal, client, creator, modalState } = this.state
         const toggleModal = () => {
-            this.setState({modalOpen: !modalOpen})
+            this.setState({clientModal: !clientModal})
+        }
+        const toggleCreatorModal = () => {
+            this.setState({creatorModal: !creatorModal})
         }
         return (
             <PageHeader
@@ -143,10 +181,10 @@ class NewProgram extends Component {
                 <ModalSidebar
                     title="Выбор заказчика"
                     closeModal={toggleModal}
-                    isOpen={modalOpen}
+                    isOpen={clientModal}
                     handleSave={() => this.setState({
                         client: modalState,
-                        modalOpen: !modalOpen
+                        clientModal: !clientModal
                     })}
                 >
                     <div
@@ -187,10 +225,57 @@ class NewProgram extends Component {
                      }
                     </div>
                 </ModalSidebar>
+                <ModalSidebar
+                    title="Выбор создателя"
+                    closeModal={toggleCreatorModal}
+                    isOpen={creatorModal}
+                    handleSave={() => this.setState({
+                        creator: modalState,
+                        creatorModal: !creatorModal
+                    })}
+                >
+                    <div
+                        className="mx-9"
+                    >
+                        <div
+                            className="grid mt-11 border-list pb-4 color-light-blue-2 fs-14 font-bold"
+                            style={{"grid-template-columns": "10% 90%"}}
+                        >
+                            <div>
+                                №
+                            </div>
+                            <div>
+                                Наименование
+                            </div>
+                        </div>
+                     {
+                         users.map(({name, id}, index) => {
+                             return (
+                                 <div
+                                     className="grid py-4 font-semibold fs-14 border-list"
+                                     style={{"grid-template-columns": "10% 90%"}}
+                                 >
+                                     <div
+                                         className="flex items-center"
+                                     >
+                                         {index + 1}
+                                     </div>
+                                     <RadioButton
+                                         inputValue={this.selectClient}
+                                         selected={(value) => modalState === value}
+                                         title={name}
+                                         id={id}
+                                     />
+                                 </div>
+                             )
+                         })
+                     }
+                    </div>
+                </ModalSidebar>
                 <div className="h-full flex flex-col justify-between">
                     <InputForm
                         state={this.state}
-                        settings={settings(toggleModal, client)}
+                        settings={settings(toggleModal, client, toggleCreatorModal, creator)}
                         onInput={this.handleInputChange}
                     />
                     <div

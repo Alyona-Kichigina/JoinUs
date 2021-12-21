@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BreadCrumbs from "../Breadcrumbs"
-import {NAV_BUTTON_LINKS} from "../Constants";
+import {NAV_BUTTON_LINKS} from "../../pages/programs/Constants";
 import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {

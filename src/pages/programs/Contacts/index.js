@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
-import {CONTENT_LINKS} from "../../../components/Constants";
+import {CONTENT_LINKS} from "../../programs/Constants";
 import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../components/APIList";
 
 
