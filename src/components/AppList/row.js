@@ -24,6 +24,7 @@ class Row extends Component {
             >
                 {
                     settings.map( (a, index) => {
+                        const { allData, key } = a
                         const renderLevel = a.nestedLevel ? nestedLevel === a.nestedLevel : true
                         const Comp = a.component ? a.component : "div"
                     return (
@@ -41,11 +42,11 @@ class Row extends Component {
                                           renderLevel &&
                                           (<Comp
                                               className="flex items-center"
-                                              data={data[a.key]}
+                                              data={allData ? data : data[key]}
                                               nestedLevel={nestedLevel}
                                               rowIndex={rowIndex}
                                           >
-                                              {data[a.key]}
+                                              {data[key]}
                                           </Comp>)
                                       }
                                  </div>

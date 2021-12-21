@@ -15,11 +15,16 @@ import Employ from "../pages/Employees/item";
 
 const Router = () => (
     <Switch>
+        <Route exact path="/programs/:programName/levels" component={Levels} />
+        <Route path="/programs/:programName/contacts" component={Contacts} />
+        <Route path="/programs/:programName/documents" component={Documents} />
+        <Route path="/programs/:programName/goals" component={Goals} />
+        <Route path="/programs/:programName/general" component={NewProgramm} />
         <Route exact path="/programs/levels" component={Levels} />
         <Route path="/programs/contacts" component={Contacts} />
         <Route path="/programs/documents" component={Documents} />
         <Route path="/programs/goals" component={Goals} />
-        <Route path="/programs/new_programm" component={NewProgramm} />
+        <Route path="/programs/new_programm/general" component={NewProgramm} />
         <Route path="/programs" component={Programs} />
     <Route path="/employees/new_employ" component={Employ} />
         <Route path="/employees" component={Employees} />

@@ -1,32 +1,37 @@
 import React, {Component} from 'react';
-import Breadcrumbs from "../Breadcrumbs";
+import BreadCrumbs from "../Breadcrumbs"
+import {NAV_BUTTON_LINKS} from "../Constants";
 import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {
     render() {
-        const { pageData } = this.props
+        const { pageData, section, children } = this.props
         return (
-            <div>
-              <Breadcrumbs
-                {...this.props}
-              />
+            <div className="h-full">
+                <div>
+                    <BreadCrumbs
+                        section={section}
+                        {...this.props}
+                    />
+                </div>
                 <div className="flex mb-6 mt-4">
                     <div className="text-2xl font-bold">
                         { pageData.pageName }
                     </div>
                 </div>
                 <div
-                    className="bg-white"
-                    style={{"borderRadius": "4px"}}
+                    className="bg-white h-5/6"
+                    style={{
+                        "border-radius": "4px",
+                        "height": "90%"
+                    }}
                 >
                     <NavContentBtn
-                      {...this.props}
+                        {...this.props}
+                        links={NAV_BUTTON_LINKS}
+
                     />
-                  <div
-                    className="bg-white flex-container"
-                  >
-                    {this.props.children}
-                  </div>
+                    {children}
                 </div>
             </div>
         );

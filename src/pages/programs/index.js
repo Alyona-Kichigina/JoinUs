@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import NavContentBtn from "../../components/NavContentButton";
 import { CONTENT_LINKS } from "./NewProgramm/Constants"
 import AppList from "../../components/AppList";
+import axios from 'axios';
 import {NavLink} from "react-router-dom";
+import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../components/APIList";
 
 const settings = [
     {
@@ -16,6 +18,15 @@ const settings = [
         key: "program_name",
         name: "Программа",
         size: "25%",
+        component: ({data}) => {
+            return (
+                <NavLink
+                    to={`/programs/${data}/levels`}
+                >
+                    {data}
+                </NavLink>
+            )
+        }
     },
     {
         id: 3,
@@ -37,7 +48,6 @@ const settings = [
 ]
 
 class Programs extends Component {
-    // AdaptationProgram
     constructor(props) {
         super(props)
         this.state = {
@@ -47,15 +57,12 @@ class Programs extends Component {
         }
     }
     componentDidMount() {
-        fetch(`http://localhost:9000/api/adaptationprogram`, {
-            method: "GET",
-        })
-            .then(res => res.json())
+         axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        items: response
+                        items: response.data
                     })
                 },
                 (error) => {
@@ -76,7 +83,7 @@ class Programs extends Component {
                     </div>
                     <NavLink
                         className="blue btn width-m flex items-center"
-                        to="/programs/new_programm"
+                        to="/programs/new_programm/general"
                     >
                         + Создать программу
                     </NavLink>

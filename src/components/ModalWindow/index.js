@@ -6,7 +6,7 @@ import {CloseIcon} from "../../pages/Constants";
 class ModalWindow extends Component {
 
     render() {
-        const { isOpen, closeModal, title } = this.props
+        const { isOpen, closeModal, title, children } = this.props
         return isOpen ? (
             <ModalContainer
                 onClick={closeModal}
@@ -20,27 +20,26 @@ class ModalWindow extends Component {
                             onClick={closeModal}
                         />
                     </div>
-                    <div
-                        className="font-bold text-2xl flex justify-center"
-                    >
-                        { title }
-                    </div>
-                    CLOSE CLOSE CLOSE CLOSE
-                    CLOSE CLOSE CLOSE CLOSE
-                    CLOSE CLOSE CLOSE CLOSE
-                    CLOSE CLOSE CLOSE CLOSE
-                    <div className="mb-12 mt-14 flex justify-around">
-                        <button
-                            className="grey btn width-m"
-                            onClick={closeModal}
-                        >
-                            Отмена
-                        </button>
-                        <button
-                            className="blue btn width-m"
-                        >
-                            Сохранить
-                        </button>
+                    <div className="px-10">
+                         <div
+                             className="font-bold text-2xl flex justify-center"
+                         >
+                             { title }
+                         </div>
+                         { children }
+                         <div className="mb-12 mt-14 flex justify-around">
+                             <button
+                                 className="grey btn width-m"
+                                 onClick={closeModal}
+                             >
+                                 Отмена
+                             </button>
+                             <button
+                                 className="blue btn width-m"
+                             >
+                                 Сохранить
+                             </button>
+                         </div>
                     </div>
                 </Modal>
             </ModalContainer>
