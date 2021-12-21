@@ -194,7 +194,7 @@ class DatePicker extends Component {
                                     {/*  onBlur={this.toggleSearch}*/}
                                     {/*  options={option}*/}
                                     {/*  clearable={false}*/}
-                                    />
+                                    {/*/>*/}
                                     <Select
                                       size="small"
                                       dropdownMatchSelectWidth={false}

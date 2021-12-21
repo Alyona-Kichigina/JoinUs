@@ -9,6 +9,7 @@ import "@Styles/animation.css"
 import "@Styles/style-input.scss"
 import "@Styles/style-btn.scss"
 import "@Styles/typography.scss"
+import "@Styles/markupHelpers.scss"
 import "./styles/colors.css"
 
 

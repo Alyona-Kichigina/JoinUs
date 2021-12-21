@@ -55,8 +55,8 @@ const FilterForEmployees = () => {
     setDateValue(value)
   }
   return (
-    <FilterContainer className="flex m-b-16">
-      <div>
+    <FilterContainer className="m-b-16">
+      <div className="p-r-24">
         <div className="fs-12 color-light-blue-2 p-b-5">ФИО/Должность</div>
         <Input
           id="name"
@@ -67,7 +67,7 @@ const FilterForEmployees = () => {
           onFocus={onFocus}
         />
       </div>
-      <div>
+      <div className="p-r-24">
         <div className="fs-12 color-light-blue-2 p-b-5">Статус</div>
         <Select
           id="status"
@@ -80,25 +80,45 @@ const FilterForEmployees = () => {
           clearable={false}
         />
       </div>
-      {arrayStatus.map(({label, icon, id}) => (
-        <CheckBox
-          key={id}
-          label={label}
-          id={id}
-          value={value}
-          onInput={onInputCha}
-          iconLabel={icon}
-          className="p-b-18"
-        />
-      ))}
-      <div className="flex-auto">
-        <DatePicker
-          dateFormat={PRESENT_DATE_FORMAT}
-          onInput={onInputDatePicker}
-          id="calendar"
-          placeholder="Дата выхода"
-          value={dateValue}
-        />
+      {/*{arrayStatus.map(({label, icon, id}) => (*/}
+      {/*  <CheckBox*/}
+      {/*    key={id}*/}
+      {/*    label={label}*/}
+      {/*    id={id}*/}
+      {/*    value={value}*/}
+      {/*    onInput={onInputCha}*/}
+      {/*    iconLabel={icon}*/}
+      {/*    className="p-b-18"*/}
+      {/*  />*/}
+      {/*))}*/}
+      <div className="flex">
+        <div
+          className="fs-12 color-light-blue-2 p-r-16 p-b-14 flex items-end"
+        >
+          Дата выхода
+        </div>
+        <div className="p-r-8 flex-auto">
+          <div className="fs-12 color-light-blue-2 p-b-5">От</div>
+          <DatePicker
+            dateFormat={PRESENT_DATE_FORMAT}
+            onInput={onInputDatePicker}
+            id="calendar"
+            placeholder="От"
+            value={dateValue}
+            style={{width: "160px"}}
+          />
+        </div>
+        <div className="flex-auto">
+          <div className="fs-12 color-light-blue-2 p-b-5">До</div>
+          <DatePicker
+            dateFormat={PRESENT_DATE_FORMAT}
+            onInput={onInputDatePicker}
+            id="calendar"
+            placeholder="До"
+            value={dateValue}
+            style={{width: "160px"}}
+          />
+        </div>
       </div>
 
     </FilterContainer>

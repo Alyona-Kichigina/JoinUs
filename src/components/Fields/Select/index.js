@@ -363,7 +363,7 @@ class Select extends PureComponent {
                   className={className}
                 >
                   <InputSelectContainer
-                    className="relative w-full overflow-hidden flex-full-with flex"
+                    className="relative w-full overflow-hidden flex-auto flex"
                     allWaysExpandedMultipleSelection={allWaysExpandedMultipleSelection}
                     disabled={disabled}
                   >
