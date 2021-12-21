@@ -1,28 +1,53 @@
 
 export const CONTENT_LINKS = [
     {
-        id: 1,
-        name: "Общие",
-        link: "/"
+        name: "программы",
+        link: "programs"
     },
     {
-        id: 2,
-        name: "Уровни",
+        name: "общие",
+        link: "general"
+    },
+    {
+        name: "Новая программа",
+        link: "new_programm"
+    },
+    {
+        name: "уровни",
         link: "levels"
     },
     {
-        id: 3,
-        name: "Контакты",
+        name: "контакты",
         link: "contacts"
     },
     {
-        id: 4,
-        name: "Документы",
+        name: "документы",
         link: "documents"
     },
     {
-        id: 5,
-        name: "Цели",
+        name: "цели",
+        link: "goals"
+    }
+]
+export const NAV_BUTTON_LINKS = [
+    {
+        name: "общие",
+        link: "general"
+    },
+    {
+        name: "уровни",
+        link: "levels"
+    },
+    {
+        name: "контакты",
+        link: "contacts"
+    },
+    {
+        name: "документы",
+        link: "documents"
+    },
+    {
+        name: "цели",
         link: "goals"
     }
 ]

@@ -24,13 +24,13 @@
     &::placeholder {
       font-size: var(--plachodler-font-size);
     }
-    &:disabled {
-      color: var(--input-disabled-color);
-      background: var(--color-grey-Light-4);
-      &::placeholder {
-        color: var(--color-grey);
-      }
-    }
+    //&:disabled {
+    //  color: var(--input-disabled-color);
+    //  background: var(--color-grey-Light-4);
+    //  &::placeholder {
+    //    color: var(--color-grey);
+    //  }
+    //}
     &::placeholder {
       color: var(--input-placeholder-color);
       opacity: 1;

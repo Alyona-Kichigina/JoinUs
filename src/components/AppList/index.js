@@ -22,8 +22,7 @@ class AppList extends Component {
                     >
                         {
                             <div>
-                              {/* todo почему тут этот класс?*/}
-                                <div className="bg-color-light-blue">
+                                <div className={`${nestedData && "bg-color-light-blue"}`}>
                                     <Row
                                         className=""
                                         settings={settings}
@@ -36,7 +35,7 @@ class AppList extends Component {
                                     />
                                 </div>
                                 {
-                                    nestedKey && rowData.length > 0 && rowData[nestedKey].map( (a, index) => {
+                                    nestedKey && rowData[nestedKey].length > 0 && rowData[nestedKey].map( (a, index) => {
                                         return (
                                         <Row
                                             settings={settings}
