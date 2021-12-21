@@ -38,8 +38,14 @@ class Employees extends Component {
     // });
   }
 
+  // получаем данные для фильтра
+  onInputDate = (value, id) => {
+    console.log(value, id)
+  }
+
 
   handleInput = (payload) => { this.setState(({ value }) => ({ value: { ...value, ...payload } })) }
+
   render() {
     const { state: { value } } = this
     return (
@@ -53,9 +59,9 @@ class Employees extends Component {
             + Создать сотрудника
           </NavLink>
         </div>
-        <FilterForEmployees/>
-
-
+        <FilterForEmployees
+          handleInput={this.onInputDate}
+        />
         <AppList
           settings={settings}
           data={data}

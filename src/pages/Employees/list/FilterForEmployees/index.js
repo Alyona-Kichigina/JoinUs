@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useRef, useEffect } from "react"
-import debounce from "lodash/debounce"
 import Input from "@Components/Fields/Input"
 import Select from "../../../../components/Fields/Select";
 import {FilterContainer} from "./style"
@@ -28,32 +27,37 @@ const arrayStatus = [
   }
 ]
 
-const FilterForEmployees = () => {
-  const [toggle, updateToggle] = useState(false)
-  const [searchState, setSearchState] = useState("")
+const FilterForEmployees = ({handleInput}) => {
+  const [dataForInput, setDataForInput] = useState("")
   const [valueSelect, setValueSelect] = useState({})
   const [value, setValue] = useState(false)
-  const[date, setDate] = useState({DATE: []})
-  const[dateValue, setDateValue] = useState("")
+  const [dateFrom, setDateFrom] = useState("")
+  const [dateTo, setDateTo] = useState("")
 
-  const toggleSearch = useCallback(debounce(() => updateToggle(!toggle), 150), [toggle, updateToggle])
-  const handleInput = useCallback((value) => {
-    setSearchState(value)
-  }, [])
-  const onFocus = () => {
 
-  }
+  const onInput = useCallback((value, id) => {
+    setDataForInput(value)
+    handleInput(value, id)
+  }, [setDataForInput, handleInput])
+
   const handleSelect = useCallback((value) => {
     setValueSelect(value)
   }, [])
 
-  const onInputCha = (value) => {
+  const onInputCha = (value, id) => {
     setValue(value)
   }
 
-  const onInputDatePicker = (value) => {
-    setDateValue(value)
-  }
+  const onInputDateFrom = useCallback((value, id) => {
+      setDateFrom(value)
+      handleInput(value, id)
+    }, [handleInput])
+
+  const onInputDateTo = useCallback((value, id) => {
+    setDateTo(value)
+    handleInput(value, id)
+  }, [handleInput])
+
   return (
     <FilterContainer className="m-b-16">
       <div className="p-r-24">
@@ -61,10 +65,8 @@ const FilterForEmployees = () => {
         <Input
           id="name"
           placeholder="Введите ФИО или должность"
-          value={searchState}
-          onBlur={toggleSearch}
-          onInput={handleInput}
-          onFocus={onFocus}
+          value={dataForInput}
+          onInput={onInput}
         />
       </div>
       <div className="p-r-24">
@@ -74,8 +76,6 @@ const FilterForEmployees = () => {
           placeholder="Выберите статус"
           onInput={handleSelect}
           value={valueSelect}
-          onFocus={onFocus}
-          onBlur={toggleSearch}
           options={options}
           clearable={false}
         />
@@ -101,10 +101,10 @@ const FilterForEmployees = () => {
           <div className="fs-12 color-light-blue-2 p-b-5">От</div>
           <DatePicker
             dateFormat={PRESENT_DATE_FORMAT}
-            onInput={onInputDatePicker}
-            id="calendar"
+            onInput={onInputDateFrom}
+            id="dateFrom"
             placeholder="От"
-            value={dateValue}
+            value={dateFrom}
             style={{width: "160px"}}
           />
         </div>
@@ -112,10 +112,10 @@ const FilterForEmployees = () => {
           <div className="fs-12 color-light-blue-2 p-b-5">До</div>
           <DatePicker
             dateFormat={PRESENT_DATE_FORMAT}
-            onInput={onInputDatePicker}
-            id="calendar"
+            onInput={onInputDateTo}
+            id="dateTo"
             placeholder="До"
-            value={dateValue}
+            value={dateTo}
             style={{width: "160px"}}
           />
         </div>

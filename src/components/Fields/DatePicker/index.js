@@ -45,7 +45,8 @@ class DatePicker extends Component {
     }
   }
 
-  onCalendarInput = (value, id) => {
+  onCalendarInput = (value) => {
+    const { id } = this.props
     const { props: { onInput, dateFormat } } = this
     onInput(dayjs(value._d).format(dateFormat), id)
     this.closeCalendar()
