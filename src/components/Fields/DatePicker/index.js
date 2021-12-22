@@ -69,6 +69,8 @@ class DatePicker extends Component {
 
   }
 
+  // не работают кнопки внутри календаря
+
   render() {
     const {
       props: {

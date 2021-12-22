@@ -2,7 +2,6 @@ import styled from "styled-components"
 
 export const FormContainer = styled.div`
   width: 100%;
-  padding-bottom: 200px;
   display: grid;
   word-wrap: break-word;
   grid-template-columns: 1fr 1fr;

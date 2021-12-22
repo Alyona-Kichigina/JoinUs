@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react"
-import { ScrollContainer } from "@constants"
+import { ScrollContainer } from "../../constants"
 import PerfectScrollbar from "react-perfect-scrollbar"
 
 const ScrollBar = (props, ref) => {

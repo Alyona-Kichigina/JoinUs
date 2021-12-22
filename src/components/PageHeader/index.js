@@ -7,7 +7,7 @@ class PageHeader extends Component {
     render() {
         const { pageData, section, children } = this.props
         return (
-            <div className="h-full">
+            <div className="h-full flex-container">
                 <div>
                     <BreadCrumbs
                         section={section}
@@ -20,10 +20,9 @@ class PageHeader extends Component {
                     </div>
                 </div>
                 <div
-                    className="bg-white h-5/6"
+                    className="bg-white flex-container m-b-24 hidden"
                     style={{
-                        "borderRadius": "4px",
-                        "height": "90%"
+                        "borderRadius": "4px"
                     }}
                 >
                     <NavContentBtn

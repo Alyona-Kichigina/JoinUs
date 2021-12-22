@@ -61,3 +61,7 @@ export const fieldMap = [
     formColumn: 1,
   },
 ]
+
+export const rules = {
+  SURNAME: "required",
+}
