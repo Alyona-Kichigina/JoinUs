@@ -200,21 +200,21 @@ class Goals extends Component {
                     </Modal>
                     <Modal
                         isOpen={documentSelection}
-                        title="Выбор документа"
+                        title="Выбор цели"
                         closeModal={openDocumentSelection}
                         handleSave={() => saveEditDocument(selectedGoals)}
                     >
                         <ModalTableHeader>
                             <div>№</div>
                             <div>
-                                Наименование документа
+                                Наименование цели
                             </div>
                             <div>
                                 Наименование программы
                             </div>
                         </ModalTableHeader>
                         {
-                            items.map(({document_name, id_document}, index) => {
+                            items.map(({description, id_goal}, index) => {
                                 return (
                                     <ModalTableBody>
                                         <div className="flex items-center">
@@ -225,16 +225,16 @@ class Goals extends Component {
                                                 className="pr-2"
                                                 dangerouslySetInnerHTML={{__html: DocumentIcon}}
                                             />
-                                            {document_name}
+                                            {description}
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <div>
-                                                {document_name}
+                                                {description}
                                             </div>
                                             <ChekBox
                                                 id="selectedGoals"
                                                 value={selectedGoals}
-                                                checkBoxValue={id_document}
+                                                checkBoxValue={id_goal}
                                                 onInput={checkDocument}
                                             />
                                         </div>
