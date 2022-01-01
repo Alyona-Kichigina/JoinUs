@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useCallback} from 'react';
 import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import WithCloseWindow from "@Core/RenderProps/withCloseWindow"
 import { DatePickerCalendarContainer, ToggleIcon} from "./styles";
@@ -7,13 +7,17 @@ import PropTypes from "prop-types";
 import {PRESENT_DATE_FORMAT} from "@constants"
 import { Calendar, Select, Col, Row } from 'antd';
 import moment from "moment";
+import Sel from "@Components/Fields/Select";
+
+const option = [{ID: 1, SYS_NAME: "aaa"}]
 
 class DatePicker extends Component {
   constructor(props) {
     super(props)
     this.state = {
       open: false,
-      valueForCalendar: moment()
+      valueForCalendar: moment(),
+      valueSelect: {}
     }
   }
 
@@ -41,7 +45,8 @@ class DatePicker extends Component {
     }
   }
 
-  onCalendarInput = (value, id) => {
+  onCalendarInput = (value) => {
+    const { id } = this.props
     const { props: { onInput, dateFormat } } = this
     onInput(dayjs(value._d).format(dateFormat), id)
     this.closeCalendar()
@@ -53,6 +58,16 @@ class DatePicker extends Component {
       this.setState({ valueForCalendar: moment(new Date(value.replace(pattern,'$3-$2-$1'))) })
     }
   }
+  handleSelect = (value) => {
+    this.setState({valueSelect: value})
+  }
+  onFocus = () => {
+
+  }
+
+  toggleSearch = () => {
+
+  }
 
   render() {
     const {
@@ -60,7 +75,7 @@ class DatePicker extends Component {
         style, className, disabled, placeholder, children, tipMaxSize,
         value
       },
-      state: { open, valueForCalendar }
+      state: { open, valueForCalendar, valueSelect }
     } = this
     return (
       <RenderOverlayMenu
@@ -171,6 +186,16 @@ class DatePicker extends Component {
                               <div style={{ padding: 8 }}>
                                 <Row gutter={8}>
                                   <Col>
+                                    {/*<Sel*/}
+                                    {/*  id="status"*/}
+                                    {/*  placeholder="Выберите статус"*/}
+                                    {/*  onInput={this.handleSelect}*/}
+                                    {/*  value={valueSelect}*/}
+                                    {/*  onFocus={this.onFocus}*/}
+                                    {/*  onBlur={this.toggleSearch}*/}
+                                    {/*  options={option}*/}
+                                    {/*  clearable={false}*/}
+                                    {/*/>*/}
                                     <Select
                                       size="small"
                                       dropdownMatchSelectWidth={false}

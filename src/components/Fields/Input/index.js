@@ -85,7 +85,7 @@ class BsInput extends Component {
         style={this.margeStyles(styleInputBox, { minHeight, height })}
       >
         <InputContainer
-          className="relative flex-full-with flex wrapper-input-control"
+          className="relative flex-auto flex wrapper-input-control"
           type={InputType}
         >
           <Input

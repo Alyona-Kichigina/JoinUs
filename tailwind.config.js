@@ -12,6 +12,9 @@ module.exports = {
       margin: {
         't-a': 'auto',
         'b-a': 'auto',
+      },
+      padding: {
+        '-5': "5px",
       }
     }
   },
