@@ -36,9 +36,8 @@ class Employ extends Component {
   inputDataOfEmployee = (value) => {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
-  saveDataOfEmployee = (v, id) => {
-    console.log(8888)
-    console.log(v, id)
+  saveDataOfEmployee = (v) => {
+    console.log(v)
 
   }
   render() {
@@ -61,44 +60,44 @@ class Employ extends Component {
             {(formProps) => {
               const { formValid, onSubmit, onInput } = formProps
               return (
-                    <>
-                      <ScrollBar>
-                        <TabContainer className="flex-container">
-                          <FormContainer>
-                            <Form
-                              {...formProps}
-                              fields={firstForm}
-                              value={data}
-                              onInput={onInput}
-                            />
-                            <Form
-                              {...formProps}
-                              fields={SecondForm}
-                              value={data}
-                              onInput={onInput}
-                            />
-                          </FormContainer>
-                        </TabContainer>
-                      </ScrollBar>
+                <>
+                  <ScrollBar>
+                    <TabContainer className="flex-container">
+                      <FormContainer>
+                        <Form
+                          {...formProps}
+                          fields={firstForm}
+                          value={data}
+                          onInput={onInput}
+                        />
+                        <Form
+                          {...formProps}
+                          fields={SecondForm}
+                          value={data}
+                          onInput={onInput}
+                        />
+                      </FormContainer>
+                    </TabContainer>
+                  </ScrollBar>
 
-                      <div className="flex justify-end m-r-24 m-t-24">
-                        <button
-                          name="cancel"
-                          type="submit"
-                          className="grey btn width-medium m-r-16"
-                        >
-                          Отмена
-                        </button>
-                        <button
-                          name="save"
-                          type="submit"
-                          className="blue btn width-medium"
-                          onClick={onSubmit}
-                        >
-                          Сохранить
-                        </button>
-                      </div>
-                    </>
+                  <div className="flex justify-end m-r-24 m-t-24">
+                    <button
+                      name="cancel"
+                      type="submit"
+                      className="grey btn width-medium m-r-16"
+                    >
+                      Отмена
+                    </button>
+                    <button
+                      name="save"
+                      type="submit"
+                      className="blue btn width-medium"
+                      onClick={onSubmit}
+                    >
+                      Сохранить
+                    </button>
+                  </div>
+                </>
               )
             }}
           </WithValidationHocRenderPropAdapter>
