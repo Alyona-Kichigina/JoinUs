@@ -46,11 +46,13 @@ DefaultInputWrapper.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   className: PropTypes.string,
   style: PropTypes.object,
+  classNameInputWrapper: PropTypes.string,
 }
 
 DefaultInputWrapper.defaultProps = {
   ...dProps,
   className: "",
+  classNameInputWrapper: ""
 }
 
 export default DefaultInputWrapper

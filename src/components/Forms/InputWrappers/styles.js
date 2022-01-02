@@ -25,11 +25,11 @@ export const InputContainer = styled.div`
    content: "";
    display: ${props => props.hasError ? "block" : "none"};
    width: 100%;
-   height: 2px;
+   height: 1px;
    background: var(--validation-color);
    position: absolute;
-   border-radius: 4px;
-   bottom: 0;
+   border-radius: 6px;
+   bottom: -1px;
  }
 `
 

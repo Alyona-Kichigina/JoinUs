@@ -22,6 +22,7 @@ const withValidationHoc = (OriginalComponent) => {
     componentDidMount() {
       const { value } = this.props
       this.validate(value)
+      // todo зачем этот код?
       // this.context(this.handleSubmit)
     }
 
