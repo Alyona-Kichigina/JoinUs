@@ -1,19 +1,12 @@
 import React, {Component} from 'react';
-import StateLessForm from "@Components/Forms/StateLessForm"
-import { rules, fieldMap } from "./formConfig"
 import FilterForEmployees from "./list/FilterForEmployees";
 import axios from 'axios';
-
 import dayjs from "dayjs"
-import Status from "../../components/ComponentStatus";
-import Progress from "../../components/ComponentProgress";
 import AppList from "../../components/AppList";
 import {settings, data} from "./TableConfig"
 import {NavLink} from "react-router-dom";
 
 const BACK_END_URL = "192.168.0.102:9000"
-
-
 
 // employee
 
@@ -23,9 +16,6 @@ class Employees extends Component {
     this.state = {
       value: false
     }
-  }
-  submitForm = ({ login, password }) => {
-    console.log(login, password)
   }
 
   addEmployees = async () => {
@@ -67,23 +57,6 @@ class Employees extends Component {
           data={data}
           nestedKey="data"
         />
-
-
-        {/*<StateLessForm*/}
-        {/*  fields={fieldMap}*/}
-        {/*  rules={rules}*/}
-        {/*  value={value}*/}
-        {/*  onInput={this.handleInput}*/}
-        {/*  onSubmit={this.submitForm}*/}
-        {/*>*/}
-        {/*  <button*/}
-        {/*    className="blue btn width-medium"*/}
-        {/*    name="Login"*/}
-        {/*    type="submit"*/}
-        {/*  >*/}
-        {/*    Сохранить*/}
-        {/*  </button>*/}
-        {/*</StateLessForm>*/}
       </div>
     );
   }

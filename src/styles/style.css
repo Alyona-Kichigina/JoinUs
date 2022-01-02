@@ -60,6 +60,8 @@ body {
 
     --pink: #FF7979;
 
+    --color-black-darken-1: #333333;
+
     --grey-gradient: linear-gradient(89.43deg, #000000 0.12%, rgba(0, 0, 0, 0) 99.82%);
     --blue-gradient: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
 
@@ -104,6 +106,39 @@ body {
     border-radius: 4px;
 }
 
+ /*стили скролла*/
+
+.ps__rail-y {
+    width: 6px;
+    display: block;
+    opacity: 0;
+    border: 0;
+    right: 0;
+}
+.ps__rail-y:hover {
+    background-color: transparent;
+}
+.ps__rail-y.ps--clicking {
+    background-color: transparent;
+}
+.ps__rail-y:hover > .ps__thumb-y {
+    width: 6px;
+    background: var(--color-black-darken-1);
+    opacity: 1;
+}
+.ps__thumb-y {
+    width: 6px;
+    background: var(--color-black-darken-1);
+    right: 0;
+}
+.ps__thumb-y:hover {
+    width: 6px;
+    background: var(--color-black-darken-1);
+}
+.ps__rail-y {
+    padding-right: 8px;
+}
+
 /*flex-col*/
 /* w-full - w-100*/
 /*pos-relative - relative*/
@@ -111,6 +146,7 @@ body {
 /*no-white-space - whitespace-nowrap*/
 /* no-pointer-events - pointer-events-auto */
 /* flex-full-with - flex-auto*/
+/* jc-fe - justify-end*/
 
 .icon-navigation-drawer path {
     fill: var(--color-light-blue-2);

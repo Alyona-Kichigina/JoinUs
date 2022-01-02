@@ -6,7 +6,10 @@ import CheckBox from "@Components/Fields/CheckBox";
 import DatePicker from "../../../../components/Fields/DatePicker";
 import {PRESENT_DATE_FORMAT} from "@constants"
 
-const options = [{ID: 1, SYS_NAME: "aaa"}]
+const options = [
+  {ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},
+  {ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},
+]
 
 
 const arrayStatus = [
@@ -80,6 +83,8 @@ const FilterForEmployees = ({handleInput}) => {
           clearable={false}
         />
       </div>
+      {/*в селекте можно написать компонет Option чтобы внутри него были чекбоксы*/}
+
       {/*{arrayStatus.map(({label, icon, id}) => (*/}
       {/*  <CheckBox*/}
       {/*    key={id}*/}
