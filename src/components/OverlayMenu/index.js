@@ -45,6 +45,8 @@ class OverlayMenu extends PureComponent {
       const outOfXAxis = zoneRight - left - contextMenuWidth
       const YPositions = outOfYAxis < 0
         ? { bottom: `calc(${containerMargin} + ${window.innerHeight - top}px)` }
+        // todo pointerBottom не нужен для селекта, но нужен календарю
+        // разобраться с этим
         : { top: `calc(${containerMargin} + ${pointerBottom}px)` }
       let rightPosition = zoneRight - right
       rightPosition = rightPosition > 0 ? rightPosition : 0

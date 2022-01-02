@@ -1,18 +1,7 @@
 import React, { useCallback, useMemo } from "react"
 import PropTypes from "prop-types"
-import styled from "styled-components"
+import {OptionContainer} from "./styles"
 
-const OptionContainer = styled.div`
-  line-height: 1.42857143; /* Normalize line height */
-  display: block;
-  padding: 5px 15px;
-  clear: both;
-  white-space: normal;
-  cursor: pointer;
-  transition: color, background-color ease-in-out 250ms;
-  ${props => props.selected && "color: var(--color-light-gold-1);"}
-  ${props => props.highlited && "background-color: var(--color-grey-light-2);"}
-`
 
 const Option = ({
   labelKey, index, typeAheadPointer, selectedOptions, valueKey, option, option: { [labelKey]: label, [valueKey]: value },

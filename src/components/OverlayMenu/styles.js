@@ -9,10 +9,10 @@ export const SlotContainer = styled.div`
 
 export const FixedContainer = styled.div`
   position: fixed;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
   background: none;
   z-index: 2000;
-  border-radius: 2px;
+  border-radius: 0 6px 0 6px;
   transition: none;
   text-align: left;
   ${props => props.positionStatic && `

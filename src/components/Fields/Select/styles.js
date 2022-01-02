@@ -139,3 +139,14 @@ export const MultipleValueInputContainer = styled.div`
 export const ToggleIndicator = styled(IconToggleIndicator)`
   transition: transform 500ms ease-in-out;
 `
+export const OptionContainer = styled.div`
+  line-height: 1.42857143; /* Normalize line height */
+  display: flex;
+  padding: 8px 8px;
+  clear: both;
+  white-space: normal;
+  cursor: pointer;
+  transition: color, background-color ease-in-out 250ms;
+  ${props => props.selected && "color: var(--color-light-blue);"}
+  ${props => props.highlited && "background-color: var(--color-light-blue);"}
+`

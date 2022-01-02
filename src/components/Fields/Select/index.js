@@ -11,6 +11,7 @@ import debounce from "@Utils/debounce"
 import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import Option from "./Option"
 import MultipleOption from "./MultipleOption"
+import ChoiceOfStatusOption from "./ChoiceOfStatusOption";
 import {
   ToggleIndicator,
   SelectContainer, InputSelectContainer, SelectInput, MultipleValuePrerenderContainer, NoOptionsLabel, ToggleIconContainer,
@@ -18,16 +19,6 @@ import {
 } from "./styles"
 
 const scrollOptions = { wheelPropagation: false }
-
-export const AlwaysOpenContainer = ({ children }) => (
-  <div className="flex flex-col w-full m-t-3">
-    {children}
-  </div>
-)
-
-AlwaysOpenContainer.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
-}
 
 class Select extends PureComponent {
   callRemoteMethod = (debounce((v) => {
@@ -244,6 +235,7 @@ class Select extends PureComponent {
   }
 
   selectOption = (optionValue) => {
+    console.log(optionValue, 4)
     const { props: { returnOption, valueKey, multiple, value = [] } } = this
     const normalizeValue = returnOption ? optionValue : optionValue[valueKey]
     if (multiple) {
@@ -338,22 +330,21 @@ class Select extends PureComponent {
       searchInputRef, scrollBarRef, refSelectOverlayItems, refMultipleValueContainer,
       props: {
         children, disabled, searchable, id, multiple, allWaysExpandedMultipleSelection, tipMaxSize, tipMinSize,
-        value, labelKey, valueKey, returnOption, allWaysOpen, clearable, placeholder,
-        remote, loading, awaitOfUserInputLabel, className, showToggleButton
+        value, labelKey, valueKey, returnOption, clearable, placeholder,
+        remote, loading, awaitOfUserInputLabel, className, showToggleButton,
+        choiceStatus
       },
       state: {
         open, search, filteredOptions, typeAheadPointer, multipleContainerMeta: { multipleContainerStyles },
         overflowMultipleItems
       }
     } = this
-    const isSelectOpen = allWaysOpen || open
     return (
       <RenderOverlayMenu
         onOpenOverlayMenu={this.openSelect}
-        renderOverlayMenu={isSelectOpen}
+        renderOverlayMenu={open}
       >
         {(overlayBoundRef, onOpenOverlayMenu, OverlayMenu) => {
-          const DropDownWrapperComponent = allWaysOpen ? AlwaysOpenContainer : OverlayMenu
           return (
             <WithCloseWindow closeWindow={this.closeSelect} byKey={open}>
               {(onMouseDown) => (
@@ -381,7 +372,7 @@ class Select extends PureComponent {
                         onKeyDown={this.onSearchKeyDown}
                         onFocus={onOpenOverlayMenu}
                       />
-                      {((!isSelectOpen && multiple) || allWaysExpandedMultipleSelection) && (
+                      {(multiple || allWaysExpandedMultipleSelection) && (
                         <MultipleValuePrerenderContainer style={multipleContainerStyles}>
                           <MultipleValueInputContainer
                             className="overflow-hidden"
@@ -419,7 +410,7 @@ class Select extends PureComponent {
                     </div>
                     {children}
                   </InputSelectContainer>
-                  <DropDownWrapperComponent
+                  <OverlayMenu
                     className="no-user-select"
                     renderTip={false}
                     containerMargin="2px"
@@ -433,21 +424,32 @@ class Select extends PureComponent {
                           ref={scrollBarRef}
                           options={scrollOptions}
                         >
-                          {filteredOptions.map((option, index) => (
-                            <Option
-                              key={option[valueKey]}
-                              option={option}
-                              selectedOptions={value}
-                              index={index}
-                              labelKey={labelKey}
-                              valueKey={valueKey}
-                              multiple={multiple}
-                              returnOption={returnOption}
-                              typeAheadPointer={typeAheadPointer}
-                              onSelect={this.selectOption}
-                              onUpdateTypePointer={this.handleUpdateTypePointer}
-                            />
-                          ))}
+                          {choiceStatus
+                            ?
+                            (
+                              <ChoiceOfStatusOption
+                                onSelect={this.selectOption}
+                              />
+                            )
+                          :
+                            (<>
+                                {filteredOptions.map((option, index) => (
+                                  <Option
+                                    key={option[valueKey]}
+                                    option={option}
+                                    selectedOptions={value}
+                                    index={index}
+                                    labelKey={labelKey}
+                                    valueKey={valueKey}
+                                    multiple={multiple}
+                                    returnOption={returnOption}
+                                    typeAheadPointer={typeAheadPointer}
+                                    onSelect={this.selectOption}
+                                    onUpdateTypePointer={this.handleUpdateTypePointer}
+                                  />
+                                ))}
+                            </>)
+                          }
                         </ScrollBar>
                       </SelectedOptions>
                     )}
@@ -461,7 +463,7 @@ class Select extends PureComponent {
                         {this.renderMultipleOptions()}
                       </SelectedOptionsScrollBar>
                     )}
-                  </DropDownWrapperComponent>
+                  </OverlayMenu>
                 </SelectContainer>
               )}
             </WithCloseWindow>
@@ -481,7 +483,6 @@ Select.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object, PropTypes.array]),
   options: PropTypes.array,
   disabled: PropTypes.bool,
-  allWaysOpen: PropTypes.bool,
   allWaysExpandedMultipleSelection: PropTypes.bool,
   clearable: PropTypes.bool,
   searchable: PropTypes.bool,
@@ -503,6 +504,7 @@ Select.propTypes = {
   onFocus: PropTypes.func,
   inputRef: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  choiceStatus: PropTypes.bool,
 }
 
 Select.defaultProps = {
@@ -520,7 +522,8 @@ Select.defaultProps = {
   onFocus: () => null,
   inputRef: () => null,
   filterBy: (option, label, search) => label ? label.toLowerCase().indexOf(search.toLowerCase()) > -1 : false,
-  className: ""
+  className: "",
+  choiceStatus: false
 }
 
 export default Select

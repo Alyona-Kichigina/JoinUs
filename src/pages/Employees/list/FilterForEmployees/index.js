@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef, useEffect } from "react"
 import Input from "@Components/Fields/Input"
 import Select from "../../../../components/Fields/Select";
 import {FilterContainer} from "./style"
-import CheckBox from "@Components/Fields/CheckBox";
+
 import DatePicker from "../../../../components/Fields/DatePicker";
 import {PRESENT_DATE_FORMAT} from "@constants"
 
@@ -11,29 +11,9 @@ const options = [
   {ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},
 ]
 
-
-const arrayStatus = [
-  {
-    id: "statusEnd",
-    label: "Завершена",
-    icon: "/assets/icons/iconStatus/iconStatusEnd.svg"
-  },
-  {
-    id: "statusWait",
-    label: "Ожидание",
-    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
-  },
-  {
-    id: "statusWork",
-    label: "В процессе",
-    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
-  }
-]
-
 const FilterForEmployees = ({handleInput}) => {
   const [dataForInput, setDataForInput] = useState("")
   const [valueSelect, setValueSelect] = useState({})
-  const [value, setValue] = useState(false)
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
 
@@ -46,10 +26,6 @@ const FilterForEmployees = ({handleInput}) => {
   const handleSelect = useCallback((value) => {
     setValueSelect(value)
   }, [])
-
-  const onInputCha = (value, id) => {
-    setValue(value)
-  }
 
   const onInputDateFrom = useCallback((value, id) => {
       setDateFrom(value)
@@ -81,21 +57,9 @@ const FilterForEmployees = ({handleInput}) => {
           value={valueSelect}
           options={options}
           clearable={false}
+          choiceStatus
         />
       </div>
-      {/*в селекте можно написать компонет Option чтобы внутри него были чекбоксы*/}
-
-      {/*{arrayStatus.map(({label, icon, id}) => (*/}
-      {/*  <CheckBox*/}
-      {/*    key={id}*/}
-      {/*    label={label}*/}
-      {/*    id={id}*/}
-      {/*    value={value}*/}
-      {/*    onInput={onInputCha}*/}
-      {/*    iconLabel={icon}*/}
-      {/*    className="p-b-18"*/}
-      {/*  />*/}
-      {/*))}*/}
       <div className="flex">
         <div
           className="fs-12 color-light-blue-2 p-r-16 p-b-14 flex items-end"
