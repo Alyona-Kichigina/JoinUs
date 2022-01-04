@@ -132,12 +132,6 @@ class Contacts extends Component {
         // console.log("newData", newData)
         return (
             <div>
-                <PageHeader
-                {...this.props}
-                section="programs"
-                links={CONTENT_LINKS}
-                pageData={pageData}
-                 >
                     <div
                         className="pt-6 pl-4"
                     >
@@ -153,7 +147,6 @@ class Contacts extends Component {
                              data={newData}
                          />
                      </div>
-                </PageHeader>
             </div>
         );
     }

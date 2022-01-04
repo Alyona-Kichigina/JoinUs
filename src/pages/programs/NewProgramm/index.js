@@ -2,11 +2,15 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Input from "@Components/Fields/Input"
 import PageHeader from "../../../components/PageHeader";
-import InputForm from "../inputForm";
 import ModalSelectInput from "../../../components/ModalSelectInput";
 import ModalSidebar from "../../../components/ModalSidebar";
 import RadioButton from "../../../components/RadioButton";
-import {CONTENT_LINKS} from "../Constants";
+import { WithValidationHocRenderPropAdapter } from "../../../Validator";
+import { fieldMap, rules} from "./formConfig";
+import Form from "@Components/Forms/index"
+import { CONTENT_LINKS } from "../Constants";
+import { FormContainer } from "./style"
+import memoizeOne from "memoize-one";
 
 const pageData = {
     pageName: "Новая программа"
@@ -58,71 +62,19 @@ const users = [
     },
 ]
 
-const settings = (toggleModal, client, toggleCreatorModal, creator) => {
-   return {
-        1: [
-            {
-                id: 1,
-                name: "Наименование",
-                key: "name",
-                Component: Input,
-                props: {
-                    placeholder: ""
-                }
-            },
-            {
-                id: 2,
-                name: "Описание",
-                key: "description",
-                props: {
-                    minHeight: "178px",
-                    type: "textarea"
-                },
-                Component: Input
-            }
-        ],
-        2: [
-            {
-                id: 3,
-                name: "Срок программы",
-                key: "time",
-                Component: Input
-            },
-            {
-                id: 4,
-                name: "Заказчик",
-                key: "client",
-                Component: ({onInput}) =>
-                    <ModalSelectInput
-                        id="4"
-                        key="client"
-                        value={client}
-                        onInput={onInput}
-                        toggleModal={toggleModal}
-                />
-            },
-            {
-                id: 5,
-                name: "дата создания",
-                key: "date",
-                Component: Input
-            },
-            {
-                id: 6,
-                name: "создатель",
-                key: "creator",
-                Component: ({onInput}) =>
-                    <ModalSelectInput
-                        id="6"
-                        key="creator"
-                        value={creator}
-                        onInput={onInput}
-                        toggleModal={toggleCreatorModal}
-                    />
-            },
-        ]
-    }
-}
+const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
+    .reduce((acc, c) => {
+        const index = acc.findIndex(({ id }) => id === c)
+        if (index >= 0) {
+            acc[index] = { ...acc[index], disabled: true }
+        }
+        return acc
+    }, [...config])
+    .reduce((acc, f) => {
+        const { formColumn = 0 } = f
+        acc[formColumn].push(f)
+        return acc
+    }, [[], []]))
 
 class NewProgram extends Component {
     constructor(props) {
@@ -130,13 +82,8 @@ class NewProgram extends Component {
         this.state = {
             clientModal: false,
             creatorModal: false,
-            modalState: {},
-            name: "",
-            description: "",
-            time: "",
-            client: "",
-            date: "",
-            creator: ""
+            data: {},
+            modalState: {}
         }
         this.handleInputChange = this.handleInputChange.bind(this)
     }
@@ -160,30 +107,34 @@ class NewProgram extends Component {
     }
 
     saveNewProgram () {
-        console.log(this.state)
+        console.log(this.state.data)
+    }
+
+    inputDataOfProgram = (value) => {
+        this.setState(({ data }) => ({ data: { ...data, ...value } }))
+    }
+    saveDataOfProgram = (v) => {
+        console.log(v)
     }
 
     render() {
         const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, client, creator, modalState } = this.state
+        const { clientModal, creatorModal, modalState, data, data: { CLIENT, CREATOR } } = this.state
         const toggleModal = () => {
             this.setState({clientModal: !clientModal})
         }
         const toggleCreatorModal = () => {
             this.setState({creatorModal: !creatorModal})
         }
+        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, CLIENT, toggleCreatorModal, CREATOR))
         return (
-            <PageHeader
-                {...this.props}
-                section="programs"
-                pageData={pageData}
-            >
+            <div>
                 <ModalSidebar
                     title="Выбор заказчика"
                     closeModal={toggleModal}
                     isOpen={clientModal}
                     handleSave={() => this.setState({
-                        client: modalState,
+                        data: { ...data, CLIENT: modalState },
                         clientModal: !clientModal
                     })}
                 >
@@ -230,7 +181,7 @@ class NewProgram extends Component {
                     closeModal={toggleCreatorModal}
                     isOpen={creatorModal}
                     handleSave={() => this.setState({
-                        creator: modalState,
+                        data: { ...data, CREATOR: modalState },
                         creatorModal: !creatorModal
                     })}
                 >
@@ -272,30 +223,54 @@ class NewProgram extends Component {
                      }
                     </div>
                 </ModalSidebar>
-                <div className="h-full flex flex-col justify-between">
-                    <InputForm
-                        state={this.state}
-                        settings={settings(toggleModal, client, toggleCreatorModal, creator)}
-                        onInput={this.handleInputChange}
-                    />
-                    <div
-                        className="flex justify-end pb-20 pr-8"
-                    >
-                        <div
+                <WithValidationHocRenderPropAdapter
+                    onInput={this.inputDataOfProgram}
+                    onSubmit={this.saveDataOfProgram}
+                    value={data}
+                    rules={rules}
+                >
+                    {(formProps) => {
+                        const { formValid, onSubmit, onInput } = formProps
+                          return (
+                            <div className="h-full flex flex-col justify-between">
+                            <div
+                                className="mx-8"
+                            >
+                                <FormContainer>
+                                    <Form
+                                        {...formProps}
+                                        fields={firstForm}
+                                        value={data}
+                                        onInput={onInput}
+                                    />
+                                    <Form
+                                        {...formProps}
+                                        fields={SecondForm}
+                                        value={data}
+                                        onInput={onInput}
+                                    />
+                                </FormContainer>
+                            </div>
+                            <div
+                            className="flex justify-end pb-20 pr-8"
+                            >
+                            <div
                             onClick={() => goBack()}
                             className="white btn width-m mr-4"
-                        >
+                            >
                             Отмена
-                        </div>
-                        <button
+                            </div>
+                            <button
                             className="blue btn width-m"
                             onClick={() => this.saveNewProgram()}
-                        >
+                            >
                             Сохранить
-                        </button>
-                    </div>
-                </div>
-            </PageHeader>
+                            </button>
+                            </div>
+                            </div>
+                          )}}
+                </WithValidationHocRenderPropAdapter>
+            </div>
         );
     }
 }

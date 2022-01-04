@@ -160,107 +160,101 @@ class Goals extends Component {
 
         return (
             <div>
-                <PageHeader
-                    {...this.props}
-                    section="programs"
-                    pageData={pageData}
+                <Modal
+                    isOpen={editModal}
+                    title="редактирование цели"
+                    closeModal={() => this.setState({editModal: false})}
+                    handleSave={() => saveEditDocument(modalData)}
                 >
-                    <Modal
-                        isOpen={editModal}
-                        title="редактирование цели"
-                        closeModal={() => this.setState({editModal: false})}
-                        handleSave={() => saveEditDocument(modalData)}
+                    <div>
+                        <div className="pt-8">
+                    <span
+                        className="font-normal color-light-blue-2"
                     >
-                        <div>
-                            <div className="pt-8">
-                        <span
-                            className="font-normal color-light-blue-2"
-                        >
-                            Наименование цели
-                        </span>
-                                <Input
-                                    value={description}
-                                    key="description"
-                                    id="description"
-                                    onInput={() => handleInputChange(document.getElementById('description').value, "description")}
-                                    className="mt-2 font-normal"
-                                />
-                            </div>
-                            <div className="pt-4">
-                        <span
-                            className="font-normal color-light-blue-2"
-                        >
-                            Номер п.п.
-                        </span>
-                                <Input
-                                    className="mt-2"
-                                />
-                            </div>
+                        Наименование цели
+                    </span>
+                            <Input
+                                value={description}
+                                key="description"
+                                id="description"
+                                onInput={() => handleInputChange(document.getElementById('description').value, "description")}
+                                className="mt-2 font-normal"
+                            />
                         </div>
-                    </Modal>
-                    <Modal
-                        isOpen={documentSelection}
-                        title="Выбор цели"
-                        closeModal={openDocumentSelection}
-                        handleSave={() => saveEditDocument(selectedGoals)}
+                        <div className="pt-4">
+                    <span
+                        className="font-normal color-light-blue-2"
                     >
-                        <ModalTableHeader>
-                            <div>№</div>
-                            <div>
-                                Наименование цели
-                            </div>
-                            <div>
-                                Наименование программы
-                            </div>
-                        </ModalTableHeader>
-                        {
-                            items.map(({description, id_goal}, index) => {
-                                return (
-                                    <ModalTableBody>
-                                        <div className="flex items-center">
-                                            {index + 1}
-                                        </div>
-                                        <div className="flex items-center">
-                                            <div
-                                                className="pr-2"
-                                                dangerouslySetInnerHTML={{__html: DocumentIcon}}
-                                            />
+                        Номер п.п.
+                    </span>
+                            <Input
+                                className="mt-2"
+                            />
+                        </div>
+                    </div>
+                </Modal>
+                <Modal
+                    isOpen={documentSelection}
+                    title="Выбор цели"
+                    closeModal={openDocumentSelection}
+                    handleSave={() => saveEditDocument(selectedGoals)}
+                >
+                    <ModalTableHeader>
+                        <div>№</div>
+                        <div>
+                            Наименование цели
+                        </div>
+                        <div>
+                            Наименование программы
+                        </div>
+                    </ModalTableHeader>
+                    {
+                        items.map(({description, id_goal}, index) => {
+                            return (
+                                <ModalTableBody>
+                                    <div className="flex items-center">
+                                        {index + 1}
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div
+                                            className="pr-2"
+                                            dangerouslySetInnerHTML={{__html: DocumentIcon}}
+                                        />
+                                        {description}
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div>
                                             {description}
                                         </div>
-                                        <div className="flex items-center justify-between">
-                                            <div>
-                                                {description}
-                                            </div>
-                                            <ChekBox
-                                                id="selectedGoals"
-                                                value={selectedGoals}
-                                                checkBoxValue={id_goal}
-                                                onInput={checkDocument}
-                                            />
-                                        </div>
-                                    </ModalTableBody>
-                                )
-                            })
-                        }
-                    </Modal>
-                    <div className="pt-8 pb-6 pl-4">
-                        <button
-                            className="blue btn width-m pt-1.5"
-                        >
-                            + Добавить документ
-                        </button>
-                        <button
-                            className="blue btn width-m pt-1.5 ml-4"
-                            onClick={openDocumentSelection}
-                        >
-                            Выбрать документ
-                        </button>
-                    </div>
-                    <AppList
-                        settings={settings(editModal, toggleModal, handleEdit)}
-                        data={items}
-                    />
-                </PageHeader>
+                                        <ChekBox
+                                            id="selectedGoals"
+                                            value={selectedGoals}
+                                            checkBoxValue={id_goal}
+                                            onInput={checkDocument}
+                                        />
+                                    </div>
+                                </ModalTableBody>
+                            )
+                        })
+                    }
+                </Modal>
+                <div className="pt-8 pb-6 pl-4">
+                    <button
+                        className="blue btn width-m pt-1.5"
+                    >
+                        + Добавить документ
+                    </button>
+                    <button
+                        className="blue btn width-m pt-1.5 ml-4"
+                        onClick={openDocumentSelection}
+                    >
+                        Выбрать документ
+                    </button>
+                </div>
+                <AppList
+                    settings={settings(editModal, toggleModal, handleEdit)}
+                    data={items}
+                />
             </div>
         );
     }

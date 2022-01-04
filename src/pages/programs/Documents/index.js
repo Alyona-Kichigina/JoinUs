@@ -146,109 +146,101 @@ class Documents extends Component {
         }
         return (
             <div>
-                <PageHeader
-                    {...this.props}
-                    section="programs"
-                    pageData={pageData}
-                    url="programs"
-                    links={CONTENT_LINKS}
+                <Modal
+                    isOpen={editModal}
+                    title="редактирование документа"
+                    closeModal={closeModal}
+                    handleSave={() => saveEditDocument(modalData)}
                 >
-                    <Modal
-                        isOpen={editModal}
-                        title="редактирование документа"
-                        closeModal={closeModal}
-                        handleSave={() => saveEditDocument(modalData)}
+                    <div>
+                        <div className="pt-8">
+                    <span
+                        className="font-normal color-light-blue-2"
                     >
-                        <div>
-                            <div className="pt-8">
-                        <span
-                            className="font-normal color-light-blue-2"
-                        >
-                            Наименование документа
-                        </span>
-                                <Input
-                                    value={document_name}
-                                    key="document_name"
-                                    id="document_name"
-                                    onInput={() => handleInputChange(document.getElementById('document_name').value, "document_name")}
-                                    className="mt-2 font-normal"
-                                />
-                            </div>
-                            <div className="pt-4">
-                        <span
-                            className="font-normal color-light-blue-2"
-                        >
-                            Номер п.п.
-                        </span>
-                                <Input
-                                    className="mt-2"
-                                />
-                            </div>
+                        Наименование документа
+                    </span>
+                            <Input
+                                value={document_name}
+                                key="document_name"
+                                id="document_name"
+                                onInput={() => handleInputChange(document.getElementById('document_name').value, "document_name")}
+                                className="mt-2 font-normal"
+                            />
                         </div>
-                    </Modal>
-                    <Modal
-                        isOpen={documentSelection}
-                        title="Выбор документа"
-                        closeModal={openDocumentSelection}
-                        handleSave={() => saveEditDocument(selectedDocuments)}
+                        <div className="pt-4">
+                    <span
+                        className="font-normal color-light-blue-2"
                     >
-                        <ModalTableHeader>
-                            <div>№</div>
-                            <div>
-                                Наименование документа
-                            </div>
-                            <div>
-                                Наименование программы
-                            </div>
-                        </ModalTableHeader>
-                           {
-                               items.map(({document_name, id_document}, index) => {
-                                   return (
-                                       <ModalTableBody>
-                                           <div className="flex items-center">
-                                               {index + 1}
-                                           </div>
-                                           <div className="flex items-center">
-                                               <div
-                                                   className="pr-2"
-                                                   dangerouslySetInnerHTML={{__html: DocumentIcon}}
-                                               />
+                        Номер п.п.
+                    </span>
+                            <Input
+                                className="mt-2"
+                            />
+                        </div>
+                    </div>
+                </Modal>
+                <Modal
+                    isOpen={documentSelection}
+                    title="Выбор документа"
+                    closeModal={openDocumentSelection}
+                    handleSave={() => saveEditDocument(selectedDocuments)}
+                >
+                    <ModalTableHeader>
+                        <div>№</div>
+                        <div>
+                            Наименование документа
+                        </div>
+                        <div>
+                            Наименование программы
+                        </div>
+                    </ModalTableHeader>
+                       {
+                           items.map(({document_name, id_document}, index) => {
+                               return (
+                                   <ModalTableBody>
+                                       <div className="flex items-center">
+                                           {index + 1}
+                                       </div>
+                                       <div className="flex items-center">
+                                           <div
+                                               className="pr-2"
+                                               dangerouslySetInnerHTML={{__html: DocumentIcon}}
+                                           />
+                                           {document_name}
+                                       </div>
+                                       <div className="flex items-center justify-between">
+                                           <div>
                                                {document_name}
                                            </div>
-                                           <div className="flex items-center justify-between">
-                                               <div>
-                                                   {document_name}
-                                               </div>
-                                               <ChekBox
-                                                   id="selectedDocuments"
-                                                   value={selectedDocuments}
-                                                   checkBoxValue={id_document}
-                                                   onInput={checkDocument}
-                                               />
-                                           </div>
-                                       </ModalTableBody>
-                                   )
-                               })
-                           }
-                    </Modal>
-                    <div className="pt-8 pb-6 pl-4">
-                        <button
-                            className="blue btn width-m pt-1.5"
-                        >
-                            + Добавить документ
-                        </button>
-                        <button
-                            className="blue btn width-m pt-1.5 ml-4"
-                            onClick={openDocumentSelection}
-                        >
-                            Выбрать документ
-                        </button>
-                    </div>
-                    <AppList
-                        settings={settings(editModal, closeModal, handleEdit)}
-                        data={items}
-                    />
-                </PageHeader>
+                                           <ChekBox
+                                               id="selectedDocuments"
+                                               value={selectedDocuments}
+                                               checkBoxValue={id_document}
+                                               onInput={checkDocument}
+                                           />
+                                       </div>
+                                   </ModalTableBody>
+                               )
+                           })
+                       }
+                </Modal>
+                <div className="pt-8 pb-6 pl-4">
+                    <button
+                        className="blue btn width-m pt-1.5"
+                    >
+                        + Добавить документ
+                    </button>
+                    <button
+                        className="blue btn width-m pt-1.5 ml-4"
+                        onClick={openDocumentSelection}
+                    >
+                        Выбрать документ
+                    </button>
+                </div>
+                <AppList
+                    settings={settings(editModal, closeModal, handleEdit)}
+                    data={items}
+                />
             </div>
         );
     }

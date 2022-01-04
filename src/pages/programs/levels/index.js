@@ -201,11 +201,6 @@ class Levels extends Component {
         return (
             <div className="h-full">
                 <div>
-                    <PageHeader
-                        {...this.props}
-                        section="programs"
-                        pageData={pageData}
-                    />
                     <div>
                          <div className="bg-white h-full">
                              <div className="pt-6 mb-4 ml-4">
