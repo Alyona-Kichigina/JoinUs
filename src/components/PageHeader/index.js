@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BreadCrumbs from "../Breadcrumbs"
-import { NAV_BUTTON_LINKS } from "@Pages/programs/NewProgramm/Constants";
+import {NAV_BUTTON_LINKS} from "../../pages/programs/Constants";
 import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {
@@ -22,7 +22,8 @@ class PageHeader extends Component {
                 <div
                     className="bg-white flex-container m-b-24 hidden"
                     style={{
-                        "borderRadius": "4px"
+                        "borderRadius": "4px",
+                        "height": "90%"
                     }}
                 >
                     <NavContentBtn

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const NawContentBtn = styled.div`
-    padding: 0 16px 0 16px;
+    padding: 16px 16px 0 16px;
     min-height: 46px;
-  font-weight: 700;
+    font-weight: 700;
     border-bottom: 2px solid  var(--color-light-grey-2);
     border-radius: 4px 4px 0 0;
 `

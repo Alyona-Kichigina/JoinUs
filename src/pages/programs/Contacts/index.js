@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
-import {CONTENT_LINKS} from "../NewProgramm/Constants";
+import {CONTENT_LINKS} from "../../programs/Constants";
 import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../components/APIList";
 
 
@@ -131,12 +131,6 @@ class Contacts extends Component {
         )
         return (
             <div>
-                <PageHeader
-                {...this.props}
-                section="programs"
-                links={CONTENT_LINKS}
-                pageData={pageData}
-                 >
                     <div
                         className="pt-6 pl-4"
                     >
@@ -152,7 +146,6 @@ class Contacts extends Component {
                              data={newData}
                          />
                      </div>
-                </PageHeader>
             </div>
         );
     }

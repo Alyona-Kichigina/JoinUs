@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import NavContentBtn from "../../../components/NavContentButton";
-import { CONTENT_LINKS } from "../NewProgramm/Constants";
+import { CONTENT_LINKS } from "../../programs/Constants"
 // import Breadcrumbs from "../../components/Breadcrumbs";
 import AppList from "../../../components/AppList";
 import { ActiveIcon } from "../../Constants"
@@ -201,11 +201,6 @@ class Levels extends Component {
         return (
             <div className="h-full">
                 <div>
-                    <PageHeader
-                        {...this.props}
-                        section="programs"
-                        pageData={pageData}
-                    />
                     <div>
                          <div className="bg-white h-full">
                              <div className="pt-6 mb-4 ml-4">
