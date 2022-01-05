@@ -1,51 +1,9 @@
 import React, {Component} from 'react';
-import NavContentBtn from "../../../components/NavContentButton";
-import { CONTENT_LINKS } from "../Constants"
 import AppList from "../../../components/AppList";
 import axios from 'axios';
 import {NavLink} from "react-router-dom";
 import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../components/APIList";
-
-const settings = [
-    {
-        id: 1,
-        key: "number",
-        name: "№",
-        size: "5%"
-    },
-    {
-        id: 2,
-        key: "program_name",
-        name: "Программа",
-        size: "25%",
-        component: ({data}) => {
-            return (
-                <NavLink
-                    to={`/programs/${data}/levels`}
-                >
-                    {data}
-                </NavLink>
-            )
-        }
-    },
-    {
-        id: 3,
-        key: "duration_day",
-        name: "Срок адаптации",
-        component: ({data}) => (
-                <div>
-                    { data } дней
-                </div>
-            ),
-        size: "15%"
-    },
-    {
-        id: 4,
-        key: "description",
-        name: "Комментарии",
-        size: "55%"
-    }
-]
+import { settings } from "./Settings";
 
 class ProgramsList extends Component {
     constructor(props) {

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import BreadCrumbs from "../Breadcrumbs"
-import {NAV_BUTTON_LINKS} from "../../pages/programs/Constants";
 import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {
     render() {
-        const { pageData, section, children } = this.props
+        const { pageData, section, children, links } = this.props
         return (
             <div className="h-full flex-container">
                 <div>
@@ -28,7 +27,7 @@ class PageHeader extends Component {
                 >
                     <NavContentBtn
                         {...this.props}
-                        links={NAV_BUTTON_LINKS}
+                        links={links}
 
                     />
                     {children}

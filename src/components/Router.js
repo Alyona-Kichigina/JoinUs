@@ -1,38 +1,20 @@
 import React from "react"
-import { Route, Switch, Redirect } from "react-router-dom"
-import Levels from "../pages/programs/levels";
-import ProgramsList from "../pages/programs/ProgramsList";
+import { Route, Switch } from "react-router-dom"
 import EmptyPage from "../pages/EmptyPage";
 import Employees from "../pages/Employees";
 import Appeal from "../pages/Аppeal"
 import Reference from "../pages/Reference"
 import Settings from "../pages/Settings"
-import Contacts from "../pages/programs/Contacts"
-import Documents from "../pages/programs/Documents";
-import Goals from "../pages/programs/Goals";
-import NewProgramm from "../pages/programs/NewProgramm";
 import Employ from "../pages/Employees/item";
 import BlocksPage from "../pages/Blocks";
 import Programs from "../pages/programs"
+import Stages from "../pages/programs/Stages";
 
 const Router = () => (
     <Switch>
-        {/*<Route exact path="/programs/:programName/levels" component={Levels} />*/}
-        {/*<Route path="/programs/:programName/contacts" component={Contacts} />*/}
-        {/*<Route path="/programs/:programName/documents" component={Documents} />*/}
-        {/*<Route path="/programs/:programName/goals" component={Goals} />*/}
-        {/*<Route path="/programs/:programName/general" component={NewProgramm} />*/}
-        <Route path="/programs" component={Programs}>
-                {/*<Route path="/programs/:programName/:pageName" component={Programs} />*/}
-        </Route>
-                {/*<Route path="/programs/goals" component={Goals} />*/}
+        <Route path="/programs" component={Programs} />
+        <Route exact path="/programs/:programName/stages" component={Stages} />
         <Route path="/programs/blocks" component={BlocksPage} />
-        {/*<Route exact path="/programs/levels" component={Levels} />*/}
-        {/*<Route path="/programs/contacts" component={Contacts} />*/}
-        {/*<Route path="/programs/documents" component={Documents} />*/}
-        {/*<Route path="/programs/goals" component={Goals} />*/}
-        {/*<Route path="/programs/new_programm/general" component={NewProgramm} />*/}
-        {/*<Route path="/programs" component={ProgramsList} />*/}
         <Route path="/employees/new_employ" component={Employ} />
         <Route path="/employees" component={Employees} />
         <Route path="/appeal" component={Appeal} />

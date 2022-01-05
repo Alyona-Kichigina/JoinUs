@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../components/PageHeader";
 import AppList from "../../../components/AppList";
-import {CONTENT_LINKS} from "../../programs/Constants";
 import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../components/APIList";
-
-
-const pageData = {
-    pageName: "Программа для разработчиков"
-}
+import axios from "axios";
 
 const Contact = ({data}) => {
     return (
@@ -56,7 +50,6 @@ const settings = [
         id: 1,
         key: "number",
         name: "№",
-        // component: Contact,
         size: "5%"
     },
     {
@@ -91,15 +84,12 @@ class Contacts extends Component {
         }
     }
     componentDidMount() {
-        fetch(`${DEFAULT_URL}/${ADAPTATION_CONTACTS}`, {
-            method: "GET",
-        })
-            .then(res => res.json())
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_CONTACTS}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        items: response
+                        items: response.data
                     })
                 },
                 (error) => {
@@ -129,7 +119,6 @@ class Contacts extends Component {
                 }
             })
         )
-        // console.log("newData", newData)
         return (
             <div>
                     <div
