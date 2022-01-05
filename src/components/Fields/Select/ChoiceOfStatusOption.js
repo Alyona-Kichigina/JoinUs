@@ -48,19 +48,21 @@ const ChoiceOfStatusOption = ({onSelect}) => {
     <OptionContainer
       className=" flex flex-col"
     >
-      {arrayStatus.map((item) => (
-        <StyleCheckbox
-          key={item.ID}
-          label={item.label}
-          id={item.ID}
-          value={value}
-          onInput={onInput}
-          iconLabel={item.icon}
-          checkBoxValue={item}
-          returnObjects
-        />
-      ))}
-
+      {arrayStatus.map(item => {
+        const { ID, label, icon} = item
+        return (
+          <StyleCheckbox
+            key={ID}
+            label={label}
+            id={ID}
+            value={value}
+            onInput={onInput}
+            iconLabel={icon}
+            checkBoxValue={item}
+            returnObjects
+          />
+        )
+      })}
     </OptionContainer>
   );
 };
