@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import CheckBox from "@Components/Fields/CheckBox";
@@ -15,39 +15,49 @@ const StyleCheckbox = styled(CheckBox)`
 
 const arrayStatus = [
   {
-    id: "statusEnd",
+    ID: "statusEnd",
     label: "Завершена",
     icon: "/assets/icons/iconStatus/iconStatusEnd.svg"
   },
   {
-    id: "statusWait",
+    ID: "statusWait",
     label: "Ожидание",
     icon: "/assets/icons/iconStatus/iconStatusWait.svg"
   },
   {
-    id: "statusWork",
+    ID: "statusWork",
     label: "В процессе",
     icon: "/assets/icons/iconStatus/iconStatusWait.svg"
   }
 ]
 
 const ChoiceOfStatusOption = ({onSelect}) => {
-  const [value, setValue] = useState(false)
-  const onInput = (v) => {
-console.log(v,5454)
-  }
+  const [value, setValue] = useState([])
+
+  const onInput = useCallback((value, id) => {
+      const checkedStatus = arrayStatus.reduce((acc, item) => {
+        if (item.ID === id) {
+          acc.push(item)
+        }
+        return acc
+      }, [...value])
+      setValue(value ? checkedStatus.map(item => item) : [])
+      onSelect(value ? checkedStatus.map(item => item) : [])
+    }, [value, setValue])
   return (
     <OptionContainer
       className=" flex flex-col"
     >
-      {arrayStatus.map(({label, icon, id}) => (
+      {arrayStatus.map((item) => (
         <StyleCheckbox
-          key={id}
-          label={label}
-          id={id}
+          key={item.ID}
+          label={item.label}
+          id={item.ID}
           value={value}
           onInput={onInput}
-          iconLabel={icon}
+          iconLabel={item.icon}
+          checkBoxValue={item}
+          returnObjects
         />
       ))}
 

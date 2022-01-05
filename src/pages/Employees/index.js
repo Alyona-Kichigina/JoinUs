@@ -19,7 +19,6 @@ class Employees extends Component {
   }
 
   addEmployees = async () => {
-    console.log(dayjs().month())
     // await fetch('192.168.0.102:9000/swagger', {
     //   method: 'GET',
     //   headers: {

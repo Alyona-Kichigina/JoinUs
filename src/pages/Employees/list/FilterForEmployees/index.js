@@ -5,6 +5,7 @@ import {FilterContainer} from "./style"
 
 import DatePicker from "../../../../components/Fields/DatePicker";
 import {PRESENT_DATE_FORMAT} from "@constants"
+import ChoiceOfStatusOption from "../../../../components/Fields/Select/ChoiceOfStatusOption";
 
 const options = [
   {ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},
@@ -16,7 +17,6 @@ const FilterForEmployees = ({handleInput}) => {
   const [valueSelect, setValueSelect] = useState({})
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
-
 
   const onInput = useCallback((value, id) => {
     setDataForInput(value)
@@ -37,6 +37,10 @@ const FilterForEmployees = ({handleInput}) => {
     handleInput(value, id)
   }, [handleInput])
 
+  const selectOption = useCallback((value) => {
+    // console.log(value)
+  }, [])
+
   return (
     <FilterContainer className="m-b-16">
       <div className="p-r-24">
@@ -48,6 +52,9 @@ const FilterForEmployees = ({handleInput}) => {
           onInput={onInput}
         />
       </div>
+      <ChoiceOfStatusOption
+        onSelect={selectOption}
+      />
       <div className="p-r-24">
         <div className="fs-12 color-light-blue-2 p-b-5">Статус</div>
         <Select
@@ -57,6 +64,7 @@ const FilterForEmployees = ({handleInput}) => {
           value={valueSelect}
           options={options}
           clearable={false}
+          mult
           choiceStatus
         />
       </div>

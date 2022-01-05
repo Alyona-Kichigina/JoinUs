@@ -203,7 +203,6 @@ class DatePicker extends Component {
                                       dropdownMatchSelectWidth={false}
                                       value={String(month)}
                                       onChange={selectedMonth => {
-                                        console.log(8)
                                         const newValue = value.clone();
                                         newValue.month(parseInt(selectedMonth, 10));
                                         onChange(newValue);

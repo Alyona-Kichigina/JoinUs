@@ -8,7 +8,7 @@ export const LeftMenuItem = styled.div`
   transition: all 0.5s ease 0s;
   height: 48px;
   border-radius: 8px;
-  margin: 0 16px 0 16px;
+  margin: 0 16px 1px 16px;
   display: flex;
   align-items: center;
   ${props => !props.hideToolbar} {
@@ -35,6 +35,9 @@ export const LeftMenuContainer = styled.div`
       background: var(--blue-gradient);
       color: var(--color-white);
       --color-light-blue-2: var(--color-white);
+      &:hover {
+        background: var(--color-blue-hover);
+      }
     }
   }
 `
@@ -88,6 +91,14 @@ export const ToggleToolbar = styled.div`
   &.close {
     .close {
       animation: closeImg .6s linear forwards;
+    }
+  }
+  &:hover {
+    color: var(--color-blue);
+    .arrow {
+      path {
+        fill: var(--color-blue);
+      }
     }
   }
 `

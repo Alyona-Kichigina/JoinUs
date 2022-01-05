@@ -129,7 +129,6 @@ class Contacts extends Component {
                 }
             })
         )
-        // console.log("newData", newData)
         return (
             <div>
                 <PageHeader

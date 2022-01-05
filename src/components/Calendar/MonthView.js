@@ -9,7 +9,6 @@ const MonthView = ({ currentYear, currentMonth, normalizedVal, range, containerW
   const [originSelectedDay, setOriginSelectedDay] = useState()
   const [selectedRange, setSelectedRange] = useState()
   const currentSelectedRange = selectedRange || normalizedVal
-  console.log(currentMonth)
   const { daysCount, dayOfTheWeek } = useMemo(() => {
     const Calendar = []
     for (let i = 1; i < 13; i++) {

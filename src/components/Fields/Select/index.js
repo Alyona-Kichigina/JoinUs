@@ -42,7 +42,8 @@ class Select extends PureComponent {
       multipleContainerMeta: {},
       // eslint-disable-next-line react/no-unused-state
       optionsPipe: this.createOptionsPipe(),
-      search: ""
+      search: "",
+      multipleData: []
     }
   }
 
@@ -235,7 +236,7 @@ class Select extends PureComponent {
   }
 
   selectOption = (optionValue) => {
-    console.log(optionValue, 4)
+    this.setState({multipleData: optionValue})
     const { props: { returnOption, valueKey, multiple, value = [] } } = this
     const normalizeValue = returnOption ? optionValue : optionValue[valueKey]
     if (multiple) {
@@ -332,13 +333,15 @@ class Select extends PureComponent {
         children, disabled, searchable, id, multiple, allWaysExpandedMultipleSelection, tipMaxSize, tipMinSize,
         value, labelKey, valueKey, returnOption, clearable, placeholder,
         remote, loading, awaitOfUserInputLabel, className, showToggleButton,
-        choiceStatus
+        choiceStatus, mult
       },
       state: {
         open, search, filteredOptions, typeAheadPointer, multipleContainerMeta: { multipleContainerStyles },
-        overflowMultipleItems
+        overflowMultipleItems, multipleData
       }
     } = this
+    // Object { ID: 1, SYS_NAME: "aaa" }
+
     return (
       <RenderOverlayMenu
         onOpenOverlayMenu={this.openSelect}
@@ -367,45 +370,24 @@ class Select extends PureComponent {
                         disabled={disabled}
                         placeholder={this.getPlaceholder(allWaysExpandedMultipleSelection, multiple, open, placeholder, value)}
                         readOnly={!searchable}
-                        value={open ? search : multiple ? "" : this.getLabel(value)}
+                        value={open
+                            ? ""
+                            : this.getLabel(value)}
                         onInput={this.handleSearchInput}
                         onKeyDown={this.onSearchKeyDown}
                         onFocus={onOpenOverlayMenu}
                       />
-                      {(multiple || allWaysExpandedMultipleSelection) && (
-                        <MultipleValuePrerenderContainer style={multipleContainerStyles}>
-                          <MultipleValueInputContainer
-                            className="overflow-hidden"
-                            ref={refMultipleValueContainer}
-                          >
-                            {this.renderMultipleOptions()}
-                          </MultipleValueInputContainer>
-                        </MultipleValuePrerenderContainer>
-                      )}
-                      <OverlayItemsContainer ref={refSelectOverlayItems}>
-                        {overflowMultipleItems > 0 && !allWaysExpandedMultipleSelection && !open && (
-                          <div className="whitespace-nowrap p-l-3 color-darken-blue fs-12">
-                            and {overflowMultipleItems} others
+                      {mult && multipleData && multipleData.length > 0 && (
+                        multipleData.map(({label, icon, ID}) => (
+                          <div className="flex items-center">
+                            <img src={icon} alt="" className="p-r-8"/>
+                            <div
+                              className="p-r-15 fz14"
+                            >
+                              { label }
+                            </div>
                           </div>
-                        )}
-                        {clearable && !(Array.isArray(value) ? value.length === 0 : !value) && !disabled && (
-                          <RemoveIconContainer
-                            type="button"
-                            disabled={disabled}
-                            title="Delete"
-                            onMouseDown={this.clearSelection}
-                          >
-                            {open && multiple ? <div className="fs-12">Clear all</div> : <IconClose size="12" />}
-                          </RemoveIconContainer>
-                        )}
-                      </OverlayItemsContainer>
-                      {showToggleButton && (
-                        <ToggleIconContainer
-                          onMouseDown={open ? this.closeSelect : null}
-                          type="button"
-                        >
-                          <ToggleIndicator size="14" className={`${open ? 'up' : 'down'}`} />
-                        </ToggleIconContainer>
+                        ))
                       )}
                     </div>
                     {children}
@@ -455,13 +437,8 @@ class Select extends PureComponent {
                     )}
                     {filteredOptions.length === 0 && (
                       <NoOptionsLabel className="color-darken-blue p-5">
-                        {remote ? loading ? "Download..." : search ? "Nothing found" : awaitOfUserInputLabel : "No data"}
+                        {remote ? loading ? "Загружается..." : "Ничего не найдено" : "Нет данных"}
                       </NoOptionsLabel>
-                    )}
-                    {multiple && value && !allWaysExpandedMultipleSelection && (
-                      <SelectedOptionsScrollBar options={scrollOptions}>
-                        {this.renderMultipleOptions()}
-                      </SelectedOptionsScrollBar>
                     )}
                   </OverlayMenu>
                 </SelectContainer>

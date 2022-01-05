@@ -44,6 +44,7 @@ body {
     --font: "Nunito", sans-serif;
 
     --color-blue: #009BF6;
+    --color-blue-hover: linear-gradient(#0095EC, #0095EC);
     --color-light-blue: #F2F9FF;
     --color-light-blue-2: #56809F;
     --color-darken-blue: #0C2B3E;
@@ -51,6 +52,7 @@ body {
 
     --color-light-grey: #F4F6FA;
     --color-light-grey-2: #EBEFF2;
+    --color-light-grey-hover: #E9ECF1;
 
     --color-white: #ffffff;
 
@@ -216,6 +218,7 @@ a {
 a:active,
 a:hover {
     outline-width: 0; /* Remove the outline when hovering in all browsers */
+    color: var(--color-blue);
 }
 code,
 kbd,

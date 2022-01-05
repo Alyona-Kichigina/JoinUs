@@ -13,13 +13,18 @@
   transition: color, background-color;
   transition-duration: 250ms;
   min-height: var(--height-button);
-
   &.blue {
     background: var(--blue-gradient);
     color: var(--color-white);
+    &:hover {
+      background: var(--color-blue-hover)
+    }
   }
   &.grey {
     background: var(--color-light-grey);
+    &:hover {
+      background: var(--color-light-grey-hover);
+    }
   }
   &.white {
     background: var(--color-white);
@@ -27,6 +32,10 @@
     border-color: var(--color-blue);
     border-width: 2px;
     border-style: solid;
+    &:hover {
+      border-color: var(--color-blue-hover);
+      color: var(--color-blue-hover);
+    }
   }
   &.width-mid {
     width: 118px;

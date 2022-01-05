@@ -19,9 +19,7 @@ const BreadCrumbs = props => {
                             className="flex items-center">
                             {
                                 !!index ? (
-                                    <BreadcrumbsDot
-                                        className="ml-4"
-                                    />
+                                    <BreadcrumbsDot/>
                                 ) : (
                                     <NavLink
                                         to={`${newPath[0].link}`}

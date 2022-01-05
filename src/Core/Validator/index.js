@@ -32,7 +32,6 @@ export default class Validator {
             })
           }
           if (Object.keys(nextErrors).length > 0) {
-            console.log(path.slice(0, pathIndex), errors, nextErrors)
             set(path.slice(0, pathIndex), errors, nextErrors)
           }
           return errors
@@ -51,7 +50,6 @@ export default class Validator {
         return fieldErrors
       }, [])
       if (fieldErrors.length > 0) {
-        console.log(path, errors, fieldErrors)
         set(path, errors, fieldErrors)
       }
       return errors
