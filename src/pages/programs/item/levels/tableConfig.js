@@ -1,6 +1,6 @@
 import React from "react";
 import Actions from "./Actions";
-import {ActiveIcon} from "../../Constants";
+import {ActiveIcon} from "../../../Constants";
 
 const ActiveIndicator = ({ data } ) => data ? (
     <div className="flex justify-between items-center">

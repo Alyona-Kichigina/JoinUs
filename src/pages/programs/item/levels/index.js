@@ -1,4 +1,5 @@
 import React, {Component, useState} from 'react';
+import axios from "axios";
 import NavContentBtn from "../../../../components/NavContentButton";
 import { CONTENT_LINKS } from "../../Constants"
 // import Breadcrumbs from "../../components/Breadcrumbs";
@@ -6,6 +7,9 @@ import AppList from "../../../../components/AppList";
 import { ActiveIcon } from "../../../Constants"
 import Actions from "./Actions";
 import PageHeader from "../../../../components/PageHeader";
+import {DEFAULT_URL, ADAPTATION_LEVELS} from "../../../../components/APIList"
+import {NavLink} from "react-router-dom";
+import {settings} from "./tableConfig";
 
 const pageData = {
     pageName: "Программа для разработчиков"

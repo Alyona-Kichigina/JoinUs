@@ -9,6 +9,8 @@ import Contacts from "./item/Contacts";
 import Documents from "./item/Documents";
 import NewProgram from "./item/NewProgramm";
 import ProgramsList from "./list/ProgramsList";
+import General from "../Employees/item/General";
+import levelStages from "./Stages/Stages";
 
 
 const pageData = {
