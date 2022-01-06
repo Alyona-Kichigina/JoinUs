@@ -12,13 +12,11 @@ class AppList extends Component {
 
         const TableRows = (nestedKey) => {
             const result = []
-
             for (let i = 0; i < data.length; i++) {
                 const rowData = data[i]
-                const rowKey = settings[i].key
                 result.push(
                     <div
-                        key={rowKey}
+                        key={i}
                     >
                         {
                             <div>
