@@ -29,6 +29,20 @@ export const CONTENT_LINKS = [
         link: "goals"
     }
 ]
+export const STAGES_LINKS = [
+    {
+        name: "общие",
+        link: "general"
+    },
+    {
+        name: "Этапы",
+        link: "levelStages"
+    },
+    {
+        name: "Программы",
+        link: "programs"
+    }
+]
 export const NAV_BUTTON_LINKS = [
     {
         name: "Общие",

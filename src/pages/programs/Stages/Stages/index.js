@@ -1,90 +1,14 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../../components/PageHeader";
 import AppList from "../../../../components/AppList";
-import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../../Constants";
 import axios from "axios";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
-import { DEFAULT_URL, ADAPTATION_GOALS } from "../../../../components/APIList";
-import {CONTENT_LINKS} from "../../Constants";
+import {DEFAULT_URL, ADAPTATION_STAGE} from "../../../../components/APIList";
 import Modal from "../../../../components/ModalWindow";
-import {ModalTableBody, ModalTableHeader} from "../Documents/style";
+import {ModalTableBody, ModalTableHeader} from "./style";
+import {settings} from "./tableConfig";
 
-const DocumentName = ({data}) => {
-    return (
-        <div className="flex items-center">
-            <div
-                dangerouslySetInnerHTML={{__html: DocumentIcon}}
-            />
-            <div className="ml-2">
-                { data }
-            </div>
-        </div>
-    )
-}
-
-const DocumentActions = ({handleEdit, data}) => {
-    return (
-        <div>
-            <div className="icon-container transition-icon cursor items-center j-c-center flex">
-                <div
-                    className="edit-icon"
-                    onClick={() => handleEdit(data)}
-                    dangerouslySetInnerHTML={{__html: EditIcon}}
-                />
-                <div className="flex a-i-center j-c-center ml-7">
-                    <div
-                        className="arrow-icon"
-                        dangerouslySetInnerHTML={{__html: ArrowUP}}
-                    />
-                    <div
-                        className="arrow-icon arrow-down"
-                        dangerouslySetInnerHTML={{__html: ArrowUP}}
-                    />
-                </div>
-                <div
-                    className="trash-icon ml-7"
-                    dangerouslySetInnerHTML={{__html: Trash}}
-                />
-            </div>
-        </div>
-    )
-}
-
-
-const settings = (editModal, closeModal, handleEdit) => [
-    {
-        id: 1,
-        key: "number",
-        name: "№",
-        size: "5%"
-    },
-    {
-        id: 2,
-        key: "description",
-        name: "Наименование",
-        component: DocumentName,
-        size: "30%"
-    },
-    {
-        id: 3,
-        key: "description",
-        allData: true,
-        name: "Действия",
-        component: ({rowIndex, data}) => (
-            <DocumentActions
-                data={data}
-                editModal={editModal}
-                closeModal={closeModal}
-                handleEdit={handleEdit}
-                rowIndex={rowIndex}
-            />
-        ),
-        size: "30%"
-    }
-]
-
-class Goals extends Component {
+class levelStages extends Component {
 
     constructor(props) {
         super(props)
@@ -92,14 +16,14 @@ class Goals extends Component {
             error: false,
             editModal: false,
             isLoaded: false,
-            selectedGoals: [],
+            selectedStage: [],
             modalData: {},
             items: []
         }
     }
 
     componentDidMount() {
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_GOALS}`)
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_STAGE}`)
             .then(
                 (response) => {
                     this.setState({
@@ -118,7 +42,7 @@ class Goals extends Component {
     }
 
     render() {
-        const { items, editModal, modalData, documentSelection, modalData: { description }, selectedGoals } = this.state
+        const { items, editModal, modalData, documentSelection, modalData: { stage_name }, selectedStage } = this.state
 
         const handleEdit = (data) => {
             this.setState({
@@ -146,7 +70,7 @@ class Goals extends Component {
             editModal: !editModal
         })
 
-        const checkDocument = (value, id) => {
+        const checkStage = (value, id) => {
             this.setState({
                 [id]: value
             })
@@ -156,7 +80,7 @@ class Goals extends Component {
             <div>
                 <Modal
                     isOpen={editModal}
-                    title="редактирование цели"
+                    title="редактирование этапа"
                     closeModal={() => this.setState({editModal: false})}
                     handleSave={() => saveEditDocument(modalData)}
                 >
@@ -165,13 +89,13 @@ class Goals extends Component {
                     <span
                         className="font-normal color-light-blue-2"
                     >
-                        Наименование цели
+                        Наименование этапа
                     </span>
                             <Input
-                                value={description}
-                                key="description"
-                                id="description"
-                                onInput={() => handleInputChange(document.getElementById('description').value, "description")}
+                                value={stage_name}
+                                key="stage_name"
+                                id="stage_name"
+                                onInput={() => handleInputChange(document.getElementById('stage_name').value, "stage_name")}
                                 className="mt-2 font-normal"
                             />
                         </div>
@@ -189,42 +113,41 @@ class Goals extends Component {
                 </Modal>
                 <Modal
                     isOpen={documentSelection}
-                    title="Выбор цели"
+                    title="Выбор этапа"
                     closeModal={openDocumentSelection}
-                    handleSave={() => saveEditDocument(selectedGoals)}
+                    handleSave={() => saveEditDocument(selectedStage)}
                 >
                     <ModalTableHeader>
                         <div>№</div>
                         <div>
-                            Наименование цели
+                            Наименование этапа
+                        </div>
+                        <div>
+                            Наименование уровня
                         </div>
                         <div>
                             Наименование программы
                         </div>
                     </ModalTableHeader>
                     {
-                        items.map(({description, id_goal}, index) => {
+                        items.map(({description, stage_name}, index) => {
                             return (
                                 <ModalTableBody>
                                     <div className="flex items-center">
                                         {index + 1}
                                     </div>
                                     <div className="flex items-center">
-                                        <div
-                                            className="pr-2"
-                                            dangerouslySetInnerHTML={{__html: DocumentIcon}}
-                                        />
-                                        {description}
+                                        {stage_name}
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <div>
                                             {description}
                                         </div>
                                         <ChekBox
-                                            id="selectedGoals"
-                                            value={selectedGoals}
-                                            checkBoxValue={id_goal}
-                                            onInput={checkDocument}
+                                            id="selectedStage"
+                                            value={selectedStage}
+                                            checkBoxValue={stage_name}
+                                            onInput={checkStage}
                                         />
                                     </div>
                                 </ModalTableBody>
@@ -236,13 +159,13 @@ class Goals extends Component {
                     <button
                         className="blue btn width-m pt-1.5"
                     >
-                        + Добавить документ
+                        + Добавить этап
                     </button>
                     <button
                         className="blue btn width-m pt-1.5 ml-4"
                         onClick={openDocumentSelection}
                     >
-                        Выбрать документ
+                        Выбрать этап
                     </button>
                 </div>
                 <AppList
@@ -254,4 +177,4 @@ class Goals extends Component {
     }
 }
 
-export default Goals;
+export default levelStages;

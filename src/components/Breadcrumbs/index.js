@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { CONTENT_LINKS } from "../../pages/programs/Constants";
+import PropTypes from "prop-types"
 import {ArrowBack} from "../../pages/Constants";
 import { BreadcrumbsDot } from "./style";
 
@@ -16,12 +17,14 @@ const BreadCrumbs = props => {
                     const activeLink = newPath.length === index + 1
                     return (
                         <div
+                            // key={name}
                             className="flex items-center">
                             {
                                 !!index ? (
                                     <BreadcrumbsDot/>
                                 ) : (
                                     <NavLink
+                                        key={name}
                                         to={`${newPath[0].link}`}
                                     >
                                         <div
@@ -43,6 +46,10 @@ const BreadCrumbs = props => {
             }
         </div>
     );
+}
+
+BreadCrumbs.propTypes ={
+    location: PropTypes.object,
 }
 
 export default withRouter(BreadCrumbs)

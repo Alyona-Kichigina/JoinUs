@@ -5,7 +5,7 @@ import {CONTENT_LINKS} from "../../Constants";
 import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../../components/APIList";
 import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
 import CardContact from "../../../../components/ComponentsForListTable/CardContact";
-
+import axios from "axios";
 
 const pageData = {
     pageName: "Программа для разработчиков"
@@ -16,7 +16,6 @@ const settings = [
         id: 1,
         key: "number",
         name: "№",
-        // component: Contact,
         size: "5%"
     },
     {
@@ -51,15 +50,12 @@ class Contacts extends Component {
         }
     }
     componentDidMount() {
-        fetch(`${DEFAULT_URL}/${ADAPTATION_CONTACTS}`, {
-            method: "GET",
-        })
-            .then(res => res.json())
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_CONTACTS}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        items: response
+                        items: response.data
                     })
                 },
                 (error) => {

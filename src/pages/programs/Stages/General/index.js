@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import Input from "@Components/Fields/Input"
-import PageHeader from "../../../../components/PageHeader";
-import ModalSelectInput from "../../../../components/ModalSelectInput";
+import memoizeOne from "memoize-one";
+import Form from "@Components/Forms/index"
+import PropTypes from "prop-types"
 import ModalSidebar from "../../../../components/ModalSidebar";
 import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
-import Form from "@Components/Forms/index"
-import { CONTENT_LINKS } from "../../Constants";
-import { FormContainer } from "./style"
-import memoizeOne from "memoize-one";
+import { FormContainer } from "../../NewProgramm/style"
 
 const clients = [
     {
@@ -148,28 +144,28 @@ class NewProgram extends Component {
                                 Наименование
                             </div>
                         </div>
-                     {
-                         clients.map(({name, id}, index) => {
-                             return (
-                                 <div
-                                     className="grid py-4 font-semibold fs-14 border-list"
-                                     style={{"grid-template-columns": "10% 90%"}}
-                                 >
-                                     <div
-                                         className="flex items-center"
-                                     >
-                                         {index + 1}
-                                     </div>
-                                     <RadioButton
-                                         inputValue={this.selectClient}
-                                         selected={(value) => modalState === value}
-                                         title={name}
-                                         id={id}
-                                     />
-                                 </div>
-                             )
-                         })
-                     }
+                        {
+                            clients.map(({name, id}, index) => {
+                                return (
+                                    <div
+                                        className="grid py-4 font-semibold fs-14 border-list"
+                                        style={{"grid-template-columns": "10% 90%"}}
+                                    >
+                                        <div
+                                            className="flex items-center"
+                                        >
+                                            {index + 1}
+                                        </div>
+                                        <RadioButton
+                                            inputValue={this.selectClient}
+                                            selected={(value) => modalState === value}
+                                            title={name}
+                                            id={id}
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </ModalSidebar>
                 <ModalSidebar
@@ -195,28 +191,28 @@ class NewProgram extends Component {
                                 Наименование
                             </div>
                         </div>
-                     {
-                         users.map(({name, id}, index) => {
-                             return (
-                                 <div
-                                     className="grid py-4 font-semibold fs-14 border-list"
-                                     style={{"grid-template-columns": "10% 90%"}}
-                                 >
-                                     <div
-                                         className="flex items-center"
-                                     >
-                                         {index + 1}
-                                     </div>
-                                     <RadioButton
-                                         inputValue={this.selectClient}
-                                         selected={(value) => modalState === value}
-                                         title={name}
-                                         id={id}
-                                     />
-                                 </div>
-                             )
-                         })
-                     }
+                        {
+                            users.map(({name, id}, index) => {
+                                return (
+                                    <div
+                                        className="grid py-4 font-semibold fs-14 border-list"
+                                        style={{"grid-template-columns": "10% 90%"}}
+                                    >
+                                        <div
+                                            className="flex items-center"
+                                        >
+                                            {index + 1}
+                                        </div>
+                                        <RadioButton
+                                            inputValue={this.selectClient}
+                                            selected={(value) => modalState === value}
+                                            title={name}
+                                            id={id}
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </ModalSidebar>
                 <WithValidationHocRenderPropAdapter
@@ -227,50 +223,52 @@ class NewProgram extends Component {
                 >
                     {(formProps) => {
                         const { formValid, onSubmit, onInput } = formProps
-                          return (
+                        return (
                             <div className="h-full flex flex-col justify-between">
-                            <div
-                                className="mx-8"
-                            >
-                                <FormContainer>
-                                    <Form
-                                        {...formProps}
-                                        fields={firstForm}
-                                        value={data}
-                                        onInput={onInput}
-                                    />
-                                    <Form
-                                        {...formProps}
-                                        fields={SecondForm}
-                                        value={data}
-                                        onInput={onInput}
-                                    />
-                                </FormContainer>
+                                <div
+                                    className="mx-8"
+                                >
+                                    <FormContainer>
+                                        <Form
+                                            {...formProps}
+                                            fields={firstForm}
+                                            value={data}
+                                            onInput={onInput}
+                                        />
+                                        <Form
+                                            {...formProps}
+                                            fields={SecondForm}
+                                            value={data}
+                                            onInput={onInput}
+                                        />
+                                    </FormContainer>
+                                </div>
+                                <div
+                                    className="flex justify-end pb-20 pr-8"
+                                >
+                                    <div
+                                        onClick={() => goBack()}
+                                        className="white btn width-m mr-4"
+                                    >
+                                        Отмена
+                                    </div>
+                                    <button
+                                        className="blue btn width-m"
+                                        onClick={() => this.saveNewProgram()}
+                                    >
+                                        Сохранить
+                                    </button>
+                                </div>
                             </div>
-                            <div
-                            className="flex justify-end pb-20 pr-8"
-                            >
-                            <div
-                            onClick={() => goBack()}
-                            className="white btn width-m mr-4"
-                            >
-                            Отмена
-                            </div>
-                            <button
-                            className="blue btn width-m"
-                            onClick={() => this.saveNewProgram()}
-                            >
-                            Сохранить
-                            </button>
-                            </div>
-                            </div>
-                          )}}
+                        )}}
                 </WithValidationHocRenderPropAdapter>
             </div>
         );
     }
 }
 
-NewProgram.propTypes = {};
+NewProgram.propTypes = {
+    history: PropTypes.object,
+};
 
 export default NewProgram;
