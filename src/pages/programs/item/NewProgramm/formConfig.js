@@ -1,6 +1,6 @@
 import Input from "@Components/Fields/Input"
 import DatePicker from "@Components/Fields/DatePicker"
-import ModalSelectInput from "../../../components/ModalSelectInput";
+import ModalSelectInput from "../../../../components/ModalSelectInput";
 import React from "react";
 
 export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
@@ -8,7 +8,7 @@ export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
         label: "Наименование",
         id: "PROGRAM_NAME",
         component: Input,
-        placeholder: "Введите наименование програмы",
+        placeholder: "Введите наименование программы",
         formColumn: 0,
     },
     {
@@ -17,7 +17,7 @@ export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
         component: Input,
         type: "textarea",
         minHeight: "195px",
-        placeholder: "Описание програмы",
+        placeholder: "Описание программы",
         formColumn: 0,
     },
     {
@@ -45,7 +45,7 @@ export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
         label: "Дата создания",
         id: "CREATION_DATE",
         component: DatePicker,
-        placeholder: "Выберите создания",
+        placeholder: "Выберите дату создания",
         formColumn: 1,
     },
     {

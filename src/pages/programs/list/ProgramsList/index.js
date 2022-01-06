@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import NavContentBtn from "../../../components/NavContentButton";
-import { CONTENT_LINKS } from "../Constants"
-import AppList from "../../../components/AppList";
+import NavContentBtn from "../../../../components/NavContentButton";
+import { CONTENT_LINKS } from "../../Constants"
+import AppList from "../../../../components/AppList";
 import axios from 'axios';
 import {NavLink} from "react-router-dom";
-import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../components/APIList";
+import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../../components/APIList";
 
 const settings = [
     {

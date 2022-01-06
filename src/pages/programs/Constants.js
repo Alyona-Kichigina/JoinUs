@@ -1,11 +1,11 @@
 
 export const CONTENT_LINKS = [
     {
-        name: "программы",
+        name: "Программы",
         link: "programs"
     },
     {
-        name: "общие",
+        name: "Общие",
         link: "general"
     },
     {
@@ -13,41 +13,41 @@ export const CONTENT_LINKS = [
         link: "new_programm"
     },
     {
-        name: "уровни",
+        name: "Уровни",
         link: "levels"
     },
     {
-        name: "контакты",
+        name: "Контакты",
         link: "contacts"
     },
     {
-        name: "документы",
+        name: "Документы",
         link: "documents"
     },
     {
-        name: "цели",
+        name: "Цели",
         link: "goals"
     }
 ]
 export const NAV_BUTTON_LINKS = [
     {
-        name: "общие",
+        name: "Общие",
         link: "general"
     },
     {
-        name: "уровни",
+        name: "Уровни",
         link: "levels"
     },
     {
-        name: "контакты",
+        name: "Контакты",
         link: "contacts"
     },
     {
-        name: "документы",
+        name: "Документы",
         link: "documents"
     },
     {
-        name: "цели",
+        name: "Цели",
         link: "goals"
     }
 ]

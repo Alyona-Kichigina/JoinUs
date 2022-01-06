@@ -36,7 +36,7 @@ export const LeftMenuContainer = styled.div`
       color: var(--color-white);
       --color-light-blue-2: var(--color-white);
       &:hover {
-        background: var(--color-blue-hover);
+        background: var(--color-blue-hover-gradient);
       }
     }
   }

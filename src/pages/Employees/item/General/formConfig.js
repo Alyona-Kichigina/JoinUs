@@ -29,7 +29,7 @@ export const fieldMap = [
     label: "Должность",
     id: "POSITION",
     component: Select,
-    placeholder: "Руководитель проекта",
+    placeholder: "Выберите должность",
     formColumn: 0,
   },
   {
@@ -57,7 +57,7 @@ export const fieldMap = [
     label: "Программа адаптации",
     id: "POSITION",
     component: Select,
-    placeholder: "Для руководителей проектов",
+    placeholder: "Выберите программу адаптации",
     formColumn: 1,
   },
 ]

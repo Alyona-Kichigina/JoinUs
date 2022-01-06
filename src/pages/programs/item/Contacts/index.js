@@ -1,54 +1,14 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../components/PageHeader";
-import AppList from "../../../components/AppList";
-import {CONTENT_LINKS} from "../../programs/Constants";
-import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../components/APIList";
+import PageHeader from "../../../../components/PageHeader";
+import AppList from "../../../../components/AppList";
+import {CONTENT_LINKS} from "../../Constants";
+import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../../components/APIList";
+import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
+import CardContact from "../../../../components/ComponentsForListTable/CardContact";
 
 
 const pageData = {
     pageName: "Программа для разработчиков"
-}
-
-const Contact = ({data}) => {
-    return (
-        <div className="flex ml-1.5 items-center">
-            <div
-                className="h-7 w-7 bg-color-green"
-                style={{"border-radius": "50%"}}
-            />
-            <div className="flex flex-col ml-3 justify-center">
-                <div className="flex j-c-start">
-                    { data.name }
-                </div>
-                <div
-                    className="flex j-c-start text-xs font-semibold color-light-blue-2"
-                >
-                    { data.role }
-                </div>
-            </div>
-        </div>
-    )
-}
-
-const ContactsComp = ({ data }) => {
-    return  (
-        <div>
-            {
-                data.phone && data.phone.map( a => (
-                    <div className="flex j-c-start mb-1">
-                        { a }
-                    </div>
-                ))
-            }
-            {
-                data.mail && (
-                    <div className="flex j-c-start text-xs font-semibold color-light-blue-2">
-                        {data.mail}
-                    </div>
-                )
-            }
-        </div>
-    )
 }
 
 const settings = [
@@ -63,7 +23,7 @@ const settings = [
         id: 2,
         key: "value",
         name: "Контакт",
-        component: Contact,
+        component: CardForUser,
         size: "45%"
     },
     {
@@ -76,7 +36,7 @@ const settings = [
         id: 4,
         key: "contacts",
         name: "Контакты",
-        component: ContactsComp,
+        component: CardContact,
         size: "30%"
     }
 ]

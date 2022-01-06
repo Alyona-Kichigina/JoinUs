@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./style.css"
-import { EditIcon, ArrowUP, ArrowDown, Trash } from "../../Constants";
+import { EditIcon, ArrowUP, ArrowDown, Trash } from "../../../Constants";
 
 class Actions extends Component {
     render() {

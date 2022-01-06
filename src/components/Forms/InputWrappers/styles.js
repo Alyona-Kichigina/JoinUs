@@ -13,6 +13,7 @@ export const InputLabel = styled.label`
  padding-bottom: 6px;
   color: var(--color-light-blue-2);
   font-size: 12px;
+letter-spacing: 0.2px;
 `
 
 export const InputContainer = styled.div`

@@ -1,4 +1,4 @@
-import CardForUser from "../../../components/CardForUser";
+import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
 import React from "react";
 
 const ContactsComp = ({data}) => {

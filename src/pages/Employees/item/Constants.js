@@ -2,26 +2,26 @@ export const EMPLOYEES_TAB = [
   {
     id: 1,
     name: "Общие",
-    link: "/"
+    link: "general"
   },
   {
     id: 2,
     name: "Контакты",
-    link: "employ_contacts"
+    link: "contacts"
   },
   {
     id: 3,
     name: "Ход адаптации",
-    link: "employ_adaptation_progress"
+    link: "adaptation_progress"
   },
   {
     id: 4,
     name: "Документы",
-    link: "employ_documents"
+    link: "documents"
   },
   {
     id: 5,
     name: "Цели",
-    link: "employ_goals"
+    link: "goals"
   }
 ]

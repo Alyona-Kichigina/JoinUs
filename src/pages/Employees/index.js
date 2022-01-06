@@ -1,64 +1,48 @@
 import React, {Component} from 'react';
-import FilterForEmployees from "./list/FilterForEmployees";
-import axios from 'axios';
-import dayjs from "dayjs"
-import AppList from "../../components/AppList";
-import {settings, data} from "./TableConfig"
-import {NavLink} from "react-router-dom";
+import {Route} from "react-router-dom";
+import Contacts from "./item/Contacts";
+import AdaptationProgress from "./item/AdaptationProgress";
+import Documents from "./item/Documents";
+import Goals from "./item/Goals";
+import Employees from "./list";
+import General from "./item/General";
+import {EMPLOYEES_TAB} from "./item/Constants";
+import PageHeader from "../../components/PageHeader";
 
-const BACK_END_URL = "192.168.0.102:9000"
+const pageData = {
+  pageName: "Новый сотрудник"
+}
 
-// employee
-
-class Employees extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: false
-    }
-  }
-
-  addEmployees = async () => {
-    // await fetch('192.168.0.102:9000/swagger', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    // });
-  }
-
-  // получаем данные для фильтра
-  onInputDate = (value, id) => {
-    console.log(value, id)
-  }
-
-
-  handleInput = (payload) => { this.setState(({ value }) => ({ value: { ...value, ...payload } })) }
-
+class RouterEmployees extends Component {
   render() {
-    const { state: { value } } = this
+  const { props: { location: { pathname } } } = this
     return (
       <div className="flex-container">
-        <div className="flex justify-between p-b-25">
-          <h1>Сотрудники</h1>
-          <NavLink
-            className="blue btn width-m flex items-center"
-            to="/employees/new_employ"
-          >
-            + Создать сотрудника
-          </NavLink>
-        </div>
-        <FilterForEmployees
-          handleInput={this.onInputDate}
-        />
-        <AppList
-          settings={settings}
-          data={data}
-          nestedKey="data"
-        />
+        {
+          pathname === "/employees"
+            ?
+            (
+              <Route path="/employees" component={Employees} />
+            )
+            :
+            (
+              <PageHeader
+                {...this.props}
+                pageData={pageData}
+                url="employees"
+                links={EMPLOYEES_TAB}
+              >
+                <Route path="/employees/new_employ/general" component={General} />
+                <Route path="/employees/new_employ/contacts" component={Contacts}/>
+                <Route path="/employees/new_employ/adaptation_progress" component={AdaptationProgress}/>
+                <Route path="/employees/new_employ/documents" component={Documents}/>
+                <Route path="/employees/new_employ/goals" component={Goals}/>
+              </PageHeader>
+            )
+        }
       </div>
     );
   }
-};
+}
 
-export default Employees;
+export default RouterEmployees;

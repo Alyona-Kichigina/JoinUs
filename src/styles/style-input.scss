@@ -21,9 +21,8 @@
     flex: var(--flex-input);
     text-align: var(--text-aling-input);
     resize: none;
-    &::placeholder {
-      font-size: var(--plachodler-font-size);
-    }
+    font-size: 14px;
+    letter-spacing: 0.2px;
     //&:disabled {
     //  color: var(--input-disabled-color);
     //  background: var(--color-grey-Light-4);
@@ -32,10 +31,11 @@
     //  }
     //}
     &::placeholder {
+      font-size: var(--plachodler-font-size);
+      letter-spacing: 0.2px;
       color: var(--input-placeholder-color);
       opacity: 1;
       font-weight: 400;
-      font-size: 12px;
     }
     &:focus {
       outline: none;

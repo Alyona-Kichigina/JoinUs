@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Input from "@Components/Fields/Input"
-import PageHeader from "../../../components/PageHeader";
-import ModalSelectInput from "../../../components/ModalSelectInput";
-import ModalSidebar from "../../../components/ModalSidebar";
-import RadioButton from "../../../components/RadioButton";
-import { WithValidationHocRenderPropAdapter } from "../../../Validator";
+import PageHeader from "../../../../components/PageHeader";
+import ModalSelectInput from "../../../../components/ModalSelectInput";
+import ModalSidebar from "../../../../components/ModalSidebar";
+import RadioButton from "../../../../components/RadioButton";
+import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
 import Form from "@Components/Forms/index"
-import { CONTENT_LINKS } from "../Constants";
+import { CONTENT_LINKS } from "../../Constants";
 import { FormContainer } from "./style"
 import memoizeOne from "memoize-one";
 

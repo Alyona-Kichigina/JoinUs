@@ -23,7 +23,6 @@ body {
     height: 100%;
     letter-spacing: 0.01em;
     line-height: 1;
-    font-size: 0.875rem;
     font-weight: 400;
     color: var(--color-darken-blue);
     background: var(--color-light-grey);
@@ -44,7 +43,8 @@ body {
     --font: "Nunito", sans-serif;
 
     --color-blue: #009BF6;
-    --color-blue-hover: linear-gradient(#0095EC, #0095EC);
+    --color-blue-hover-gradient: linear-gradient(#0095EC, #0095EC);
+    --color-blue-hover: #0095EC;
     --color-light-blue: #F2F9FF;
     --color-light-blue-2: #56809F;
     --color-darken-blue: #0C2B3E;

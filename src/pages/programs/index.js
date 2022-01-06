@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import { Route } from "react-router-dom"
-import {CONTENT_LINKS} from "./Constants";
-import Goals from "./Goals";
-import Levels from "./levels";
-import Contacts from "./Contacts";
-import Documents from "./Documents";
-import NewProgram from "./NewProgramm";
-import ProgramsList from "./ProgramsList";
+import {NAV_BUTTON_LINKS} from "./Constants";
+import Goals from "./item/Goals";
+import Levels from "./item/levels";
+import Contacts from "./item/Contacts";
+import Documents from "./item/Documents";
+import NewProgram from "./item/NewProgramm";
+import ProgramsList from "./list/ProgramsList";
 
 
 const pageData = {
@@ -18,7 +18,6 @@ const pageData = {
 
 const Programs = (props) => {
     const { match: { path }, match, location: { pathname } } = props
-    console.log(pathname, path, path === "/programs")
     return (
         <div>
 
@@ -31,7 +30,7 @@ const Programs = (props) => {
                             {...props}
                             pageData={pageData}
                             url="programs"
-                            links={CONTENT_LINKS}
+                            links={NAV_BUTTON_LINKS}
                         >
                             <Route path="/programs/general" component={NewProgram}/>
                             <Route path="/programs/:programName/levels" component={Levels}/>

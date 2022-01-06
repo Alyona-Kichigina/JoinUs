@@ -9,7 +9,7 @@ const BreadCrumbs = props => {
     const pathnames = pathname.split("/").filter(x => x)
     const newPath = CONTENT_LINKS.filter(a => pathnames.some(e => e === a.link))
     return (
-        <div className="flex">
+        <div className="flex ls-02">
             {
                 newPath.map(({name, link}, index) => {
                     // console.log(link)

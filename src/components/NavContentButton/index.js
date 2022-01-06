@@ -18,7 +18,7 @@ export default function NavContentBtn(props) {
                             <NawContentItem>
                                 <NavLink
                                     key={a.name}
-                                    className="ml-8 h-full font-semibold capitalize"
+                                    className="h-full"
                                     to={`/${path}/${a.link}`}
                                 >
                                     {a.name}
@@ -27,7 +27,6 @@ export default function NavContentBtn(props) {
                         ))
                     }
                 </NawContentBtn>
-                <div className="w-full h-px bg-gray-300" />
             </div>
     )
 }

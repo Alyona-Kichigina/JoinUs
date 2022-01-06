@@ -36,6 +36,8 @@ export const SelectInput = styled.input`
     color: var(--input-placeholder-color);
     opacity: 1;
     font-weight: 400;
+    font-size: var(--plachodler-font-size);
+    letter-spacing: 0.2px;
   }
 `
 

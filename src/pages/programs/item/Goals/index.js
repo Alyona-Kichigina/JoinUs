@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../components/PageHeader";
-import AppList from "../../../components/AppList";
-import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../Constants";
+import PageHeader from "../../../../components/PageHeader";
+import AppList from "../../../../components/AppList";
+import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../../Constants";
 import axios from "axios";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
-import { DEFAULT_URL, ADAPTATION_GOALS } from "../../../components/APIList";
-import {CONTENT_LINKS} from "../Constants";
-import Modal from "../../../components/ModalWindow";
+import { DEFAULT_URL, ADAPTATION_GOALS } from "../../../../components/APIList";
+import {CONTENT_LINKS} from "../../Constants";
+import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "../Documents/style";
 
 

@@ -1,6 +1,6 @@
-import Status from "../../components/ComponentStatus";
-import Progress from "../../components/ComponentProgress";
-import CardForUser from "../../components/CardForUser";
+import Status from "../../../components/ComponentStatus";
+import Progress from "../../../components/ComponentsForListTable/ComponentProgress";
+import CardForUser from "../../../components/ComponentsForListTable/CardForUser";
 
 export const settings = [
   // это надо добавить в компонент таблицы, чтобы была дополнительная колонка с нумерацией

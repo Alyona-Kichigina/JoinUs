@@ -115,12 +115,12 @@ class DatePicker extends Component {
                           {
                            value.length > 0
                             ? (
-                              <div className="m-t-a m-b-a fs-14">
+                              <div className="m-t-a m-b-a fs-14 ls-02">
                                 {value}
                               </div>
                             )
                             : (
-                              <div className="m-t-a m-b-a color-light-blue-2 fs-12">
+                              <div className="m-t-a m-b-a color-light-blue-2 fs-14">
                                 {placeholder}
                               </div>
                             )

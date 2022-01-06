@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormContainer } from "../NewProgramm/style";
+import { FormContainer } from "../item/NewProgramm/style";
 import PropTypes from 'prop-types';
 
 const InputForm = ({ settings, state, onInput }) => {
