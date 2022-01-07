@@ -1,3 +1,4 @@
+// export const DEFAULT_URL = "http://localhost:9000/api"
 export const DEFAULT_URL = "http://51.250.15.127:9000/api-active"
 export const ADAPTATION_GOALS = "adaptationbgoal"
 export const ADAPTATION_PROGRAM = "adaptationprogram"
