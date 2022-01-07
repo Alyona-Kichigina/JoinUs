@@ -1,30 +1,19 @@
 import React, {Component} from 'react';
 import FilterForEmployees from "./FilterForEmployees";
 import axios from 'axios';
-import dayjs from "dayjs"
 import AppList from "../../../components/AppList";
-import {settings, data} from "./TableConfig"
+import {settings} from "./TableConfig"
 import {NavLink} from "react-router-dom";
-
-const BACK_END_URL = "192.168.0.102:9000"
-
-// employee
+import {CANDIDATE_LIST, DEFAULT_URL} from "../../../components/APIList";
 
 class Employees extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: false
+      value: false,
+      data: [],
+      error: false,
     }
-  }
-
-  addEmployees = async () => {
-    // await fetch('192.168.0.102:9000/swagger', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    // });
   }
 
   // получаем данные для фильтра
@@ -32,11 +21,31 @@ class Employees extends Component {
     console.log(value, id)
   }
 
+  componentDidMount() {
+    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}`)
+    .then((response) => {
+        this.setState({data: response.data.results})
+      },
+      (error) => {
+        this.setState({error})
+      }
+    )
+  }
 
   handleInput = (payload) => { this.setState(({ value }) => ({ value: { ...value, ...payload } })) }
 
   render() {
-    console.log(999)
+    const { state: {data} } = this
+    console.log(data)
+    const newData = data.map(({ last_name, first_name, post, role }) =>
+      ({
+        value: {
+          name: `${last_name} ${first_name}`,
+          role: `${post}`
+        },
+        role: `${role}`
+      })
+    )
     return (
       <div className="flex-container">
         <div className="flex justify-between p-b-25">
@@ -53,7 +62,7 @@ class Employees extends Component {
         />
         <AppList
           settings={settings}
-          data={data}
+          data={newData}
           nestedKey="data"
         />
       </div>
