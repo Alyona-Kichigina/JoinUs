@@ -8,9 +8,10 @@ import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
 import Form from "@Components/Forms/index"
-import { CONTENT_LINKS } from "../../Constants";
 import { FormContainer } from "./style"
 import memoizeOne from "memoize-one";
+import axios from "axios";
+import {ADAPTATION_LEVELS, DEFAULT_URL} from "../../../../components/APIList";
 
 const clients = [
     {
@@ -72,7 +73,7 @@ const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnl
         return acc
     }, [[], []]))
 
-class NewProgram extends Component {
+class General extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -82,6 +83,24 @@ class NewProgram extends Component {
             modalState: {}
         }
         this.handleInputChange = this.handleInputChange.bind(this)
+    }
+
+    componentDidMount() {
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoaded: true,
+                        data: response.data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
     }
 
     handleInputChange (value, id) {
@@ -271,6 +290,6 @@ class NewProgram extends Component {
     }
 }
 
-NewProgram.propTypes = {};
+General.propTypes = {};
 
-export default NewProgram;
+export default General;

@@ -1,88 +1,13 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../../components/PageHeader";
 import AppList from "../../../../components/AppList";
-import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../../Constants";
+import { DocumentIcon } from "../../../Constants";
 import axios from "axios";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
 import { DEFAULT_URL, ADAPTATION_GOALS } from "../../../../components/APIList";
-import {CONTENT_LINKS} from "../../Constants";
 import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "../Documents/style";
-
-const DocumentName = ({data}) => {
-    return (
-        <div className="flex items-center">
-            <div
-                dangerouslySetInnerHTML={{__html: DocumentIcon}}
-            />
-            <div className="ml-2">
-                { data }
-            </div>
-        </div>
-    )
-}
-
-const DocumentActions = ({handleEdit, data}) => {
-    return (
-        <div>
-            <div className="icon-container transition-icon cursor items-center j-c-center flex">
-                <div
-                    className="edit-icon"
-                    onClick={() => handleEdit(data)}
-                    dangerouslySetInnerHTML={{__html: EditIcon}}
-                />
-                <div className="flex a-i-center j-c-center ml-7">
-                    <div
-                        className="arrow-icon"
-                        dangerouslySetInnerHTML={{__html: ArrowUP}}
-                    />
-                    <div
-                        className="arrow-icon arrow-down"
-                        dangerouslySetInnerHTML={{__html: ArrowUP}}
-                    />
-                </div>
-                <div
-                    className="trash-icon ml-7"
-                    dangerouslySetInnerHTML={{__html: Trash}}
-                />
-            </div>
-        </div>
-    )
-}
-
-
-const settings = (editModal, closeModal, handleEdit) => [
-    {
-        id: 1,
-        key: "number",
-        name: "№",
-        size: "5%"
-    },
-    {
-        id: 2,
-        key: "description",
-        name: "Наименование",
-        component: DocumentName,
-        size: "30%"
-    },
-    {
-        id: 3,
-        key: "description",
-        allData: true,
-        name: "Действия",
-        component: ({rowIndex, data}) => (
-            <DocumentActions
-                data={data}
-                editModal={editModal}
-                closeModal={closeModal}
-                handleEdit={handleEdit}
-                rowIndex={rowIndex}
-            />
-        ),
-        size: "30%"
-    }
-]
+import { settings } from "./FormConfig";
 
 class Goals extends Component {
 

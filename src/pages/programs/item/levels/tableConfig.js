@@ -18,20 +18,20 @@ const ActiveIndicator = ({ data } ) => data ? (
 export const settings = [
     {
         id: 1,
-        key: "name",
+        key: ["level_name", "stage_name"],
         name: "уровень/этап",
         size: "30%"
     },
     {
         id: 2,
-        key: "days",
+        key: "duration_day",
         name: "дней этапа",
         nestedLevel: 1,
         size: "15%"
     },
     {
         id: 3,
-        key: "points",
+        key: "point",
         name: "баллов",
         nestedLevel: 1,
         size: "15%"

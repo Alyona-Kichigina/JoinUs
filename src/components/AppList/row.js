@@ -25,10 +25,12 @@ class Row extends Component {
                 {
                     settings.map( (a, index) => {
                         const { allData, key } = a
+                        const rowKey = Array.isArray(key) ? nestedLevel > key.length ? key[key.length - 1] : key[nestedLevel] : key
                         const renderLevel = a.nestedLevel ? nestedLevel === a.nestedLevel : true
                         const Comp = a.component ? a.component : "div"
                     return (
                              <div
+                                 key={`${index}${key}`}
                                  className={`${rowClass} ${nestedLevel > 0 && index === 0 ? "ml-8" : "ml-4"}`}
                              >
                                  <div className="flex items-center">
@@ -42,11 +44,11 @@ class Row extends Component {
                                           renderLevel &&
                                           (<Comp
                                               className="flex items-center"
-                                              data={allData ? data : data[key]}
+                                              data={allData ? data : data[rowKey]}
                                               nestedLevel={nestedLevel}
                                               rowIndex={rowIndex}
                                           >
-                                              {data[key]}
+                                              {data[rowKey]}
                                           </Comp>)
                                       }
                                  </div>

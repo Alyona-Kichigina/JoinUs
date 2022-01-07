@@ -1,15 +1,9 @@
-import React, {Component, useState} from 'react';
+import React, { Component } from 'react';
 import axios from "axios";
-import NavContentBtn from "../../../../components/NavContentButton";
-import { CONTENT_LINKS } from "../../Constants"
-// import Breadcrumbs from "../../components/Breadcrumbs";
 import AppList from "../../../../components/AppList";
-import { ActiveIcon } from "../../../Constants"
-import Actions from "./Actions";
-import PageHeader from "../../../../components/PageHeader";
-import {DEFAULT_URL, ADAPTATION_LEVELS} from "../../../../components/APIList"
-import {NavLink} from "react-router-dom";
-import {settings} from "./tableConfig";
+import { DEFAULT_URL, ADAPTATION_LEVELS } from "../../../../components/APIList"
+import { NavLink } from "react-router-dom";
+import { settings } from "./tableConfig";
 
 const pageData = {
     pageName: "Программа для разработчиков"
@@ -107,6 +101,7 @@ class Levels extends Component {
             )
     }
     render() {
+        const { items } = this.state
         return (
             <div className="h-full">
                 <div>
@@ -128,8 +123,8 @@ class Levels extends Component {
                              <AppList
                                  settings={settings}
                                  nestedData={true}
-                                 data={levelsList}
-                                 nestedKey="data"
+                                 data={items}
+                                 nestedKey="stages"
                              />
                          </div>
                     </div>

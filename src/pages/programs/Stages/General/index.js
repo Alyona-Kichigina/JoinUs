@@ -6,7 +6,7 @@ import ModalSidebar from "../../../../components/ModalSidebar";
 import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
-import { FormContainer } from "../../item/NewProgramm/style"
+import { FormContainer } from "../../item/General/style"
 
 const clients = [
     {

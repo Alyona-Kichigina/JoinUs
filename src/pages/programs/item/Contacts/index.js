@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../../components/PageHeader";
 import AppList from "../../../../components/AppList";
-import {CONTENT_LINKS} from "../../Constants";
 import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../../components/APIList";
 import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
 import CardContact from "../../../../components/ComponentsForListTable/CardContact";
 import axios from "axios";
-
-const pageData = {
-    pageName: "Программа для разработчиков"
-}
 
 const settings = [
     {
@@ -69,19 +63,17 @@ class Contacts extends Component {
 
     render() {
         const { items = [] } = this.state
-        const newData = items.map(({ last_name, first_name, post, role }) =>
+        const newData = items.map(({ last_name, first_name, post, role, email, mobile_phone, illustration_link }) =>
             ({
                 value: {
                     name: `${last_name} ${first_name}`,
-                    role: `${post}`
+                    role: `${post}`,
+                    img: illustration_link
                 },
                 role: `${role}`,
                 contacts: {
-                    mail: "petrova.darya@gmail.com",
-                    phone: [
-                        "+7 999 787 7868",
-                        "+7 999 787 7868"
-                    ]
+                    mail: email,
+                    phone: [mobile_phone]
                 }
             })
         )

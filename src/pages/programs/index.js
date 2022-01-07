@@ -7,7 +7,7 @@ import Goals from "./item/Goals";
 import Levels from "./item/levels";
 import Contacts from "./item/Contacts";
 import Documents from "./item/Documents";
-import NewProgram from "./item/NewProgramm";
+import NewProgram from "./item/General";
 import ProgramsList from "./list/ProgramsList";
 import General from "../Employees/item/General";
 import levelStages from "./Stages/Stages";
