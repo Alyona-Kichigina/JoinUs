@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from "./header";
 import Row from "./row"
 import PropTypes from "prop-types"
+import ScrollBar from "@Components/ScrollBar"
 
 class AppList extends Component {
     render() {
@@ -19,7 +20,7 @@ class AppList extends Component {
                         key={i}
                     >
                         {
-                            <div>
+                            <>
                                 <div className={`${nestedData && "bg-color-light-blue"}`}>
                                     <Row
                                         className=""
@@ -46,7 +47,7 @@ class AppList extends Component {
                                         />
                                     )})
                                 }
-                            </div>
+                            </>
                         }
                     </div>
                 )
@@ -55,13 +56,14 @@ class AppList extends Component {
         }
 
         return (
-            <div className="bg-white flex-container border-radius-4 m-b-16 h-full">
+            <div className="bg-white flex-container border-radius-4 m-b-16 h-full m-b-50">
                 <Header
                     settings={settings}
                     gridStyle={gridStyle}
                 />
-
-                    { TableRows(nestedKey) }
+              <ScrollBar>
+                  { TableRows(nestedKey) }
+              </ScrollBar>
             </div>
         );
     }
@@ -75,7 +77,8 @@ AppList.propTypes = {
 
 AppList.defaultProps = {
   data: [],
-  settings: []
+  settings: [],
+  nestedKey: ""
 }
 
 export default AppList;

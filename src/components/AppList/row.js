@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { RowContainer } from "./style"
+import PropTypes from "prop-types"
 
 class Row extends Component {
     render() {
@@ -57,6 +58,14 @@ class Row extends Component {
             </RowContainer>
         );
     }
+}
+
+Row.propTypes = {
+    rowClass: PropTypes.string,
+}
+
+Row.defaultProps = {
+    rowClass: ""
 }
 
 export default Row;
