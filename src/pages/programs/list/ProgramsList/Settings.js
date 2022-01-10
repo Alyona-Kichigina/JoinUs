@@ -13,14 +13,15 @@ export const settings  = [
             key: "program_name",
             name: "Программа",
             size: "25%",
-            // allData: true,
-            component: ({data}) => {
-                console.log(data)
+            allData: true,
+            component: ({data: { program_name, id }}) => {
+                console.log(program_name, id)
                 return (
+                    // <div />
                     <NavLink
-                        to={`/programs/${data}/general`}
+                        to={`/programs/${program_name}/${id}/general`}
                     >
-                        {data}
+                        {program_name}
                     </NavLink>
                 )
             }

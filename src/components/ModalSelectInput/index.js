@@ -29,6 +29,11 @@ class ModalSelectInput extends Component {
     }
 }
 
-ModalSelectInput.propTypes = {};
+ModalSelectInput.propTypes = {
+    toggleModal: PropTypes.bool,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object, PropTypes.array]),
+};
 
 export default ModalSelectInput;

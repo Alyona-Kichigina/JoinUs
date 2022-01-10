@@ -12,18 +12,12 @@ import ProgramsList from "./list/ProgramsList";
 import General from "../Employees/item/General";
 import levelStages from "./Stages/Stages";
 
-
-const pageData = {
-    pageName: "Программа для разработчиков"
-}
-
 const Programs = (props) => {
     const { match: { path }, match, location: { pathname } } = props
     const pathnames = pathname.split("/").filter(x => x)
     const programName = pathnames[1] === "new_programm" ? "Новая программа"  : pathnames[1]
     return (
         <div>
-
             {
                 pathname === "/programs" ?
                     (
@@ -35,9 +29,9 @@ const Programs = (props) => {
                             url="programs"
                             links={STAGES_LINKS}
                         >
-                            <Route exact path="/programs/:programName/stages/general" component={General} />
-                            <Route path="/programs/:programName/stages/levelStages" component={levelStages}/>
-                            <Route path="/programs/:programName/stages/programs" component={ProgramsList}/>
+                            <Route exact path="/programs/:programName/:programID/stages/general" component={General} />
+                            <Route path="/programs/:programName/:programID/stages/levelStages" component={levelStages}/>
+                            <Route path="/programs/:programName/:programID/stages/programs" component={ProgramsList}/>
                         </PageHeader>
                     ) : (
                         <PageHeader
@@ -47,10 +41,11 @@ const Programs = (props) => {
                             links={NAV_BUTTON_LINKS}
                         >
                             <Route path="/programs/general" component={NewProgram}/>
-                            <Route path="/programs/:programName/levels" component={Levels}/>
-                            <Route path="/programs/:programName/contacts" component={Contacts}/>
-                            <Route path="/programs/:programName/documents" component={Documents}/>
-                            <Route path="/programs/:programName/goals" component={Goals}/>
+                            <Route path="/programs/:programName/:programID/levels" component={Levels}/>
+                            <Route path="/programs/:programName/:programID/contacts" component={Contacts}/>
+                            <Route path="/programs/:programName/:programID/documents" component={Documents}/>
+                            <Route path="/programs/:programName/:programID/goals" component={Goals}/>
+                            <Route path="/programs/:programName/:programID/general" component={NewProgram}/>
                             <Route path="/programs/:programName/general" component={NewProgram}/>
                             <Route path="/programs/levels" component={Levels}/>
                             <Route path="/programs/contacts" component={Contacts}/>

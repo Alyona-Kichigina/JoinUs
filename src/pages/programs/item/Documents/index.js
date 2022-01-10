@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PageHeader from "../../../../components/PageHeader";
 import AppList from "../../../../components/AppList";
 import "../levels/style.css"
 import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../../Constants";
@@ -7,13 +6,8 @@ import Modal from "../../../../components/ModalWindow";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
 import axios from "axios";
-import {CONTENT_LINKS} from "../../Constants";
-import {ADAPTATION_DOCUMENT, DEFAULT_URL} from "../../../../components/APIList";
+import {ADAPTATION_DOCUMENT, ADAPTATION_PROGRAM, DEFAULT_URL} from "../../../../components/APIList";
 import { ModalTableHeader, ModalTableBody } from "./style";
-
-const pageData = {
-    pageName: "Программа для разработчиков"
-}
 
 const DocumentName = ({data}) => (
         <div className="flex items-center">
@@ -104,12 +98,15 @@ class Documents extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_DOCUMENT}`)
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        items: response.data
+                        items: response.data.documents_detail
                     })
                 },
                 (error) => {

@@ -13,7 +13,6 @@ const BreadCrumbs = props => {
         <div className="flex ls-02">
             {
                 newPath.map(({name, link}, index) => {
-                    // console.log(link)
                     const activeLink = newPath.length === index + 1
                     return (
                         <div

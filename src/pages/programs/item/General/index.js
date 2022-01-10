@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Input from "@Components/Fields/Input"
-import PageHeader from "../../../../components/PageHeader";
-import ModalSelectInput from "../../../../components/ModalSelectInput";
 import ModalSidebar from "../../../../components/ModalSidebar";
 import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
@@ -11,26 +8,7 @@ import Form from "@Components/Forms/index"
 import { FormContainer } from "./style"
 import memoizeOne from "memoize-one";
 import axios from "axios";
-import {ADAPTATION_LEVELS, DEFAULT_URL} from "../../../../components/APIList";
-
-const clients = [
-    {
-        id: 1,
-        name: "ПАО Газпром 111"
-    },
-    {
-        id: 2,
-        name: "ПАО Газпром 222"
-    },
-    {
-        id: 3,
-        name: "ПАО Газпром 333"
-    },
-    {
-        id: 4,
-        name: "ПАО Газпром 444"
-    },
-]
+import {ADAPTATION_CUSTOMER, ADAPTATION_PROGRAM, ADAPTATION_EMPLOYEE, DEFAULT_URL} from "../../../../components/APIList";
 
 const users = [
     {
@@ -79,6 +57,8 @@ class General extends Component {
         this.state = {
             clientModal: false,
             creatorModal: false,
+            customers: [],
+            employees: [],
             data: {},
             modalState: {}
         }
@@ -86,7 +66,85 @@ class General extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}`)
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_EMPLOYEE}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoaded: true,
+                        employees: response.data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_CUSTOMER}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoaded: true,
+                        customers: response.data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+        if (pathnames[1] !== "new_program") {
+            axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
+                .then(
+                    (response) => {
+                        this.setState({
+                            isLoaded: true,
+                            data: response.data
+                        })
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        })
+                    }
+                )
+        }
+    }
+
+    handleInputChange (value, id) {
+
+        this.setState({
+            [id]: value
+        });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
+    selectClient = (value) => {
+        const { customers } = this.state
+        const customer = customers.find((a) => a.customer_name === value)
+        console.log(value)
+        this.setState({
+            modalState: [customer.id]
+        })
+    }
+
+    saveNewProgram () {
+        const { location: { pathname } } = this.props
+        const { data } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === "new_program"
+        const idProgram = newProgram ? "/" : `/${pathnames[2]}/`
+        axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newProgram ? {...data, status: 1} : data)
             .then(
                 (response) => {
                     this.setState({
@@ -103,28 +161,6 @@ class General extends Component {
             )
     }
 
-    handleInputChange (value, id) {
-
-        this.setState({
-            [id]: value
-        });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-    }
-
-    selectClient = (value) => {
-        const { client } = this.state
-        this.setState({
-            modalState: value === client ? "" : value
-        })
-    }
-
-    saveNewProgram () {
-        console.log(this.state.data)
-    }
-
     inputDataOfProgram = (value) => {
         this.setState(({ data }) => ({ data: { ...data, ...value } }))
     }
@@ -132,16 +168,26 @@ class General extends Component {
         console.log(v)
     }
 
+    selectedRadioButton = (value) => {
+        const { customers, modalState } = this.state
+        const newValue = customers.find((a) => a.customer_name === value)
+        return modalState[0] === newValue.id
+    }
+
     render() {
         const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, modalState, data, data: { CLIENT, CREATOR } } = this.state
+        const { clientModal, creatorModal, modalState, data, customers, isLoaded, data: { customer = [], CREATOR } } = this.state
+        const customerValue = isLoaded ? customers.find((a) => a.id === customer[0]) : {}
         const toggleModal = () => {
-            this.setState({clientModal: !clientModal})
+            this.setState({
+                clientModal: !clientModal,
+                modalState: data.customer
+            })
         }
         const toggleCreatorModal = () => {
             this.setState({creatorModal: !creatorModal})
         }
-        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, CLIENT, toggleCreatorModal, CREATOR))
+        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, customerValue, toggleCreatorModal, CREATOR))
         return (
             <div>
                 <ModalSidebar
@@ -149,7 +195,7 @@ class General extends Component {
                     closeModal={toggleModal}
                     isOpen={clientModal}
                     handleSave={() => this.setState({
-                        data: { ...data, CLIENT: modalState },
+                        data: { ...data, customer: modalState },
                         clientModal: !clientModal
                     })}
                 >
@@ -168,7 +214,7 @@ class General extends Component {
                             </div>
                         </div>
                      {
-                         clients.map(({name, id}, index) => {
+                         customers.map(({customer_name, id}, index) => {
                              return (
                                  <div
                                      className="grid py-4 font-semibold fs-14 border-list"
@@ -181,8 +227,9 @@ class General extends Component {
                                      </div>
                                      <RadioButton
                                          inputValue={this.selectClient}
-                                         selected={(value) => modalState === value}
-                                         title={name}
+                                         // selected={(value) => modalState === value}
+                                         selected={(value) => this.selectedRadioButton(value)}
+                                         title={customer_name}
                                          id={id}
                                      />
                                  </div>
@@ -248,40 +295,40 @@ class General extends Component {
                         const { formValid, onSubmit, onInput } = formProps
                           return (
                             <div className="h-full flex flex-col justify-between">
-                            <div
-                                className="mx-8"
-                            >
-                                <FormContainer>
-                                    <Form
-                                        {...formProps}
-                                        fields={firstForm}
-                                        value={data}
-                                        onInput={onInput}
-                                    />
-                                    <Form
-                                        {...formProps}
-                                        fields={SecondForm}
-                                        value={data}
-                                        onInput={onInput}
-                                    />
-                                </FormContainer>
-                            </div>
-                            <div
-                            className="flex justify-end pb-20 pr-8"
-                            >
-                            <div
-                            onClick={() => goBack()}
-                            className="white btn width-m mr-4"
-                            >
-                            Отмена
-                            </div>
-                            <button
-                            className="blue btn width-m"
-                            onClick={() => this.saveNewProgram()}
-                            >
-                            Сохранить
-                            </button>
-                            </div>
+                                <div
+                                    className="mx-8"
+                                >
+                                        <FormContainer>
+                                            <Form
+                                                {...formProps}
+                                                fields={firstForm}
+                                                value={data}
+                                                onInput={onInput}
+                                            />
+                                            <Form
+                                                {...formProps}
+                                                fields={SecondForm}
+                                                value={data}
+                                                onInput={onInput}
+                                            />
+                                        </FormContainer>
+                                    </div>
+                                    <div
+                                    className="flex justify-end pb-20 pr-8"
+                                    >
+                                        <div
+                                            onClick={() => goBack()}
+                                            className="white btn width-m mr-4"
+                                        >
+                                            Отмена
+                                        </div>
+                                        <button
+                                             className="blue btn width-m"
+                                             onClick={() => this.saveNewProgram()}
+                                        >
+                                            Сохранить
+                                        </button>
+                                </div>
                             </div>
                           )}}
                 </WithValidationHocRenderPropAdapter>

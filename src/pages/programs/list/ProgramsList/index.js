@@ -41,7 +41,7 @@ class ProgramsList extends Component {
                     </div>
                     <NavLink
                         className="blue btn width-m flex items-center"
-                        to="/programs/new_programm/general"
+                        to="/programs/new_program/general"
                     >
                         + Создать программу
                     </NavLink>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppList from "../../../../components/AppList";
-import {DEFAULT_URL, ADAPTATION_CONTACTS} from "../../../../components/APIList";
+import {DEFAULT_URL, ADAPTATION_CONTACTS, ADAPTATION_PROGRAM} from "../../../../components/APIList";
 import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
 import CardContact from "../../../../components/ComponentsForListTable/CardContact";
 import axios from "axios";
@@ -44,12 +44,15 @@ class Contacts extends Component {
         }
     }
     componentDidMount() {
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_CONTACTS}`)
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        items: response.data
+                        items: response.data.contacts_detail
                     })
                 },
                 (error) => {

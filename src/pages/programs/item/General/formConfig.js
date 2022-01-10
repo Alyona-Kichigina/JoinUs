@@ -3,17 +3,17 @@ import DatePicker from "@Components/Fields/DatePicker"
 import ModalSelectInput from "../../../../components/ModalSelectInput";
 import React from "react";
 
-export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
+export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => [
     {
         label: "Наименование",
-        id: "PROGRAM_NAME",
+        id: "program_name",
         component: Input,
         placeholder: "Введите наименование программы",
         formColumn: 0,
     },
     {
         label: "Описание",
-        id: "DESCRIPTION",
+        id: "description",
         component: Input,
         type: "textarea",
         minHeight: "195px",
@@ -22,29 +22,34 @@ export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
     },
     {
         label: "Срок программы",
-        id: "PROGRAM_TIME",
+        id: "duration_day",
         component: Input,
         placeholder: "Выберите дату выхода",
         formColumn: 1,
     },
     {
         label: "Заказчик",
-        id: "CLIENT",
+        id: "customer",
         component: ({onInput}) =>
-            <ModalSelectInput
-                id="4"
-                key="client"
-                value={client}
-                onInput={onInput}
-                placeholder="Выберите заказчика"
-                toggleModal={toggleModal}
-            />,
+        {
+                return (
+                 <ModalSelectInput
+                     id="4"
+                     key="customer"
+                     value={customer ? customer.customer_name : ""}
+                     onInput={onInput}
+                     placeholder="Выберите заказчика"
+                     toggleModal={toggleModal}
+                 />)
+        },
         formColumn: 1,
     },
     {
         label: "Дата создания",
-        id: "CREATION_DATE",
+        id: "create_date",
         component: DatePicker,
+        // dateFormat: "YYYY-MM-DDTHH.mm.ss",
+        dateFormat: "YYYY-MM-DDThh:mm",
         placeholder: "Выберите дату создания",
         formColumn: 1,
     },

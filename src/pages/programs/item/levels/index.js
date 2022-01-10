@@ -1,74 +1,9 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import AppList from "../../../../components/AppList";
-import { DEFAULT_URL, ADAPTATION_LEVELS } from "../../../../components/APIList"
+import {DEFAULT_URL, ADAPTATION_LEVELS, ADAPTATION_PROGRAM} from "../../../../components/APIList"
 import { NavLink } from "react-router-dom";
 import { settings } from "./tableConfig";
-
-const pageData = {
-    pageName: "Программа для разработчиков"
-}
-
-const levelsList = [
-    {
-        name: "Немного о нас",
-        data: [
-            {
-                name: "Немного о нас",
-                days: "4",
-                points: "200",
-                status: 1,
-            },
-            {
-                name: "Что необходимо изучить",
-                days: "6",
-                points: "100",
-                status: 1,
-            },
-            {
-                name: "Немного о нас",
-                days: "3",
-                points: "290",
-                status: 1,
-            }
-        ]
-    },
-    {
-        name: "Как мы работаем",
-        data: [
-            {
-                name: "Наш график",
-                days: "4",
-                points: "200",
-                status: 1,
-            },
-            {
-                name: "Правила офиса",
-                days: "6",
-                points: "100",
-                status: 1,
-            }
-        ]
-    },
-    {
-        name: "Что необходимо изучить",
-        data: [
-            {
-                name: "Основные регламенты",
-                days: "4",
-                points: "200",
-                status: 1,
-            },
-            {
-                name: "Презентация о компании",
-                days: "6",
-                points: "100",
-                status: 1,
-            }
-        ]
-    }
-
-]
 
 class Levels extends Component {
 
@@ -84,12 +19,17 @@ class Levels extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}`)
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        console.log(idProgram)
+        // axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}/${pathnames[2]}`)
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}/${pathnames[2]}`)
             .then(
                 (response) => {
                     this.setState({
                                     isLoaded: true,
-                                    items: response.data
+                                    items: response.data.levels_detail
                     })
                 },
                 (error) => {

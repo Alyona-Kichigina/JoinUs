@@ -4,7 +4,7 @@ import { DocumentIcon } from "../../../Constants";
 import axios from "axios";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
-import { DEFAULT_URL, ADAPTATION_GOALS } from "../../../../components/APIList";
+import {DEFAULT_URL, ADAPTATION_PROGRAM, ADAPTATION_GOALS} from "../../../../components/APIList";
 import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "../Documents/style";
 import { settings } from "./FormConfig";
@@ -24,12 +24,15 @@ class Goals extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_GOALS}`)
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        items: response.data
+                        items: response.data.goals_detail
                     })
                 },
                 (error) => {
@@ -43,7 +46,7 @@ class Goals extends Component {
     }
 
     render() {
-        const { items, editModal, modalData, documentSelection, modalData: { description }, selectedGoals } = this.state
+        const { items, editModal, modalData, documentSelection, modalData: { goal_name }, selectedGoals } = this.state
 
         const handleEdit = (data) => {
             this.setState({
@@ -55,7 +58,7 @@ class Goals extends Component {
 
         const handleInputChange = (value, id) => {
             this.setState({
-                modalData: {[id]: value}
+                modalData: {...modalData, [id]: value}
             })
         }
 
@@ -63,8 +66,26 @@ class Goals extends Component {
             documentSelection: !documentSelection
         })
 
-        const saveEditDocument = (data) => {
-            console.log(data)
+        const saveEditDocument = ({goal_name}) => {
+            const { modalData } = this.state
+            const { location: { pathname } } = this.props
+            const pathnames = pathname.split("/").filter(x => x)
+            // console.log({...modalData, goal_name})
+            axios.put(`${DEFAULT_URL}/${ADAPTATION_GOALS}/${pathnames[2]}/`, {...modalData, goal_name})
+                .then(
+                    (response) => {
+                        this.setState({
+                            isLoaded: true,
+                            data: response.data
+                        })
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        })
+                    }
+                )
         }
 
         const toggleModal = () => this.setState({
@@ -93,10 +114,10 @@ class Goals extends Component {
                         Наименование цели
                     </span>
                             <Input
-                                value={description}
-                                key="description"
-                                id="description"
-                                onInput={() => handleInputChange(document.getElementById('description').value, "description")}
+                                value={goal_name}
+                                key="goal_name"
+                                id="goal_name"
+                                onInput={() => handleInputChange(document.getElementById('goal_name').value, "goal_name")}
                                 className="mt-2 font-normal"
                             />
                         </div>
@@ -128,7 +149,7 @@ class Goals extends Component {
                         </div>
                     </ModalTableHeader>
                     {
-                        items.map(({description, id_goal}, index) => {
+                        items.map(({goal_name, description, id}, index) => {
                             return (
                                 <ModalTableBody>
                                     <div className="flex items-center">
@@ -139,7 +160,7 @@ class Goals extends Component {
                                             className="pr-2"
                                             dangerouslySetInnerHTML={{__html: DocumentIcon}}
                                         />
-                                        {description}
+                                        {goal_name}
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <div>
@@ -148,7 +169,7 @@ class Goals extends Component {
                                         <ChekBox
                                             id="selectedGoals"
                                             value={selectedGoals}
-                                            checkBoxValue={id_goal}
+                                            checkBoxValue={id}
                                             onInput={checkDocument}
                                         />
                                     </div>

@@ -53,7 +53,7 @@ export const settings = (editModal, closeModal, handleEdit) => [
     },
     {
         id: 2,
-        key: "description",
+        key: "goal_name",
         name: "Наименование",
         component: DocumentName,
         size: "30%"
