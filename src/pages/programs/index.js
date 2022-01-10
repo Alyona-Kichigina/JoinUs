@@ -22,7 +22,7 @@ const Programs = (props) => {
     const pathnames = pathname.split("/").filter(x => x)
     const programName = pathnames[1] === "new_programm" ? "Новая программа"  : pathnames[1]
     return (
-        <div>
+        <div className="flex-container">
 
             {
                 pathname === "/programs" ?

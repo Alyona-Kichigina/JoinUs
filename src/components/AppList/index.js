@@ -4,6 +4,9 @@ import Row from "./row"
 import PropTypes from "prop-types"
 import ScrollBar from "@Components/ScrollBar"
 
+// todo последний элемент в списке обрезается
+// поправить верстку
+
 class AppList extends Component {
     render() {
         const { data, settings, nestedKey, nestedData } = this.props
@@ -16,47 +19,43 @@ class AppList extends Component {
             for (let i = 0; i < data.length; i++) {
                 const rowData = data[i]
                 result.push(
-                    <div
+                  <>
+                    <div className={`${nestedData && "bg-color-light-blue"}`}>
+                      <Row
+                        className=""
                         key={i}
-                    >
-                        {
-                            <>
-                                <div className={`${nestedData && "bg-color-light-blue"}`}>
-                                    <Row
-                                        className=""
-                                        settings={settings}
-                                        data={rowData}
-                                        nestedLevel={0}
-                                        rowIndex={i}
-                                        nestedData={nestedData}
-                                        gridStyle={gridStyle}
-                                        rowClass="font-bold my-4 mx-4 flex justify-start"
-                                    />
-                                </div>
-                                {
-                                    nestedKey && rowData[nestedKey] && rowData[nestedKey].length > 0 && rowData[nestedKey].map( (a, index) => {
-                                        return (
-                                        <Row
-                                            settings={settings}
-                                            data={a}
-                                            nestedLevel={1}
-                                            rowIndex={index}
-                                            parentIndex={i}
-                                            gridStyle={gridStyle}
-                                            rowClass="my-4 flex justify-start font-semibold"
-                                        />
-                                    )})
-                                }
-                            </>
-                        }
+                        settings={settings}
+                        data={rowData}
+                        nestedLevel={0}
+                        rowIndex={i}
+                        nestedData={nestedData}
+                        gridStyle={gridStyle}
+                        rowClass="font-bold my-4 mx-4 flex justify-start"
+                      />
                     </div>
+                    {
+                      nestedKey && rowData[nestedKey] && rowData[nestedKey].length > 0 && rowData[nestedKey].map( (a, index) => {
+                        return (
+                          <Row
+                            settings={settings}
+                            key={i}
+                            data={a}
+                            nestedLevel={1}
+                            rowIndex={index}
+                            parentIndex={i}
+                            gridStyle={gridStyle}
+                            rowClass="my-4 flex justify-start font-semibold"
+                          />
+                        )})
+                    }
+                  </>
                 )
             }
             return result
         }
 
         return (
-            <div className="bg-white flex-container border-radius-4 m-b-16 h-full m-b-50">
+            <div className="bg-white flex-container border-radius-4 m-b-16 h-full m-b-16 hidden">
                 <Header
                     settings={settings}
                     gridStyle={gridStyle}
