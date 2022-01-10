@@ -1,5 +1,6 @@
 import React from 'react';
 import {Oval, Container} from "./style"
+import PropTypes from "prop-types"
 
 // progress: 1
 // 0/4 - 0
@@ -10,14 +11,14 @@ import {Oval, Container} from "./style"
 
 
 const Progress = ({data}) => {
-  const { name, progress } = data
+  const { post, progress } = data
   const result = progress/4
   return (
     <div>
       <div
         className="fs-12 color-light-blue-2 p-b-6"
       >
-        {name}
+        {post}
       </div>
       <div className="flex">
         <Container>
@@ -33,5 +34,16 @@ const Progress = ({data}) => {
     </div>
   );
 };
+
+Progress.propTypes = {
+  data: PropTypes.string,
+}
+
+Progress.defaultProps = {
+  data: {
+    progress: 0,
+    post: "no name"
+  }
+}
 
 export default Progress;

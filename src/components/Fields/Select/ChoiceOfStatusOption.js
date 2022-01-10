@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import CheckBox from "@Components/Fields/CheckBox";
@@ -13,62 +13,41 @@ const StyleCheckbox = styled(CheckBox)`
   }
 `
 
-const arrayStatus = [
-  {
-    ID: "statusEnd",
-    label: "Завершена",
-    icon: "/assets/icons/iconStatus/iconStatusEnd.svg"
-  },
-  {
-    ID: "statusWait",
-    label: "Ожидание",
-    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
-  },
-  {
-    ID: "statusWork",
-    label: "В процессе",
-    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
-  }
-]
+// todo кликаю на чекбокс
+// данные отображаются в селекте
+// открываю список чекбоксов
+// выбранный чекбокс не активен
 
-const ChoiceOfStatusOption = ({onSelect}) => {
+
+// todo в селекте отображаются повторно активные чекбоксы и чекбоксы которые не активны
+
+const ChoiceOfStatusOption = ({option, option: {ID, SYS_NAME, icon}, valueKey, onSelect, selectedOptions}) => {
   const [value, setValue] = useState([])
 
   const onInput = useCallback((value, id) => {
-      const checkedStatus = arrayStatus.reduce((acc, item) => {
-        if (item.ID === id) {
-          acc.push(item)
-        }
-        return acc
-      }, [...value])
-      setValue(value ? checkedStatus.map(item => item) : [])
-      onSelect(value ? checkedStatus.map(item => item) : [])
-    }, [value, setValue])
+    setValue(value)
+    onSelect(option, value.some(v => v.ID === id))
+    }, [option, setValue, onSelect])
+
   return (
-    <OptionContainer
-      className=" flex flex-col"
-    >
-      {arrayStatus.map(item => {
-        const { ID, label, icon} = item
-        return (
-          <StyleCheckbox
-            key={ID}
-            label={label}
-            id={ID}
-            value={value}
-            onInput={onInput}
-            iconLabel={icon}
-            checkBoxValue={item}
-            returnObjects
-          />
-        )
-      })}
+    <OptionContainer className="flex flex-col">
+      <StyleCheckbox
+        key={ID}
+        label={SYS_NAME}
+        id={ID}
+        value={value}
+        onInput={onInput}
+        iconLabel={icon}
+        checkBoxValue={option}
+        returnObjects
+      />
     </OptionContainer>
   );
 };
 
 ChoiceOfStatusOption.propTypes = {
   onSelect: PropTypes.func.isRequired,
+  option: PropTypes.object.isRequired,
 }
 
 export default ChoiceOfStatusOption;

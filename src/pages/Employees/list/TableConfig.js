@@ -26,13 +26,13 @@ export const settings = [
   },
   {
     id: 2,
-    key: "RELEASE_DATE",
+    key: "release_date",
     name: "Дата выхода",
     size: "1fr",
   },
   {
     id: 3,
-    key: "ACTIVATION_DATE",
+    key: "create_date",
     name: "Дата активации",
     size: "1fr"
   },
