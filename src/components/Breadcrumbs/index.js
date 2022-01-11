@@ -6,14 +6,18 @@ import {ArrowBack} from "../../pages/Constants";
 import { BreadcrumbsDot } from "./style";
 
 const BreadCrumbs = props => {
-    const { location: { pathname }, section } = props
+    const { location: { pathname }, section, bredCrumbsConfig, history: { go , push} } = props
     const pathnames = pathname.split("/").filter(x => x)
-    const newPath = CONTENT_LINKS.filter(a => pathnames.some(e => e === a.link))
+    // const newPath = CONTENT_LINKS.filter(a => pathnames.some(e => e === a.link))
+    const pageName = pathnames[pathnames.length - 1]
+    const { config } = bredCrumbsConfig.find(a => pageName === a.page)
     return (
         <div className="flex ls-02">
             {
-                newPath.map(({name, link}, index) => {
-                    const activeLink = newPath.length === index + 1
+                config.map(({name, link}, index) => {
+                    const activeLink = config.length === index + 1
+                    link = typeof link === "function" ? link(pathnames) : link
+                    name = typeof name === "function" ? name(pathnames) : name
                     return (
                         <div
                             // key={name}
@@ -24,7 +28,7 @@ const BreadCrumbs = props => {
                                 ) : (
                                     <NavLink
                                         key={name}
-                                        to={`${newPath[0].link}`}
+                                        to={`${link}`}
                                     >
                                         <div
                                             className="mr-3"
@@ -34,7 +38,8 @@ const BreadCrumbs = props => {
                                 )
                             }
                             <NavLink
-                                to={`/${section}/${link}`}
+                                to={`/${link}`}
+                                onClick={() => (console.log(link))}
                                 className={`${activeLink ? "pointer-events-none" : "color-light-blue-2"} capitalize`}
                             >
                                 {name}

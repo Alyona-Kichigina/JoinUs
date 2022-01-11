@@ -31,7 +31,7 @@ export const CONTENT_LINKS = [
 ]
 export const STAGES_LINKS = [
     {
-        name: "общие",
+        name: "Общие",
         link: "general"
     },
     {

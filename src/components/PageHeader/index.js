@@ -4,10 +4,11 @@ import NavContentBtn from "../NavContentButton";
 
 class PageHeader extends Component {
     render() {
-        const { pageData, section, children, links } = this.props
+        const { pageData, section, children, links, bredCrumbsConfig } = this.props
         return (
             <div className="h-full flex-container">
               <BreadCrumbs
+                bredCrumbsConfig={bredCrumbsConfig}
                 section={section}
                 {...this.props}
               />
