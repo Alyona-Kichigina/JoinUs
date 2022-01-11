@@ -1,7 +1,9 @@
 import Input from "@Components/Fields/Input"
-import Select from "@Components/Fields/Select"
 import DatePicker from "@Components/Fields/DatePicker"
 import PriceInput from "@Components/Fields/PriceInput";
+import RefSelect from "@Components/Fields/RefSelect/index"
+import {ADAPTATION_PROGRAM, DEFAULT_URL, DIRECTORY} from "../../../../components/APIList";
+import axios from "axios";
 
 export const fieldMap = [
   {
@@ -28,9 +30,16 @@ export const fieldMap = [
   {
     label: "Должность",
     id: "post",
-    component: Select,
+    component: RefSelect,
     placeholder: "Выберите должность",
     formColumn: 0,
+    valueKey: "id",
+    labelKey: "directory",
+    preload: true,
+    async refLoader() {
+      const {data } = await axios.get(`${DEFAULT_URL}/${DIRECTORY}`)
+      return data
+    },
   },
   {
     label: "Дата выхода",
@@ -55,13 +64,25 @@ export const fieldMap = [
   },
   {
     label: "Программа адаптации",
-    id: "POSITION",
-    component: Select,
+    id: "program",
+    component: RefSelect,
     placeholder: "Выберите программу адаптации",
+    valueKey: "id",
+    labelKey: "program_name",
+    preload: true,
+    async refLoader() {
+      const {data } = await axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}`)
+      return data
+    },
     formColumn: 1,
   },
 ]
 
 export const rules = {
-  SURNAME: "required",
+  last_name: "required",
+  first_name: "required",
+  middle_name: "required",
+  post: "required",
+  create_date: "required",
+  release_date: "required"
 }

@@ -13,7 +13,7 @@ class Row extends Component {
             nestedLevel,
             rowIndex,
             parentIndex,
-            data = [],
+            data = {},
             active
         } = this.props
 
@@ -62,10 +62,12 @@ class Row extends Component {
 
 Row.propTypes = {
     rowClass: PropTypes.string,
+    data: PropTypes.object,
 }
 
 Row.defaultProps = {
-    rowClass: ""
+    rowClass: "",
+    data: {}
 }
 
 export default Row;

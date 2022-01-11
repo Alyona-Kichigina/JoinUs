@@ -36,12 +36,16 @@ class Employees extends Component {
 
   render() {
     const { state: {data} } = this
-    const newData = data.map(({ last_name, first_name, post, role }) =>
-      ({
-        EMPLOYEES: {
-          name: `${last_name} ${first_name}`,
-          role: `${post}`
-        },
+    const newData = data.map((item) => ({
+      EMPLOYEES: {
+        name: `${item.last_name} ${item.first_name}`,
+        role: `${item.post}`
+      },
+      STATUS: {
+        adaptation_status: item.adaptation_status,
+        program_details: item.program_details
+      },
+        ...item
       })
     )
     return (
