@@ -6,6 +6,8 @@ import {FormContainer, TabContainer} from "../style";
 import ScrollBar from "@Components/ScrollBar"
 import {WithValidationHocRenderPropAdapter} from "../../../../Validator";
 import memoizeOne from "memoize-one";
+import axios from "axios";
+import {CANDIDATE_LIST, DEFAULT_URL} from "../../../../components/APIList";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
 .reduce((acc, c) => {
@@ -31,9 +33,15 @@ class General extends Component {
   inputDataOfEmployee = (value) => {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
-  saveDataOfEmployee = (v) => {
-    console.log(v)
-
+  saveDataOfEmployee = (payload) => {
+    axios.post(`${DEFAULT_URL}/${CANDIDATE_LIST}`, {...payload})
+    .then((response) => {
+      console.log(response)
+      },
+      (error) => {
+        this.setState({error})
+      }
+    )
   }
   render() {
     const { data } = this.state

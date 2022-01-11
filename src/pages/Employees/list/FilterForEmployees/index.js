@@ -12,9 +12,27 @@ const options = [
   {ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},{ID: 1, SYS_NAME: "aaa"},
 ]
 
+const arrayStatus = [
+  {
+    ID: "statusEnd",
+    SYS_NAME: "Завершена",
+    icon: "/assets/icons/iconStatus/iconStatusEnd.svg"
+  },
+  {
+    ID: "statusWait",
+    SYS_NAME: "Ожидание",
+    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
+  },
+  {
+    ID: "statusWork",
+    SYS_NAME: "В процессе",
+    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
+  }
+]
+
 const FilterForEmployees = ({handleInput}) => {
   const [dataForInput, setDataForInput] = useState("")
-  const [valueSelect, setValueSelect] = useState({})
+  const [valueSelect, setValueSelect] = useState([])
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
 
@@ -37,10 +55,6 @@ const FilterForEmployees = ({handleInput}) => {
     handleInput(value, id)
   }, [handleInput])
 
-  const selectOption = useCallback((value) => {
-    // console.log(value)
-  }, [])
-
   return (
     <FilterContainer className="m-b-16">
       <div className="p-r-24">
@@ -52,20 +66,18 @@ const FilterForEmployees = ({handleInput}) => {
           onInput={onInput}
         />
       </div>
-      <ChoiceOfStatusOption
-        onSelect={selectOption}
-      />
       <div className="p-r-24">
         <div className="fs-12 color-light-blue-2 p-b-5">Статус</div>
         <Select
+          ComponentOption={ChoiceOfStatusOption}
           id="status"
           placeholder="Выберите статус"
           onInput={handleSelect}
           value={valueSelect}
-          options={options}
-          clearable={false}
-          mult
-          choiceStatus
+          options={arrayStatus}
+          multiple
+          returnOption
+
         />
       </div>
       <div className="flex">

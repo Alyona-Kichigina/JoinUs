@@ -6,7 +6,7 @@ class PageHeader extends Component {
     render() {
         const { pageData, section, children, links, bredCrumbsConfig } = this.props
         return (
-            <div className="h-full flex-container">
+            <div className="flex-container">
               <BreadCrumbs
                 bredCrumbsConfig={bredCrumbsConfig}
                 section={section}

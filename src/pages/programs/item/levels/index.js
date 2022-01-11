@@ -43,33 +43,27 @@ class Levels extends Component {
     render() {
         const { items } = this.state
         return (
-            <div className="h-full">
-                <div>
-                    <div>
-                         <div className="bg-white h-full">
-                             <div className="pt-6 mb-4 ml-4">
-                                 <NavLink
-                                     className="blue btn width-m pt-1.5"
-                                     to="stages/general"
-                                 >
-                                     + Добавить уровень
-                                 </NavLink>
-                                 <button
-                                     className="white btn width-m pt-1.5 ml-4"
-                                 >
-                                     Выбрать уровень
-                                 </button>
-                             </div>
-                             <AppList
-                                 settings={settings}
-                                 nestedData={true}
-                                 data={items}
-                                 nestedKey="stages"
-                             />
-                         </div>
-                    </div>
-                </div>
-            </div>
+          <div className="flex-container">
+              <div className="pt-6 mb-4 ml-4">
+                  <NavLink
+                    className="blue btn width-m pt-1.5"
+                    to="stages/general"
+                  >
+                      + Добавить уровень
+                  </NavLink>
+                  <button
+                    className="white btn width-m pt-1.5 ml-4"
+                  >
+                      Выбрать уровень
+                  </button>
+              </div>
+              <AppList
+                settings={settings}
+                nestedData={true}
+                data={items}
+                nestedKey="stages"
+              />
+          </div>
         );
     }
 }

@@ -81,7 +81,7 @@ class Contacts extends Component {
             })
         )
         return (
-            <div>
+            <>
                     <div
                         className="pt-6 pl-4"
                     >
@@ -97,7 +97,7 @@ class Contacts extends Component {
                              data={newData}
                          />
                      </div>
-            </div>
+            </>
         );
     }
 }

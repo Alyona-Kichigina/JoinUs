@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { RowContainer } from "./style"
+import PropTypes from "prop-types"
 
 class Row extends Component {
     render() {
@@ -12,7 +13,7 @@ class Row extends Component {
             nestedLevel,
             rowIndex,
             parentIndex,
-            data = [],
+            data = {},
             active
         } = this.props
 
@@ -59,6 +60,16 @@ class Row extends Component {
             </RowContainer>
         );
     }
+}
+
+Row.propTypes = {
+    rowClass: PropTypes.string,
+    data: PropTypes.object,
+}
+
+Row.defaultProps = {
+    rowClass: "",
+    data: {}
 }
 
 export default Row;

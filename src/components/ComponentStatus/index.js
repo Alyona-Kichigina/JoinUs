@@ -6,7 +6,13 @@ const Status = ({data}) => {
   const [title, setTitle] = useState("")
 
   const getData = useCallback(() => {
-    switch (data) {
+    const { adaptation_status, program_details: [detail]} = data
+    const status = detail.levels_detail.length === adaptation_status.length
+      ? "end"
+      : adaptation_status.length === 0
+        ? "wait"
+        : "work"
+    switch (status) {
       case "end":
         setIcon("/assets/icons/iconStatus/iconStatusEnd.svg")
         setTitle("Завершена")
@@ -16,7 +22,7 @@ const Status = ({data}) => {
         setTitle("Ожидание")
         break;
       case "work":
-        setIcon("/assets/icons/iconStatus/iconStatusWait.svg")
+        setIcon("/assets/icons/iconStatus/iconStatusWorking.svg")
         setTitle("В процессе")
         break;
       default:

@@ -34,7 +34,7 @@ class ProgramsList extends Component {
     render() {
         const { items } = this.state
         return (
-            <div className="h-full">
+            <div className="flex-container">
                 <div className="flex justify-between my-3">
                     <div className="text-2xl">
                         Программы
@@ -46,12 +46,10 @@ class ProgramsList extends Component {
                         + Создать программу
                     </NavLink>
                 </div>
-                <div className="bg-white h-full">
-                    <AppList
-                        settings={settings}
-                        data={items}
-                    />
-                </div>
+              <AppList
+                settings={settings}
+                data={items}
+              />
             </div>
         );
     }

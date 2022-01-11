@@ -11,12 +11,13 @@ import debounce from "@Utils/debounce"
 import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import Option from "./Option"
 import MultipleOption from "./MultipleOption"
-import ChoiceOfStatusOption from "./ChoiceOfStatusOption";
 import {
   ToggleIndicator,
   SelectContainer, InputSelectContainer, SelectInput, MultipleValuePrerenderContainer, NoOptionsLabel, ToggleIconContainer,
   RemoveIconContainer, SelectedOptionsScrollBar, SelectedOptions, MultipleValueInputContainer, OverlayItemsContainer
 } from "./styles"
+
+// todo сделать удаление валью в селекте
 
 const scrollOptions = { wheelPropagation: false }
 
@@ -108,7 +109,7 @@ class Select extends PureComponent {
 
   getPlaceholder = memoizeOne((allWaysExpandedMultipleSelection, multiple, open, placeholder, value) => multiple
     ? value && value.length > 0
-      ? allWaysExpandedMultipleSelection ? "" : open ? placeholder : ""
+      ? open ? placeholder : ""
       : placeholder
     : open ? value ? this.getLabel(value) : placeholder : placeholder)
 
@@ -118,9 +119,9 @@ class Select extends PureComponent {
     if (filterable && !remote) {
       optionsPipe.push(this.filterOptions)
     }
-    if (multiple) {
-      optionsPipe.push(this.removeSelectedMultipleOptions)
-    }
+    // if (multiple) {
+    //   optionsPipe.push(this.removeSelectedMultipleOptions)
+    // }
     if (allowCreate) {
       optionsPipe.push(this.addCreateOption)
     }
@@ -236,7 +237,6 @@ class Select extends PureComponent {
   }
 
   selectOption = (optionValue) => {
-    this.setState({multipleData: optionValue})
     const { props: { returnOption, valueKey, multiple, value = [] } } = this
     const normalizeValue = returnOption ? optionValue : optionValue[valueKey]
     if (multiple) {
@@ -333,7 +333,7 @@ class Select extends PureComponent {
         children, disabled, searchable, id, multiple, allWaysExpandedMultipleSelection, tipMaxSize, tipMinSize,
         value, labelKey, valueKey, returnOption, clearable, placeholder,
         remote, loading, awaitOfUserInputLabel, className, showToggleButton,
-        choiceStatus, mult
+        ComponentOption
       },
       state: {
         open, search, filteredOptions, typeAheadPointer, multipleContainerMeta: { multipleContainerStyles },
@@ -341,7 +341,6 @@ class Select extends PureComponent {
       }
     } = this
     // Object { ID: 1, SYS_NAME: "aaa" }
-
     return (
       <RenderOverlayMenu
         onOpenOverlayMenu={this.openSelect}
@@ -370,21 +369,19 @@ class Select extends PureComponent {
                         disabled={disabled}
                         placeholder={this.getPlaceholder(allWaysExpandedMultipleSelection, multiple, open, placeholder, value)}
                         readOnly={!searchable}
-                        value={open
-                            ? ""
-                            : this.getLabel(value)}
+                        value={open ? "" :  multiple ? "" : this.getLabel(value)}
                         onInput={this.handleSearchInput}
                         onKeyDown={this.onSearchKeyDown}
                         onFocus={onOpenOverlayMenu}
                       />
-                      {mult && multipleData && multipleData.length > 0 && (
-                        multipleData.map(({label, icon, ID}) => (
-                          <div className="flex items-center">
+                      {multiple && value && value.length > 0 && (
+                        value.map(({SYS_NAME, icon, ID}) => (
+                          <div className="flex items-center m-r-8" key={ID}>
                             <img src={icon} alt="" className="p-r-8"/>
                             <div
                               className="p-r-15 fz14"
                             >
-                              { label }
+                              { SYS_NAME },
                             </div>
                           </div>
                         ))
@@ -406,32 +403,21 @@ class Select extends PureComponent {
                           ref={scrollBarRef}
                           options={scrollOptions}
                         >
-                          {choiceStatus
-                            ?
-                            (
-                              <ChoiceOfStatusOption
-                                onSelect={this.selectOption}
-                              />
-                            )
-                          :
-                            (<>
-                                {filteredOptions.map((option, index) => (
-                                  <Option
-                                    key={option[valueKey]}
-                                    option={option}
-                                    selectedOptions={value}
-                                    index={index}
-                                    labelKey={labelKey}
-                                    valueKey={valueKey}
-                                    multiple={multiple}
-                                    returnOption={returnOption}
-                                    typeAheadPointer={typeAheadPointer}
-                                    onSelect={this.selectOption}
-                                    onUpdateTypePointer={this.handleUpdateTypePointer}
-                                  />
-                                ))}
-                            </>)
-                          }
+                          {filteredOptions.map((option, index) => (
+                            <ComponentOption
+                              key={option[valueKey]}
+                              option={option}
+                              selectedOptions={value}
+                              index={index}
+                              labelKey={labelKey}
+                              valueKey={valueKey}
+                              multiple={multiple}
+                              returnOption={returnOption}
+                              typeAheadPointer={typeAheadPointer}
+                              onSelect={this.selectOption}
+                              onUpdateTypePointer={this.handleUpdateTypePointer}
+                            />
+                          ))}
                         </ScrollBar>
                       </SelectedOptions>
                     )}
@@ -481,7 +467,7 @@ Select.propTypes = {
   onFocus: PropTypes.func,
   inputRef: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  choiceStatus: PropTypes.bool,
+  ComponentOption: PropTypes.func,
 }
 
 Select.defaultProps = {
@@ -500,7 +486,7 @@ Select.defaultProps = {
   inputRef: () => null,
   filterBy: (option, label, search) => label ? label.toLowerCase().indexOf(search.toLowerCase()) > -1 : false,
   className: "",
-  choiceStatus: false
+  ComponentOption: Option
 }
 
 export default Select
