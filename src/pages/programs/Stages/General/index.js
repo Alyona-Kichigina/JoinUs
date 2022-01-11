@@ -7,6 +7,12 @@ import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
 import { FormContainer } from "../../item/General/style"
+import axios from "axios";
+import {
+    ADAPTATION_CUSTOMER,
+    ADAPTATION_EMPLOYEE, ADAPTATION_LEVELS, ADAPTATION_PROGRAM,
+    DEFAULT_URL
+} from "../../../../components/APIList";
 
 const clients = [
     {
@@ -68,16 +74,71 @@ const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnl
         return acc
     }, [[], []]))
 
-class NewProgram extends Component {
+class LevelsGeneral extends Component {
     constructor(props) {
         super(props);
         this.state = {
             clientModal: false,
             creatorModal: false,
+            customers: [],
+            employees: [],
             data: {},
             modalState: {}
         }
         this.handleInputChange = this.handleInputChange.bind(this)
+    }
+
+    componentDidMount() {
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idLevel = pathnames[1] !== "new_program" ? `/${pathnames[3]}` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_EMPLOYEE}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoaded: true,
+                        employees: response.data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_CUSTOMER}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoaded: true,
+                        customers: response.data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+        if (pathnames[1] !== "new_program") {
+            axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`)
+                .then(
+                    (response) => {
+                        this.setState({
+                            isLoaded: true,
+                            data: response.data
+                        })
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        })
+                    }
+                )
+        }
     }
 
     handleInputChange (value, id) {
@@ -92,20 +153,43 @@ class NewProgram extends Component {
     }
 
     selectClient = (value) => {
-        const { client } = this.state
+        const { customers } = this.state
+        const customer = customers.find((a) => a.customer_name === value)
         this.setState({
-            modalState: value === client ? "" : value
+            modalState: [customer.id]
         })
     }
 
     saveNewProgram () {
         console.log(this.state.data)
+        const { location: { pathname }, history: { push } } = this.props
+        const { data } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === "new_program"
+        const idLevel = newProgram ? "/" : `/${pathnames[3]}/`
+        axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`, {...data, illustration: "111" })
+            .then(
+                (response) => {
+                    const { data, data: { program_name, id } } = response
+                    this.setState({
+                        isLoaded: true,
+                        data: data
+                    })
+                    // push(`/programs/${program_name}/${id}/general`)
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
     }
 
     inputDataOfProgram = (value) => {
         this.setState(({ data }) => ({ data: { ...data, ...value } }))
     }
-    saveDataOfProgram = (v) => {
+    saveDataOfStage = (v) => {
         console.log(v)
     }
 
@@ -217,7 +301,7 @@ class NewProgram extends Component {
                 </ModalSidebar>
                 <WithValidationHocRenderPropAdapter
                     onInput={this.inputDataOfProgram}
-                    onSubmit={this.saveDataOfProgram}
+                    onSubmit={this.saveDataOfStage}
                     value={data}
                     rules={rules}
                 >
@@ -267,8 +351,8 @@ class NewProgram extends Component {
     }
 }
 
-NewProgram.propTypes = {
+LevelsGeneral.propTypes = {
     history: PropTypes.object,
 };
 
-export default NewProgram;
+export default LevelsGeneral;

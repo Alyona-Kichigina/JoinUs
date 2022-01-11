@@ -75,7 +75,8 @@ export const stagesBreadcrumbs = [
                 link: "programs"
             },
             {
-                name: "Новая програма",
+                name: (pathname) =>`${pathname[1] === "new_program" ? "Новая програма" : pathname[1]}`
+                ,
                 link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
             },
             {
@@ -92,7 +93,7 @@ export const stagesBreadcrumbs = [
                 link: "programs"
             },
             {
-                name: "Новая програма",
+                name: (pathname) =>`${pathname[1] === "new_program" ? "Новая програма" : pathname[1]}`,
                 link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
             },
             {
@@ -109,7 +110,7 @@ export const stagesBreadcrumbs = [
                 link: "programs"
             },
             {
-                name: "Новая програма",
+                name: (pathname) =>`${pathname[1] === "new_program" ? "Новая програма" : pathname[1]}`,
                 link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
             },
             {

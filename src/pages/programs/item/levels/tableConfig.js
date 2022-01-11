@@ -15,40 +15,47 @@ const ActiveIndicator = ({ data } ) => data ? (
     </div>
 ) : ""
 
-export const settings = [
-    {
-        id: 1,
-        key: ["level_name", "stage_name"],
-        name: "уровень/этап",
-        size: "30%"
-    },
-    {
-        id: 2,
-        key: "duration_day",
-        name: "дней этапа",
-        nestedLevel: 1,
-        size: "15%"
-    },
-    {
-        id: 3,
-        key: "point",
-        name: "баллов",
-        nestedLevel: 1,
-        size: "15%"
-    },
-    {
-        id: 4,
-        key: "status",
-        name: "статус",
-        component: ActiveIndicator,
-        nestedLevel: 1,
-        size: "15%"
-    },
-    {
-        id: 5,
-        name: "действия",
-        nestedLevel: 1,
-        size: "25%",
-        component: Actions
-    },
-]
+export const settings = (editStage) => {
+    return [
+        {
+            id: 1,
+            key: ["level_name", "stage_name"],
+            name: "уровень/этап",
+            size: "30%"
+        },
+        {
+            id: 2,
+            key: "duration_day",
+            name: "дней этапа",
+            nestedLevel: 1,
+            size: "15%"
+        },
+        {
+            id: 3,
+            key: "point",
+            name: "баллов",
+            nestedLevel: 1,
+            size: "15%"
+        },
+        {
+            id: 4,
+            key: "status",
+            name: "статус",
+            component: ActiveIndicator,
+            nestedLevel: 1,
+            size: "15%"
+        },
+        {
+            id: 5,
+            name: "действия",
+            // nestedLevel: 1,
+            allData: true,
+            size: "25%",
+            component: (props) => (
+                <Actions
+                    {...props}
+                    editButton={editStage}
+                />)
+        },
+    ]
+}

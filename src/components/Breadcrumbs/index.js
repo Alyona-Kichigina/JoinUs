@@ -1,14 +1,12 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { CONTENT_LINKS } from "../../pages/programs/Constants";
 import PropTypes from "prop-types"
 import {ArrowBack} from "../../pages/Constants";
 import { BreadcrumbsDot } from "./style";
 
 const BreadCrumbs = props => {
-    const { location: { pathname }, section, bredCrumbsConfig, history: { go , push} } = props
+    const { location: { pathname }, bredCrumbsConfig } = props
     const pathnames = pathname.split("/").filter(x => x)
-    // const newPath = CONTENT_LINKS.filter(a => pathnames.some(e => e === a.link))
     const pageName = pathnames[pathnames.length - 1]
     const { config } = bredCrumbsConfig.find(a => pageName === a.page)
     return (
@@ -20,7 +18,7 @@ const BreadCrumbs = props => {
                     name = typeof name === "function" ? name(pathnames) : name
                     return (
                         <div
-                            // key={name}
+                            key={`${name}${index}`}
                             className="flex items-center">
                             {
                                 !!index ? (

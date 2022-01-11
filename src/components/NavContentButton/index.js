@@ -10,7 +10,7 @@ export default function NavContentBtn(props) {
     return  (
             <div
                 className="bg-white"
-                style={{"border-radius": "4px 4px 0 0"}}
+                style={{"borderRadius": "4px 4px 0 0"}}
             >
                 <NawContentBtn className="flex flex-1 pt-4 pb-4">
                     {

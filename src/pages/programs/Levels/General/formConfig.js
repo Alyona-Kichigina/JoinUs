@@ -6,42 +6,51 @@ import ModalSelectInput from "../../../../components/ModalSelectInput";
 export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
     {
         label: "Наименование",
-        id: "level_name",
+        id: "PROGRAM_NAME",
         component: Input,
-        placeholder: "Введите наименование уровня",
+        placeholder: "Введите наименование програмы",
         formColumn: 0,
     },
     {
-        label: "Программа",
-        id: "description",
+        label: "Описание",
+        id: "DESCRIPTION",
         component: Input,
-        placeholder: "программа",
+        type: "textarea",
+        minHeight: "195px",
+        placeholder: "Описание програмы",
         formColumn: 0,
     },
     {
-        label: "Номер п.п",
-        id: "tier",
+        label: "Срок программы",
+        id: "PROGRAM_TIME",
         component: Input,
-        placeholder: "Номер п.п",
-        formColumn: 0,
+        placeholder: "Выберите дату выхода",
+        formColumn: 1,
     },
     {
-        label: "Статус",
-        id: "status",
-        component: Input,
-        placeholder: "Выберите статус",
+        label: "Заказчик",
+        id: "CLIENT",
+        component: ({onInput}) =>
+            <ModalSelectInput
+                id="4"
+                key="client"
+                value={client}
+                onInput={onInput}
+                placeholder="Выберите заказчика"
+                toggleModal={toggleModal}
+            />,
         formColumn: 1,
     },
     {
         label: "Дата создания",
-        id: "create_date",
+        id: "CREATION_DATE",
         component: DatePicker,
-        placeholder: "Выберите дату создания",
+        placeholder: "Выберите создания",
         formColumn: 1,
     },
     {
         label: "Создал",
-        id: "creator",
+        id: "CREATOR",
         component: ({onInput}) =>
             <ModalSelectInput
                 id="6"
@@ -56,9 +65,5 @@ export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
 ]
 
 export const rules = {
-    level_name: "required",
-    tier: "required",
-    status: "required",
-    create_date: "required",
-    id_employee: "required",
+    SURNAME: "required",
 }

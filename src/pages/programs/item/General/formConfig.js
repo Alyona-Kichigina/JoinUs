@@ -48,7 +48,6 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
         label: "Дата создания",
         id: "create_date",
         component: DatePicker,
-        // dateFormat: "YYYY-MM-DDTHH.mm.ss",
         dateFormat: "YYYY-MM-DDThh:mm",
         placeholder: "Выберите дату создания",
         formColumn: 1,

@@ -6,3 +6,7 @@ export const ActiveIcon = styled.div`
   background-color: var(--color-green);
   border-radius: 50%
 `
+export const ActionsForm = styled.div`
+  min-width: 140px;
+  justify-content: space-between;
+`
