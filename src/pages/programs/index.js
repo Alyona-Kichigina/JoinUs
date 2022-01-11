@@ -35,6 +35,9 @@ const Programs = (props) => {
                             <Route path="/programs/:programName/:programID/:levelID/level/general" component={LevelsGeneral} />
                             <Route path="/programs/:programName/:programID/:levelID/level/levelStages" component={levelStages}/>
                             <Route path="/programs/:programName/:programID/:levelID/level/programs" component={ProgramsList}/>
+                            <Route path="/programs/:programName/:programID/level/general" component={LevelsGeneral} />
+                            <Route path="/programs/:programName/:programID/level/levelStages" component={levelStages}/>
+                            <Route path="/programs/:programName/:programID/level/programs" component={ProgramsList}/>
                             <Route path="/programs/:programName/level/general" component={LevelsGeneral} />
                             <Route path="/programs/:programName/level/levelStages" component={levelStages}/>
                             <Route path="/programs/:programName/level/programs" component={ProgramsList}/>
