@@ -119,7 +119,6 @@ class General extends Component {
     }
 
     handleInputChange (value, id) {
-
         this.setState({
             [id]: value
         });

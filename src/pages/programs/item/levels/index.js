@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import AppList from "../../../../components/AppList";
-import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../../components/APIList"
+import {DEFAULT_URL, ADAPTATION_PROGRAM, ADAPTATION_LEVELS} from "../../../../components/APIList"
 import { NavLink } from "react-router-dom";
 import { settings } from "./tableConfig";
 
 class Levels extends Component {
-
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -21,12 +18,14 @@ class Levels extends Component {
     componentDidMount() {
         const { location: { pathname } } = this.props
         const pathnames = pathname.split("/").filter(x => x)
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}/${pathnames[2]}`)
+        const newProgram = pathnames[1] === "new_program"
+        const url = newProgram ? `${ADAPTATION_LEVELS}` : `${ADAPTATION_PROGRAM}/${pathnames[2]}`
+        axios.get(`${DEFAULT_URL}/${url}`)
             .then(
                 (response) => {
                     this.setState({
                                     isLoaded: true,
-                                    items: response.data.levels_detail
+                                    items: newProgram ? response.data : response.data.levels_detail
                     })
                 },
                 (error) => {

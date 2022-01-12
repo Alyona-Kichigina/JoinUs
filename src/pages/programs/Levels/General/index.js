@@ -2,64 +2,11 @@ import React, {Component} from 'react';
 import memoizeOne from "memoize-one";
 import Form from "@Components/Forms/index"
 import PropTypes from "prop-types"
-import ModalSidebar from "../../../../components/ModalSidebar";
-import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
 import { FormContainer } from "../../item/General/style"
 import axios from "axios";
-import {
-    ADAPTATION_CUSTOMER,
-    ADAPTATION_EMPLOYEE,
-    ADAPTATION_PROGRAM,
-    DEFAULT_URL
-} from "../../../../components/APIList";
-
-const clients = [
-    {
-        id: 1,
-        name: "ПАО Газпром 111"
-    },
-    {
-        id: 2,
-        name: "ПАО Газпром 222"
-    },
-    {
-        id: 3,
-        name: "ПАО Газпром 333"
-    },
-    {
-        id: 4,
-        name: "ПАО Газпром 444"
-    },
-]
-
-const users = [
-    {
-        id: 1,
-        name: "Максимов И.И"
-    },
-    {
-        id: 2,
-        name: "Иванов И.И"
-    },
-    {
-        id: 3,
-        name: "Сидоров И.И"
-    },
-    {
-        id: 4,
-        name: "Максимов И.В"
-    },
-    {
-        id: 5,
-        name: "Иванов И.В"
-    },
-    {
-        id: 6,
-        name: "Сидоров И.В"
-    },
-]
+import { ADAPTATION_STAGE, DEFAULT_URL } from "../../../../components/APIList";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
     .reduce((acc, c) => {
@@ -75,16 +22,11 @@ const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnl
         return acc
     }, [[], []]))
 
-class NewProgram extends Component {
+class StagesGeneral extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            clientModal: false,
-            creatorModal: false,
-            customers: [],
-            employees: [],
             data: {},
-            modalState: {}
         }
         this.handleInputChange = this.handleInputChange.bind(this)
     }
@@ -92,39 +34,9 @@ class NewProgram extends Component {
     componentDidMount() {
         const { location: { pathname } } = this.props
         const pathnames = pathname.split("/").filter(x => x)
-        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_EMPLOYEE}`)
-            .then(
-                (response) => {
-                    this.setState({
-                        isLoaded: true,
-                        employees: response.data
-                    })
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    })
-                }
-            )
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_CUSTOMER}`)
-            .then(
-                (response) => {
-                    this.setState({
-                        isLoaded: true,
-                        customers: response.data
-                    })
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    })
-                }
-            )
+        const idStage = pathnames[1] !== "new_program" ? `/${pathnames[3]}` : ""
         if (pathnames[1] !== "new_program") {
-            axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
+            axios.get(`${DEFAULT_URL}/${ADAPTATION_STAGE}${idStage}`)
                 .then(
                     (response) => {
                         this.setState({
@@ -143,7 +55,6 @@ class NewProgram extends Component {
     }
 
     handleInputChange (value, id) {
-
         this.setState({
             [id]: value
         });
@@ -153,139 +64,65 @@ class NewProgram extends Component {
         event.preventDefault();
     }
 
-    selectClient = (value) => {
-        const { customers } = this.state
-        const customer = customers.find((a) => a.customer_name === value)
-        this.setState({
-            modalState: [customer.id]
-        })
+    saveStage () {
+        const { location: { pathname } } = this.props
+        const { data } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === "new_program"
+        const idProgram = newProgram ? "/" : `/${pathnames[3]}/`
+        axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_STAGE}${idProgram}`, data)
+            .then(
+                (response) => {
+                    const { data } = response
+                    this.setState({
+                        isLoaded: true,
+                        data: data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
     }
 
-    saveNewProgram () {
-        console.log(this.state.data)
-    }
-
-    inputDataOfProgram = (value) => {
+    inputDataOfStage = (value) => {
         this.setState(({ data }) => ({ data: { ...data, ...value } }))
     }
     saveDataOfStage = (v) => {
         console.log(v)
     }
 
+    tierUp = () => {
+        const { data: { tier }, data } = this.state
+        this.setState({
+            data: { ...data, tier: tier + 1}
+        })
+    }
+    tierDown = () => {
+        const { data: { tier }, data } = this.state
+        this.setState({
+            data: { ...data, tier: tier > 1 ? tier - 1 : tier}
+        })
+    }
+
     render() {
         const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, modalState, data, data: { CLIENT, CREATOR } } = this.state
-        const toggleModal = () => {
-            this.setState({clientModal: !clientModal})
-        }
-        const toggleCreatorModal = () => {
-            this.setState({creatorModal: !creatorModal})
-        }
-        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, CLIENT, toggleCreatorModal, CREATOR))
+        const { data } = this.state
+        const { tierUp, tierDown } = this
+        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(tierUp, tierDown))
         return (
             <div>
-                <ModalSidebar
-                    title="Выбор заказчика"
-                    closeModal={toggleModal}
-                    isOpen={clientModal}
-                    handleSave={() => this.setState({
-                        data: { ...data, CLIENT: modalState },
-                        clientModal: !clientModal
-                    })}
-                >
-                    <div
-                        className="mx-9"
-                    >
-                        <div
-                            className="grid mt-11 border-list pb-4 color-light-blue-2 fs-14 font-bold"
-                            style={{"grid-template-columns": "10% 90%"}}
-                        >
-                            <div>
-                                №
-                            </div>
-                            <div>
-                                Наименование
-                            </div>
-                        </div>
-                        {
-                            clients.map(({name, id}, index) => {
-                                return (
-                                    <div
-                                        className="grid py-4 font-semibold fs-14 border-list"
-                                        style={{"grid-template-columns": "10% 90%"}}
-                                    >
-                                        <div
-                                            className="flex items-center"
-                                        >
-                                            {index + 1}
-                                        </div>
-                                        <RadioButton
-                                            inputValue={this.selectClient}
-                                            selected={(value) => modalState === value}
-                                            title={name}
-                                            id={id}
-                                        />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                </ModalSidebar>
-                <ModalSidebar
-                    title="Выбор создателя"
-                    closeModal={toggleCreatorModal}
-                    isOpen={creatorModal}
-                    handleSave={() => this.setState({
-                        data: { ...data, CREATOR: modalState },
-                        creatorModal: !creatorModal
-                    })}
-                >
-                    <div
-                        className="mx-9"
-                    >
-                        <div
-                            className="grid mt-11 border-list pb-4 color-light-blue-2 fs-14 font-bold"
-                            style={{"grid-template-columns": "10% 90%"}}
-                        >
-                            <div>
-                                №
-                            </div>
-                            <div>
-                                Наименование
-                            </div>
-                        </div>
-                        {
-                            users.map(({name, id}, index) => {
-                                return (
-                                    <div
-                                        className="grid py-4 font-semibold fs-14 border-list"
-                                        style={{"grid-template-columns": "10% 90%"}}
-                                    >
-                                        <div
-                                            className="flex items-center"
-                                        >
-                                            {index + 1}
-                                        </div>
-                                        <RadioButton
-                                            inputValue={this.selectClient}
-                                            selected={(value) => modalState === value}
-                                            title={name}
-                                            id={id}
-                                        />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                </ModalSidebar>
                 <WithValidationHocRenderPropAdapter
-                    onInput={this.inputDataOfProgram}
+                    onInput={this.inputDataOfStage}
                     onSubmit={this.saveDataOfStage}
                     value={data}
                     rules={rules}
                 >
                     {(formProps) => {
-                        const { formValid, onSubmit, onInput } = formProps
+                        const { onInput } = formProps
                         return (
                             <div className="h-full flex flex-col justify-between">
                                 <div
@@ -317,7 +154,7 @@ class NewProgram extends Component {
                                     </div>
                                     <button
                                         className="blue btn width-m"
-                                        onClick={() => this.saveNewProgram()}
+                                        onClick={() => this.saveStage()}
                                     >
                                         Сохранить
                                     </button>
@@ -330,8 +167,10 @@ class NewProgram extends Component {
     }
 }
 
-NewProgram.propTypes = {
+StagesGeneral.propTypes = {
     history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
 };
 
-export default NewProgram;
+export default StagesGeneral;
