@@ -37,9 +37,10 @@ class Levels extends Component {
                 }
             )
     }
-    editStage = ({id}) => {
+    editStage = (data, nestedLevel) => {
+        const { id } = data
         const { history: { push } } = this.props
-        push(`${id}/level/general`)
+        push(`${id}/${nestedLevel ? "stage" : "level"}/general`)
     }
     render() {
         const { items } = this.state

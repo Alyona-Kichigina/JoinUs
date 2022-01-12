@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from "react-router-dom"
 import Router from "../Router"
-import NavContentBtn from "../../components/NavContentButton";
-
 
 class NavContent extends Component {
     render() {

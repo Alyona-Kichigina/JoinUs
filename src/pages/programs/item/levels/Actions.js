@@ -9,7 +9,7 @@ class Actions extends Component {
         return (
             <ActionsForm className="icon-container transition-icon cursor a-i-center flex">
                 <div
-                    onClick={() => editButton(data)}
+                    onClick={() => editButton(data, nestedLevel)}
                     className="edit-icon"
                     dangerouslySetInnerHTML={{__html: EditIcon}}
                 />

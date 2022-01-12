@@ -6,9 +6,6 @@ import levelStages from "./Stages";
 
 
 const Stages = (props) => {
-    // const { match: { path }, match, location: { pathname } } = props
-    // const pathnames = pathname.split("/").filter(x => x)
-    // const programName = pathnames[1] === "new_programm" ? "Новая программа"  : pathnames[1]
     return (
         <div>
             <Route path="/programs/:programName/stages/general" component={General}/>
