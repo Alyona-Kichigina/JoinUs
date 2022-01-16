@@ -2,6 +2,7 @@ import Input from "@Components/Fields/Input"
 import DatePicker from "@Components/Fields/DatePicker"
 import ModalSelectInput from "../../../../components/ModalSelectInput";
 import React from "react";
+import {CREATE_DATE_FORMAT} from "@constants"
 
 export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => [
     {
@@ -48,7 +49,7 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
         label: "Дата создания",
         id: "create_date",
         component: DatePicker,
-        dateFormat: "YYYY-MM-DDThh:mm",
+        dateFormat: CREATE_DATE_FORMAT,
         placeholder: "Выберите дату создания",
         formColumn: 1,
     },
@@ -69,5 +70,5 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
 ]
 
 export const rules = {
-    SURNAME: "required",
+    // SURNAME: "required",
 }
