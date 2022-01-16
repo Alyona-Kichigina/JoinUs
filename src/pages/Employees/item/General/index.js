@@ -8,6 +8,8 @@ import {WithValidationHocRenderPropAdapter} from "../../../../Validator";
 import memoizeOne from "memoize-one";
 import axios from "axios";
 import {CANDIDATE_LIST, DEFAULT_URL} from "../../../../components/APIList";
+import {RELEASE_DATE_FORMAT, CREATE_DATE_FORMAT} from "@constants"
+import EditDateForSave from "../../../../utils/Date/EditDateForSave";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
 .reduce((acc, c) => {
@@ -34,10 +36,13 @@ class General extends Component {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
   saveDataOfEmployee = (payload) => {
-    axios.post(`${DEFAULT_URL}/${CANDIDATE_LIST}`, {...payload})
-    .then((response) => {
-      console.log(response)
-      },
+    axios.post(`${DEFAULT_URL}/${CANDIDATE_LIST}`, {
+      ...payload,
+      program: [payload.program],
+      release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
+      create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT)
+    })
+    .then((response) => {console.log(response)},
       (error) => {
         this.setState({error})
       }

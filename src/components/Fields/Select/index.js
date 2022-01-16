@@ -237,7 +237,8 @@ class Select extends PureComponent {
   }
 
   selectOption = (optionValue) => {
-    const { props: { returnOption, valueKey, multiple, value = [] } } = this
+    // todo labelKey заменил valueKey, чтобы передавалось название, а не айди
+    const { props: { returnOption, valueKey, multiple, value = [], labelKey } } = this
     const normalizeValue = returnOption ? optionValue : optionValue[valueKey]
     if (multiple) {
       this.handleSelect([...value, normalizeValue])

@@ -33,7 +33,7 @@ export const fieldMap = [
     component: RefSelect,
     placeholder: "Выберите должность",
     formColumn: 0,
-    valueKey: "id",
+    valueKey: "directory",
     labelKey: "directory",
     preload: true,
     async refLoader() {
@@ -79,10 +79,9 @@ export const fieldMap = [
 ]
 
 export const rules = {
-  last_name: "required",
-  first_name: "required",
-  middle_name: "required",
-  post: "required",
-  create_date: "required",
-  release_date: "required"
+  // last_name: "required",
+  // first_name: "required",
+  // program: "required",
+  // create_date: "required",
+  // release_date: "required"
 }

@@ -8,6 +8,7 @@ import Employees from "./list";
 import General from "./item/General";
 import {EMPLOYEES_TAB} from "./item/Constants";
 import PageHeader from "../../components/PageHeader";
+import {programsBreadcrumbs} from "./config";
 
 const pageData = {
   pageName: "Новый сотрудник"
@@ -28,6 +29,7 @@ class RouterEmployees extends Component {
             (
               <PageHeader
                 {...this.props}
+                bredCrumbsConfig={programsBreadcrumbs}
                 pageData={pageData}
                 url="employees"
                 links={EMPLOYEES_TAB}
