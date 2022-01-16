@@ -21,3 +21,8 @@ export const ModalTableBody = styled.div`
   padding-top: 1.5rem;
   border-bottom: var(--color-light-grey-2) 1px solid;
 `
+
+export const FileImage = styled.div`
+  max-height: 100px;
+  max-width: 100px;
+`
