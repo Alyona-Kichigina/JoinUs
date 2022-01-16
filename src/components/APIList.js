@@ -11,4 +11,4 @@ export const ADAPTATION_EMPLOYEE = "employee"
 
 export const CONTACTS =  "icontacts"
 export const DIRECTORY = "directory"
-export const CANDIDATE_LIST = "candidate"
+export const CANDIDATE_LIST = "candidate/"

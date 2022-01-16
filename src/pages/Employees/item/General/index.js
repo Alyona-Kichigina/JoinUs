@@ -40,7 +40,10 @@ class General extends Component {
       ...payload,
       program: [payload.program],
       release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
-      create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT)
+      create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT),
+      id_customer: 1,
+      id_employee: 1,
+      status: 1
     })
     .then((response) => {console.log(response)},
       (error) => {
