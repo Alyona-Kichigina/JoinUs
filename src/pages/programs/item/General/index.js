@@ -296,7 +296,7 @@ class General extends Component {
                         const { formValid, onSubmit, onInput } = formProps
                           return (
                             <div className="h-full flex flex-col justify-between">
-                                <AvatarComponent />
+                                {/*<AvatarComponent />*/}
                                 <div
                                     className="mx-8"
                                 >
