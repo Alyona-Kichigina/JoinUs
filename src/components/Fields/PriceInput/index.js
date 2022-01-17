@@ -4,6 +4,8 @@ import { useWatch } from "@Utils/hooks/useWatch"
 import Input from "@Components/Fields/Input"
 import {StyleIcon} from "./style"
 
+// нужно чтобы PriceInput отдавал данные как число
+
 function setGaps(value) {
   let dif = value.length % 3
   dif = dif === 0 ? 2 : dif - 1
@@ -36,6 +38,7 @@ const PriceInput = ({ value, id, onInput, inputRef, ...props }) => {
   const normalizedValue = useMemo(() => priceMask(value), [value])
   const handleInput = useCallback((nextValue, id) => {
     const unmaskValue = unmaskPriceInput(nextValue)
+
     if (unmaskValue !== value) {
       onInput(unmaskValue, id)
     } else {

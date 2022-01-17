@@ -32,19 +32,58 @@ class General extends Component {
       data: {}
     }
   }
+  componentDidMount() {
+    const { location: { pathname } } = this.props
+    const pathnames = pathname.split("/").filter(x => x)
+    const idEmploy = pathnames[1] !== "new_employ" ? `${pathnames[1]}` : ""
+    if (pathnames[1] !== "new_employ") {
+      axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`)
+      .then(
+        (response) => {
+          this.setState({
+            isLoaded: true,
+            data: response.data
+          })
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          })
+        }
+      )
+    }
+  }
   inputDataOfEmployee = (value) => {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
   saveDataOfEmployee = (payload) => {
-    axios.post(`${DEFAULT_URL}/${CANDIDATE_LIST}`, {
-      ...payload,
-      program: [payload.program],
-      release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
-      create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT),
-      id_customer: 1,
-      id_employee: 1,
-      status: 1
-    })
+    const { location: { pathname }, history: { push } } = this.props
+    const pathnames = pathname.split("/").filter(x => x)
+    const newEmploy = pathnames[1] === "new_employ"
+    const idEmploy = newEmploy ? "/" : `${pathnames[1]}/`
+    axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`,
+      newEmploy
+        ?
+        {
+        ...payload,
+        program: [payload.program],
+        release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
+        create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT),
+        id_customer: 1,
+        id_employee: 1,
+        status: 1,
+        salary: Number(payload.salary)
+      }
+    :
+        {
+          ...payload,
+          program: [payload.program],
+          release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
+          create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT),
+          salary: Number(payload.salary)
+        }
+    )
     .then((response) => {console.log(response)},
       (error) => {
         this.setState({error})

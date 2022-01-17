@@ -20,10 +20,13 @@ const Programs = (props) => {
     return (
         <div className="flex-container">
             {
-                pathname === "/programs" ?
+                pathname === "/programs"
+                  ?
                     (
                         <Route path="/programs" component={ProgramsList} />
-                    ) : pathnames[3] === "level" || pathnames[4] ==="level" ? (
+                    )
+                  : pathnames[3] === "level" || pathnames[4] ==="level"
+                  ? (
                         <PageHeader
                             {...props}
                             bredCrumbsConfig={stagesBreadcrumbs}
@@ -41,7 +44,8 @@ const Programs = (props) => {
                             <Route path="/programs/:programName/level/levelStages" component={levelStages}/>
                             <Route path="/programs/:programName/level/programs" component={ProgramsList}/>
                         </PageHeader>
-                    ) : (
+                    )
+                  : (
                         <PageHeader
                             {...props}
                             bredCrumbsConfig={programsBreadcrumbs}

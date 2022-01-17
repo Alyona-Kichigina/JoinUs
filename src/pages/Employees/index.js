@@ -39,6 +39,7 @@ class RouterEmployees extends Component {
                 <Route path="/employees/new_employ/adaptation_progress" component={AdaptationProgress}/>
                 <Route path="/employees/new_employ/documents" component={Documents}/>
                 <Route path="/employees/new_employ/goals" component={Goals}/>
+                <Route path="/employees/:employID/general" component={General} />
               </PageHeader>
             )
         }

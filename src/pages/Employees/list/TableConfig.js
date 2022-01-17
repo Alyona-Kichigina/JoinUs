@@ -54,14 +54,21 @@ export const settings = [
     size: "1.2fr",
     component: Progress
   },
-  // {
-  //   id: 6,
-  //   component: ({data}) => {
-  //     return (
-  //       <NavLink className="btn">просмотр</NavLink>
-  //     )
-  //   }
-  // }
+  {
+    id: 6,
+    // name: "",
+    allData: true,
+    component: ({data: { id }}) => {
+      return (
+        <NavLink
+          to={`/employees/${id}/general`}
+          className="btn width-m blue"
+        >
+          Просмотр
+        </NavLink>
+      )
+    }
+  }
 ]
 
 export const data = [

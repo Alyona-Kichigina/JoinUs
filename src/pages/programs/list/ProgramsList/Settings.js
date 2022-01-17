@@ -15,9 +15,7 @@ export const settings  = [
             size: "25%",
             allData: true,
             component: ({data: { program_name, id }}) => {
-                console.log(program_name, id)
                 return (
-                    // <div />
                     <NavLink
                         to={`/programs/${program_name}/${id}/general`}
                     >
