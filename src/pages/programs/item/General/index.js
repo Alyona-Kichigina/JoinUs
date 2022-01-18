@@ -8,6 +8,7 @@ import Form from "@Components/Forms/index"
 import { FormContainer } from "./style"
 import memoizeOne from "memoize-one";
 import axios from "axios";
+import AvatarComponent from "../../../../components/AvtarComponent";
 import {ADAPTATION_CUSTOMER, ADAPTATION_PROGRAM, ADAPTATION_EMPLOYEE, DEFAULT_URL} from "../../../../components/APIList";
 
 const users = [
@@ -119,7 +120,6 @@ class General extends Component {
     }
 
     handleInputChange (value, id) {
-
         this.setState({
             [id]: value
         });
@@ -296,6 +296,7 @@ class General extends Component {
                         const { formValid, onSubmit, onInput } = formProps
                           return (
                             <div className="h-full flex flex-col justify-between">
+                                {/*<AvatarComponent />*/}
                                 <div
                                     className="mx-8"
                                 >

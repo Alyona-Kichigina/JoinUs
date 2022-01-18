@@ -2,8 +2,9 @@ import React from "react";
 import Input from "@Components/Fields/Input"
 import DatePicker from "@Components/Fields/DatePicker"
 import ModalSelectInput from "../../../../components/ModalSelectInput";
+import ArrowInput from "../../../../components/ArrowsInput";
 
-export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
+export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown) => [
     {
         label: "Наименование",
         id: "level_name",
@@ -21,7 +22,13 @@ export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
     {
         label: "Номер п.п",
         id: "tier",
-        component: Input,
+        component: (props) => (
+            <ArrowInput
+                arrowUp={arrowUp}
+                arrowDown={arrowDown}
+                {...props}
+            />
+        ),
         placeholder: "Номер п.п",
         formColumn: 0,
     },

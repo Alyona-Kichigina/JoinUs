@@ -33,19 +33,35 @@ class ProgramsList extends Component {
     }
     render() {
         const { items } = this.state
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const subPage = pathnames.length > 1
         return (
             <div className="flex-container">
-                <div className="flex justify-between my-3">
-                    <div className="text-2xl">
-                        Программы
-                    </div>
-                    <NavLink
-                        className="blue btn width-m flex items-center"
-                        to="/programs/new_program/general"
-                    >
-                        + Создать программу
-                    </NavLink>
-                </div>
+                {
+                    !subPage ? (
+                        <div className="flex justify-between my-3">
+
+                                <div className="text-2xl">
+                                    Программы
+                                </div>
+                                <NavLink
+                                    className="blue btn width-m flex items-center"
+                                    to="/programs/new_program/general"
+                                >
+                                    + Создать программу
+                                </NavLink>
+
+                        </div>
+                    ) : (
+                        <NavLink
+                            className="blue btn width-m flex items-center my-3 ml-4"
+                            to="/programs/new_program/general"
+                        >
+                            + Добавить программу
+                        </NavLink>
+                    )
+                }
               <AppList
                 settings={settings}
                 data={items}

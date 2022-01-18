@@ -15,7 +15,12 @@ export const ArrowUP = `<svg width="24" height="24" viewBox="0 0 24 24" fill="in
 <path d="M6.20711 12.2071C5.81658 12.5976 5.18342 12.5976 4.79289 12.2071C4.40237 11.8166 4.40237 11.1834 4.79289 10.7929L10.7929 4.79289C11.1715 4.41432 11.7811 4.40107 12.1757 4.76285L18.1757 10.2628C18.5828 10.636 18.6103 11.2686 18.2372 11.6757C17.864 12.0828 17.2314 12.1103 16.8243 11.7372L11.5301 6.88414L6.20711 12.2071Z"/>
 </svg>
 `
-export const ArrowDown = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const SmallArrowUp = `<svg width="16" height="16" viewBox="0 0 24 24" fill="inherit" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.5" y="6" width="2" height="13" rx="1" fill="inherit"/>
+<path d="M6.20711 12.2071C5.81658 12.5976 5.18342 12.5976 4.79289 12.2071C4.40237 11.8166 4.40237 11.1834 4.79289 10.7929L10.7929 4.79289C11.1715 4.41432 11.7811 4.40107 12.1757 4.76285L18.1757 10.2628C18.5828 10.636 18.6103 11.2686 18.2372 11.6757C17.864 12.0828 17.2314 12.1103 16.8243 11.7372L11.5301 6.88414L6.20711 12.2071Z"/>
+</svg>
+`
+export const ArrowDown = `<svg width="24" height="24" viewBox="0 0 24 24" fill="inherit" xmlns="http://www.w3.org/2000/svg">
 <rect x="10.5" y="6" width="2" height="13" rx="1" fill="inherit"/>
 <path d="M6.20711 12.2071C5.81658 12.5976 5.18342 12.5976 4.79289 12.2071C4.40237 11.8166 4.40237 11.1834 4.79289 10.7929L10.7929 4.79289C11.1715 4.41432 11.7811 4.40107 12.1757 4.76285L18.1757 10.2628C18.5828 10.636 18.6103 11.2686 18.2372 11.6757C17.864 12.0828 17.2314 12.1103 16.8243 11.7372L11.5301 6.88414L6.20711 12.2071Z"/>
 </svg>
@@ -42,3 +47,9 @@ export const RadioOn = `<svg width="24" height="24" viewBox="0 0 24 24" fill="no
 export const RadioOff = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="12" cy="12" r="11" stroke="#EBEFF2" stroke-width="2"/>
 </svg>`
+
+export const PlusIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="5" y="13" width="2" height="14" rx="1" transform="rotate(-90 5 13)" fill="#009BF6"/>
+<rect x="11" y="5" width="2" height="14" rx="1" fill="#009BF6"/>
+</svg>
+`

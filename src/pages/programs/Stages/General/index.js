@@ -14,25 +14,6 @@ import {
     DEFAULT_URL
 } from "../../../../components/APIList";
 
-const clients = [
-    {
-        id: 1,
-        name: "ПАО Газпром 111"
-    },
-    {
-        id: 2,
-        name: "ПАО Газпром 222"
-    },
-    {
-        id: 3,
-        name: "ПАО Газпром 333"
-    },
-    {
-        id: 4,
-        name: "ПАО Газпром 444"
-    },
-]
-
 const users = [
     {
         id: 1,
@@ -80,7 +61,7 @@ class LevelsGeneral extends Component {
         this.state = {
             clientModal: false,
             creatorModal: false,
-            customers: [],
+            programs: [],
             employees: [],
             data: {},
             modalState: {}
@@ -107,12 +88,12 @@ class LevelsGeneral extends Component {
                     })
                 }
             )
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_CUSTOMER}`)
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}`)
             .then(
                 (response) => {
                     this.setState({
                         isLoaded: true,
-                        customers: response.data
+                        programs: response.data
                     })
                 },
                 (error) => {
@@ -142,7 +123,6 @@ class LevelsGeneral extends Component {
     }
 
     handleInputChange (value, id) {
-
         this.setState({
             [id]: value
         });
@@ -160,8 +140,7 @@ class LevelsGeneral extends Component {
         })
     }
 
-    saveNewProgram () {
-        console.log(this.state.data)
+    saveNewLevel () {
         const { location: { pathname }, history: { push } } = this.props
         const { data } = this.state
         const pathnames = pathname.split("/").filter(x => x)
@@ -193,65 +172,28 @@ class LevelsGeneral extends Component {
         console.log(v)
     }
 
+    tierUp = () => {
+        const { data: { tier }, data } = this.state
+        this.setState({
+            data: { ...data, tier: tier + 1}
+        })
+    }
+    tierDown = () => {
+        const { data: { tier }, data } = this.state
+        this.setState({
+            data: { ...data, tier: tier > 1 ? tier - 1 : tier}
+        })
+    }
     render() {
         const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, modalState, data, data: { CLIENT, CREATOR } } = this.state
-        const toggleModal = () => {
-            this.setState({clientModal: !clientModal})
-        }
+        const { creatorModal, modalState, data, data: { CREATOR } } = this.state
+        const { tierUp, tierDown } = this
         const toggleCreatorModal = () => {
             this.setState({creatorModal: !creatorModal})
         }
-        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, CLIENT, toggleCreatorModal, CREATOR))
+        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleCreatorModal, CREATOR, tierUp, tierDown))
         return (
             <div>
-                <ModalSidebar
-                    title="Выбор заказчика"
-                    closeModal={toggleModal}
-                    isOpen={clientModal}
-                    handleSave={() => this.setState({
-                        data: { ...data, CLIENT: modalState },
-                        clientModal: !clientModal
-                    })}
-                >
-                    <div
-                        className="mx-9"
-                    >
-                        <div
-                            className="grid mt-11 border-list pb-4 color-light-blue-2 fs-14 font-bold"
-                            style={{"grid-template-columns": "10% 90%"}}
-                        >
-                            <div>
-                                №
-                            </div>
-                            <div>
-                                Наименование
-                            </div>
-                        </div>
-                        {
-                            clients.map(({name, id}, index) => {
-                                return (
-                                    <div
-                                        className="grid py-4 font-semibold fs-14 border-list"
-                                        style={{"grid-template-columns": "10% 90%"}}
-                                    >
-                                        <div
-                                            className="flex items-center"
-                                        >
-                                            {index + 1}
-                                        </div>
-                                        <RadioButton
-                                            inputValue={this.selectClient}
-                                            selected={(value) => modalState === value}
-                                            title={name}
-                                            id={id}
-                                        />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                </ModalSidebar>
                 <ModalSidebar
                     title="Выбор создателя"
                     closeModal={toggleCreatorModal}
@@ -338,7 +280,7 @@ class LevelsGeneral extends Component {
                                     </div>
                                     <button
                                         className="blue btn width-m"
-                                        onClick={() => this.saveNewProgram()}
+                                        onClick={() => this.saveNewLevel()}
                                     >
                                         Сохранить
                                     </button>
