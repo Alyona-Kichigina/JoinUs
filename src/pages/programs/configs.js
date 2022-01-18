@@ -66,7 +66,7 @@ export const programsBreadcrumbs = [
     }
 ]
 
-export const stagesBreadcrumbs = [
+export const levelsBreadcrumbs = [
     {
         page: "general",
         config:[

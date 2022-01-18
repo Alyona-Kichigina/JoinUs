@@ -55,7 +55,7 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
     },
     {
         label: "Создал",
-        id: "CREATOR",
+        id: "creator",
         component: ({onInput}) =>
             <ModalSelectInput
                 id="6"

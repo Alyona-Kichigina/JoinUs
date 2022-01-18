@@ -37,7 +37,6 @@ const BreadCrumbs = props => {
                             }
                             <NavLink
                                 to={`/${link}`}
-                                onClick={() => (console.log(link))}
                                 className={`${activeLink ? "pointer-events-none" : "color-light-blue-2"} capitalize`}
                             >
                                 {name}

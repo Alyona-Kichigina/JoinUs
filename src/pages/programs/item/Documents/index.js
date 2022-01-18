@@ -1,43 +1,17 @@
 import React, {Component} from 'react';
 import AppList from "../../../../components/AppList";
 import "../levels/style.css"
-import {ArrowUP, DocumentIcon, EditIcon, Trash} from "../../../Constants";
+import {PlusIcon, DocumentIcon} from "../../../Constants";
 import Modal from "../../../../components/ModalWindow";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
 import axios from "axios";
-import {ADAPTATION_DOCUMENT, ADAPTATION_PROGRAM, DEFAULT_URL} from "../../../../components/APIList";
-import { ModalTableHeader, ModalTableBody } from "./style";
+import {ADAPTATION_PROGRAM, ADAPTATION_DOCUMENT, DEFAULT_URL} from "../../../../components/APIList";
+import {ModalTableHeader, ModalTableBody, FileImage} from "./style";
+import ArrowInput from "../../../../components/ArrowsInput";
+import ActionsButtons from "../../../../components/ActionsButtons";
 import DocumentName from "../../../../components/ComponentsForListTable/DocumentName";
 
-
-const DocumentActions = ({handleEdit, data}) => {
-    return (
-        <div>
-            <div className="icon-container transition-icon cursor items-center j-c-center flex">
-                <div
-                    className="edit-icon"
-                    onClick={() => handleEdit(data)}
-                    dangerouslySetInnerHTML={{__html: EditIcon}}
-                />
-                <div className="flex a-i-center j-c-center ml-7">
-                    <div
-                        className="arrow-icon"
-                        dangerouslySetInnerHTML={{__html: ArrowUP}}
-                    />
-                    <div
-                        className="arrow-icon arrow-down"
-                        dangerouslySetInnerHTML={{__html: ArrowUP}}
-                    />
-                </div>
-                <div
-                    className="trash-icon ml-7"
-                    dangerouslySetInnerHTML={{__html: Trash}}
-                />
-            </div>
-        </div>
-    )
-}
 
 const settings = (editModal, closeModal, handleEdit) => [
     {
@@ -58,13 +32,11 @@ const settings = (editModal, closeModal, handleEdit) => [
         key: "actions",
         allData: true,
         name: "Действия",
-        component: ({rowIndex, data}) => (
-            <DocumentActions
+        component: ({data}) => (
+            <ActionsButtons
                 data={data}
-                editModal={editModal}
-                closeModal={closeModal}
                 handleEdit={handleEdit}
-                rowIndex={rowIndex}
+                dataKey="tier"
             />
         ),
         size: "30%"
@@ -81,8 +53,10 @@ class Documents extends Component {
             documentModal: false,
             editModal: false,
             modalData: {},
+            addNewDocument: false,
             documentSelection: false,
             selectedDocuments: [],
+            documents: [],
             items: []
         }
     }
@@ -94,9 +68,28 @@ class Documents extends Component {
         axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
             .then(
                 (response) => {
+                    const { data: { documents_detail }, data } = response
+                    this.setState({
+                        programData: data,
+                        isLoaded: true,
+                        items: documents_detail
+                    })
+                },
+                (error) => {
+                    console.log(error)
                     this.setState({
                         isLoaded: true,
-                        items: response.data.documents_detail
+                        error
+                    })
+                }
+            )
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_DOCUMENT}`)
+            .then(
+                (response) => {
+                    const { data } = response
+                    this.setState({
+                        isLoaded: true,
+                        documents: data
                     })
                 },
                 (error) => {
@@ -108,36 +101,143 @@ class Documents extends Component {
                 }
             )
     }
+    checkDocument = (value, id) => {
+        this.setState({
+            [id]: value
+        })
+    }
+    checkNewDocument = (value, id) => {
+        this.setState({
+            [id]: value
+        })
+    }
+    saveEditDocument = (closeModal, data) => {
+        const { id } = data
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_DOCUMENT}/${id}/`, data)
+            .then(
+                (response) => {
+                    const { data: { documents_detail } } = response
+                    this.setState({
+                        isLoaded: true,
+                        data: documents_detail
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
+            .then(
+                (response) => {
+                    const { data: { documents_detail } } = response
+                    this.setState({
+                        isLoaded: true,
+                        items: documents_detail
+                    })
+                    closeModal()
+                },
+                (error) => {
+                    console.log(error)
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+    }
+    saveSelectedDocuments = () => {
+        const { selectedDocuments } = this.state
+        console.log(selectedDocuments)
+        this.setState({
+            selectedDocuments: [],
+            documentSelection: false
+        })
+    }
+    saveNewDocuments = (closeModal) => {
+        const { location: { pathname } } = this.props
+        const { programData, programData: { documents }, selectedDocuments } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
+        const newData = { ...programData, documents: documents.filter(a => a !== selectedDocuments.some(i => i === a))}
+        console.log(newData)
+        // axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
+        //     .then(
+        //         (response) => {
+        //             const { data: { documents_detail } } = response
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 items: documents_detail
+        //             })
+        //             closeModal()
+        //         },
+        //         (error) => {
+        //             console.log(error)
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 error
+        //             })
+        //         }
+        //     )
+    }
+    addDocument = () => {
+        const { addNewDocument } = this.state
+        this.setState({
+            addNewDocument: !addNewDocument
+        })
+    }
+    openDocumentSelection = () => {
+        const { documentSelection } = this.state
+        this.setState({
+            documentSelection: !documentSelection
+        })
+    }
+    handleInputChange = (value, id) => {
+        const { modalData } = this.state
+        this.setState({
+            modalData: { ...modalData, [id]: value}
+        })
+    }
+    tierUp = () => {
+        const {  modalData, modalData: { tier } } = this.state
+        this.setState({
+            modalData: { ...modalData, tier: tier + 1}
+        })
+    }
+    tierDown = () => {
+        const {  modalData, modalData: { tier } } = this.state
+        this.setState({
+            modalData: { ...modalData, tier: tier > 1 ? tier - 1 : tier}
+        })
+    }
+    closeModal = () => this.setState({editModal: false})
     render() {
-        const { editModal, items, modalData: {document_name}, modalData, documentSelection, selectedDocuments } = this.state
+        const {
+            editModal,
+            items,
+            documents,
+            modalData: {document_name, document_link, tier},
+            modalData,
+            documentSelection,
+            selectedDocuments,
+            addNewDocument
+        } = this.state
         const handleEdit = (data) => this.setState({
             editModal: true,
             modalData: data
         })
-        const openDocumentSelection = () => this.setState({
-            documentSelection: !documentSelection
-        })
-        const handleInputChange = (value, id) => {
-            this.setState({
-                modalData: {[id]: value}
-            })
-        }
-        const saveEditDocument = (data) => {
-            console.log(data)
-        }
-        const closeModal = () => this.setState({editModal: false})
-        const checkDocument = (value, id) => {
-            this.setState({
-                [id]: value
-            })
-        }
         return (
             <div>
                 <Modal
                     isOpen={editModal}
                     title="редактирование документа"
-                    closeModal={closeModal}
-                    handleSave={() => saveEditDocument(modalData)}
+                    closeModal={this.closeModal}
+                    handleSave={() => this.saveEditDocument(this.closeModal, modalData)}
                 >
                     <div>
                         <div className="pt-8">
@@ -150,7 +250,7 @@ class Documents extends Component {
                                 value={document_name}
                                 key="document_name"
                                 id="document_name"
-                                onInput={() => handleInputChange(document.getElementById('document_name').value, "document_name")}
+                                onInput={() => this.handleInputChange(document.getElementById('document_name').value, "document_name")}
                                 className="mt-2 font-normal"
                             />
                         </div>
@@ -160,17 +260,38 @@ class Documents extends Component {
                     >
                         Номер п.п.
                     </span>
-                            <Input
-                                className="mt-2"
-                            />
+                            <div className="relative">
+                                <ArrowInput
+                                    value={tier}
+                                    arrowUp={this.tierUp}
+                                    arrowDown={this.tierDown}
+                                />
+                            </div>
+                        </div>
+                        <div
+                            className="pt-8"
+                        >
+                            <div
+                                className="flex items-center bold color-blue"
+                            >
+                                <div
+                                    dangerouslySetInnerHTML={{__html: PlusIcon}}
+                                />
+                                Добавить документ
+                            </div>
+                            <FileImage>
+                                <img
+                                    src={document_link} alt=""
+                                />
+                            </FileImage>
                         </div>
                     </div>
                 </Modal>
                 <Modal
                     isOpen={documentSelection}
                     title="Выбор документа"
-                    closeModal={openDocumentSelection}
-                    handleSave={() => saveEditDocument(selectedDocuments)}
+                    closeModal={this.openDocumentSelection}
+                    handleSave={() => this.saveSelectedDocuments()}
                 >
                     <ModalTableHeader>
                         <div>№</div>
@@ -182,7 +303,7 @@ class Documents extends Component {
                         </div>
                     </ModalTableHeader>
                        {
-                           items.map(({document_name, id_document}, index) => {
+                           items.map(({document_name, id}, index) => {
                                return (
                                    <ModalTableBody>
                                        <div className="flex items-center">
@@ -202,8 +323,55 @@ class Documents extends Component {
                                            <ChekBox
                                                id="selectedDocuments"
                                                value={selectedDocuments}
-                                               checkBoxValue={id_document}
-                                               onInput={checkDocument}
+                                               checkBoxValue={id}
+                                               onInput={this.checkDocument}
+                                           />
+                                       </div>
+                                   </ModalTableBody>
+                               )
+                           })
+                       }
+                </Modal>
+                <Modal
+                    isOpen={addNewDocument}
+                    title="Добавить документ"
+                    closeModal={() => {this.setState({
+                        addNewDocument: !addNewDocument
+                    })}}
+                    handleSave={() => this.saveNewDocuments(this.closeModal)}
+                >
+                    <ModalTableHeader>
+                        <div>№</div>
+                        <div>
+                            Наименование документа
+                        </div>
+                        <div>
+                            Наименование программы
+                        </div>
+                    </ModalTableHeader>
+                       {
+                           documents.map(({document_name, id}, index) => {
+                               return (
+                                   <ModalTableBody>
+                                       <div className="flex items-center">
+                                           {index + 1}
+                                       </div>
+                                       <div className="flex items-center">
+                                           <div
+                                               className="pr-2"
+                                               dangerouslySetInnerHTML={{__html: DocumentIcon}}
+                                           />
+                                           {document_name}
+                                       </div>
+                                       <div className="flex items-center justify-between">
+                                           <div>
+                                               {document_name}
+                                           </div>
+                                           <ChekBox
+                                               id="selectedDocuments"
+                                               value={selectedDocuments}
+                                               checkBoxValue={id}
+                                               onInput={this.checkNewDocument}
                                            />
                                        </div>
                                    </ModalTableBody>
@@ -214,18 +382,19 @@ class Documents extends Component {
                 <div className="pt-8 pb-6 pl-4">
                     <button
                         className="blue btn width-m pt-1.5"
+                        onClick={this.addDocument}
                     >
                         + Добавить документ
                     </button>
                     <button
                         className="blue btn width-m pt-1.5 ml-4"
-                        onClick={openDocumentSelection}
+                        onClick={this.openDocumentSelection}
                     >
                         Выбрать документ
                     </button>
                 </div>
                 <AppList
-                    settings={settings(editModal, closeModal, handleEdit)}
+                    settings={settings(editModal, this.closeModal, handleEdit)}
                     data={items}
                 />
             </div>

@@ -1,69 +1,31 @@
 import React from "react";
 import Input from "@Components/Fields/Input"
-import DatePicker from "@Components/Fields/DatePicker"
-import ModalSelectInput from "../../../../components/ModalSelectInput";
+import ArrowInput from "../../../../components/ArrowsInput";
 
-export const fieldMap = (toggleModal, client, toggleCreatorModal, creator) => [
+export const fieldMap = (arrowUp, arrowDown) => [
     {
         label: "Наименование",
-        id: "PROGRAM_NAME",
+        id: "stage_name",
         component: Input,
-        placeholder: "Введите наименование програмы",
+        placeholder: "Введите наименование этапа",
         formColumn: 0,
     },
     {
-        label: "Описание",
-        id: "DESCRIPTION",
-        component: Input,
-        type: "textarea",
-        minHeight: "195px",
-        placeholder: "Описание програмы",
-        formColumn: 0,
-    },
-    {
-        label: "Срок программы",
-        id: "PROGRAM_TIME",
-        component: Input,
-        placeholder: "Выберите дату выхода",
-        formColumn: 1,
-    },
-    {
-        label: "Заказчик",
-        id: "CLIENT",
-        component: ({onInput}) =>
-            <ModalSelectInput
-                id="4"
-                key="client"
-                value={client}
-                onInput={onInput}
-                placeholder="Выберите заказчика"
-                toggleModal={toggleModal}
-            />,
-        formColumn: 1,
-    },
-    {
-        label: "Дата создания",
-        id: "CREATION_DATE",
-        component: DatePicker,
-        placeholder: "Выберите создания",
-        formColumn: 1,
-    },
-    {
-        label: "Создал",
-        id: "CREATOR",
-        component: ({onInput}) =>
-            <ModalSelectInput
-                id="6"
-                key="creator"
-                value={creator}
-                onInput={onInput}
-                placeholder="Выберите создателя"
-                toggleModal={toggleCreatorModal}
-            />,
+        label: "Номер п.п",
+        id: "tier",
+        component: (props) => (
+            <ArrowInput
+                arrowUp={arrowUp}
+                arrowDown={arrowDown}
+                {...props}
+            />
+        ),
+        placeholder: "Номер п.п",
         formColumn: 1,
     },
 ]
 
 export const rules = {
-    SURNAME: "required",
+    stage_name: "required",
+    tier: "required",
 }

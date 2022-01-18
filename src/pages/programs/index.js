@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PageHeader from "../../components/PageHeader";
 import { Route } from "react-router-dom"
-import {NAV_BUTTON_LINKS, STAGES_LINKS} from "./Constants";
+import {NAV_BUTTON_LINKS, LEVELS_LINKS, STAGES_LINKS} from "./Constants";
 import Goals from "./item/Goals";
 import Levels from "./item/levels";
 import Contacts from "./item/Contacts";
@@ -11,12 +11,14 @@ import NewProgram from "./item/General";
 import ProgramsList from "./list/ProgramsList";
 import LevelsGeneral from "../../pages/programs/Stages/General";
 import levelStages from "./Stages/Stages";
-import { programsBreadcrumbs, stagesBreadcrumbs } from "./configs";
+import StagesGeneral from "./Levels/General"
+import { programsBreadcrumbs, levelsBreadcrumbs } from "./configs";
 
 const Programs = (props) => {
     const { location: { pathname } } = props
     const pathnames = pathname.split("/").filter(x => x)
     const programName = pathnames[1] === "new_programm" ? "Новая программа"  : pathnames[1]
+    console.log(pathnames)
     return (
         <div className="flex-container">
             {
@@ -29,10 +31,10 @@ const Programs = (props) => {
                   ? (
                         <PageHeader
                             {...props}
-                            bredCrumbsConfig={stagesBreadcrumbs}
+                            bredCrumbsConfig={levelsBreadcrumbs}
                             pageData={{pageName: programName}}
                             url="programs"
-                            links={STAGES_LINKS}
+                            links={LEVELS_LINKS}
                         >
                             <Route path="/programs/:programName/:programID/:levelID/level/general" component={LevelsGeneral} />
                             <Route path="/programs/:programName/:programID/:levelID/level/levelStages" component={levelStages}/>
@@ -44,8 +46,17 @@ const Programs = (props) => {
                             <Route path="/programs/:programName/level/levelStages" component={levelStages}/>
                             <Route path="/programs/:programName/level/programs" component={ProgramsList}/>
                         </PageHeader>
-                    )
-                  : (
+                    ) : pathnames[4] ==="stage" ? (
+                        <PageHeader
+                            {...props}
+                            bredCrumbsConfig={levelsBreadcrumbs}
+                            pageData={{pageName: programName}}
+                            url="programs"
+                            links={STAGES_LINKS}
+                        >
+                            <Route path="/programs/:programName/:programID/:stageID/stage/general" component={StagesGeneral} />
+                        </PageHeader>
+                    ) : (
                         <PageHeader
                             {...props}
                             bredCrumbsConfig={programsBreadcrumbs}

@@ -14,14 +14,15 @@ export default function NavContentBtn(props) {
             >
                 <NawContentBtn className="flex flex-1 pt-4 pb-4">
                     {
-                        links.map( a => (
-                            <NawContentItem>
+                        links.map(({name, link}, index) => (
+                            <NawContentItem
+                                key={`${name}${index}`}
+                            >
                                 <NavLink
-                                    key={a.name}
                                     className="h-full"
-                                    to={`/${path}/${a.link}`}
+                                    to={`/${path}/${link}`}
                                 >
-                                    {a.name}
+                                    {name}
                                 </NavLink>
                             </NawContentItem>
                         ))
