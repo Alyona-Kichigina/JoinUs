@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import CardIconAndTitle from "../../../../components/CardIconAndTitle";
+import {data, settings} from "./tableConfig";
+import AppList from "../../../../components/AppList";
 
 class Documents extends Component {
   render() {
@@ -18,6 +20,10 @@ class Documents extends Component {
             icon="documents"
           />
         </div>
+        <AppList
+          settings={settings}
+          data={data}
+        />
       </div>
     );
   }

@@ -8,17 +8,7 @@ import ChekBox from "@Components/Fields/CheckBox"
 import axios from "axios";
 import {ADAPTATION_DOCUMENT, ADAPTATION_PROGRAM, DEFAULT_URL} from "../../../../components/APIList";
 import { ModalTableHeader, ModalTableBody } from "./style";
-
-const DocumentName = ({data}) => (
-        <div className="flex items-center">
-            <div
-                dangerouslySetInnerHTML={{__html: DocumentIcon}}
-            />
-            <div className="ml-2">
-                { data }
-            </div>
-        </div>
-    )
+import DocumentName from "../../../../components/ComponentsForListTable/DocumentName";
 
 
 const DocumentActions = ({handleEdit, data}) => {

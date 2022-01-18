@@ -45,6 +45,7 @@ CardIconAndTitle.propTypes = {
   title: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
+  icon: PropTypes.string,
 }
 
 export default CardIconAndTitle;
