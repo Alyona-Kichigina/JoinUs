@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import ScrollBar from "@Components/ScrollBar"
-import IconToggleIndicator from "../../Icon/IconToggleIndicator";
 
 export const MultipleOptionContainer = styled.div`
   display: flex;
@@ -138,9 +137,7 @@ export const MultipleValueInputContainer = styled.div`
   display: flex;
   flex-wrap: wrap
 `
-export const ToggleIndicator = styled(IconToggleIndicator)`
-  transition: transform 500ms ease-in-out;
-`
+
 export const OptionContainer = styled.div`
   line-height: 1.42857143; /* Normalize line height */
   display: flex;

@@ -58,6 +58,7 @@ export const settings = [
     id: 6,
     // name: "",
     allData: true,
+    size: "200px",
     component: ({data: { id }}) => {
       return (
         <NavLink

@@ -25,8 +25,6 @@ class Goals extends Component {
     axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`)
     .then(
       (response) => {
-        console.log(response.data.adaptation_status)
-        console.log(response.data.program_details)
         this.setState({
           isLoaded: true,
           data: response.data.program_details.map(({goals_detail}) => {

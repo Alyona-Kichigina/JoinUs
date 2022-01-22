@@ -7,6 +7,7 @@ const Icon = styled.div`
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
+  transition: transform 500ms ease-in-out;
   &:hover {
     border-color: var(--color-darken-blue-2);
   }

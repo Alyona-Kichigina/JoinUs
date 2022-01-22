@@ -12,10 +12,10 @@ import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import Option from "./Option"
 import MultipleOption from "./MultipleOption"
 import {
-  ToggleIndicator,
   SelectContainer, InputSelectContainer, SelectInput, MultipleValuePrerenderContainer, NoOptionsLabel, ToggleIconContainer,
   RemoveIconContainer, SelectedOptionsScrollBar, SelectedOptions, MultipleValueInputContainer, OverlayItemsContainer
 } from "./styles"
+import IconToggleIndicator from "../../Icon/IconToggleIndicator";
 
 // todo сделать удаление валью в селекте
 
@@ -387,6 +387,14 @@ class Select extends PureComponent {
                         ))
                       )}
                     </div>
+                    {showToggleButton && (
+                      <ToggleIconContainer
+                        onMouseDown={open ? this.closeSelect : null}
+                        type="button"
+                      >
+                        <IconToggleIndicator className={open ? "up" : "down"} />
+                      </ToggleIconContainer>
+                    )}
                     {children}
                   </InputSelectContainer>
                   <OverlayMenu
