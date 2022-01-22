@@ -5,7 +5,7 @@ import {ActionsForm} from "./style";
 
 class Actions extends Component {
     render() {
-        const { editButton, data, nestedLevel } = this.props
+        const { editButton, data, nestedLevel, deleteButton } = this.props
         return (
             <ActionsForm className="icon-container transition-icon cursor a-i-center flex">
                 <div
@@ -27,6 +27,7 @@ class Actions extends Component {
                          />
                  </div>
                 <div
+                    onClick={() => deleteButton(data, nestedLevel)}
                     className="trash-icon ml-7"
                     dangerouslySetInnerHTML={{__html: Trash}}
                 />

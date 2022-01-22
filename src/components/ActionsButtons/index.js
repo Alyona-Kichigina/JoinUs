@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {ArrowUP, EditIcon, Trash} from "../../pages/Constants";
 
-const ActionsButtons = ({handleEdit, data, dataKey, arrowUp, arrowDown}) => {
+const ActionsButtons = ({handleEdit, data, dataKey, arrowUp, arrowDown, deleteItem}) => {
     const iconColor = data[dataKey] <= 1 ? "0.3" : ""
     return (
         <div>
@@ -24,6 +24,7 @@ const ActionsButtons = ({handleEdit, data, dataKey, arrowUp, arrowDown}) => {
                     />
                 </div>
                 <div
+                    onClick={() => (deleteItem(data.id))}
                     className="trash-icon ml-7"
                     dangerouslySetInnerHTML={{__html: Trash}}
                 />
