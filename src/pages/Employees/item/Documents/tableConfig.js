@@ -15,10 +15,3 @@ export const settings = [
     size: "auto"
   },
 ]
-
-export const data = [
-  {
-    id: 1,
-    document_name: "Договор",
-  },
-  ]

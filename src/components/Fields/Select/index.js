@@ -236,12 +236,11 @@ class Select extends PureComponent {
     return opt ? opt[labelKey] : normalizedValue || ""
   }
 
-  selectOption = (optionValue) => {
-    // todo labelKey заменил valueKey, чтобы передавалось название, а не айди
-    const { props: { returnOption, valueKey, multiple, value = [], labelKey } } = this
+  selectOption = (optionValue, selected, index) => {
+    const { props: { returnOption, valueKey, multiple, value = [] } } = this
     const normalizeValue = returnOption ? optionValue : optionValue[valueKey]
     if (multiple) {
-      this.handleSelect([...value, normalizeValue])
+      this.handleSelect(!selected?[...value, normalizeValue]: PureDeleteItems(value, index))
     } else {
       this.handleSelect(normalizeValue)
       this.closeSelect()
@@ -341,7 +340,7 @@ class Select extends PureComponent {
         overflowMultipleItems, multipleData
       }
     } = this
-    // Object { ID: 1, SYS_NAME: "aaa" }
+
     return (
       <RenderOverlayMenu
         onOpenOverlayMenu={this.openSelect}

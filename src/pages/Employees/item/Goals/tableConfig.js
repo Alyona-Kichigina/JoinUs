@@ -18,14 +18,6 @@ export const settings = [
     key: "STATUS",
     name: "Статус",
     size: "2fr",
-    // component: Status,
+    component: Status,
   },
 ]
-
-export const data = [
-  {
-    id: 1,
-    goal_name: "Познакомиться с наставником",
-    STATUS: "end",
-  },
-  ]

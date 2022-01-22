@@ -16,6 +16,9 @@ const CardIconAndTitle = ({title, icon, value, className}) => {
       case "goals":
         setImg("/assets/icons/goals.svg")
         break;
+      case "levels":
+        setImg("/assets/icons/stairs.svg")
+        break;
       default:
         setImg("")
         break;
