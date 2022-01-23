@@ -25,7 +25,7 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
         label: "Срок программы",
         id: "duration_day",
         component: Input,
-        placeholder: "Выберите дату выхода",
+        placeholder: "Выберите срок программы",
         formColumn: 1,
     },
     {

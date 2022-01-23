@@ -34,7 +34,7 @@ class Levels extends Component {
                 (response) => {
                     this.setState({
                                     isLoaded: true,
-                                    items: newProgram ? response.data : response.data.levels_detail,
+                                    items: newProgram ? [] : response.data.levels_detail,
                                     programData: newProgram ? {} : response.data
                     })
                 },

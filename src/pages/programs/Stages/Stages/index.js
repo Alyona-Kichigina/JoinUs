@@ -206,6 +206,7 @@ class levelStages extends Component {
                                     id="tier"
                                     key="tier"
                                     value={tier}
+                                    top="20px"
                                     arrowUp={tierUp}
                                     arrowDown={tierDown}
                                     className="mt-2"

@@ -8,6 +8,7 @@ import {DEFAULT_URL, ADAPTATION_PROGRAM, ADAPTATION_GOALS} from "../../../../com
 import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "../Documents/style";
 import { settings } from "./FormConfig";
+import ArrowInput from "../../../../components/ArrowsInput";
 
 class Goals extends Component {
 
@@ -26,7 +27,7 @@ class Goals extends Component {
         }
     }
 
-    componentDidMount() {
+    loadPageData = () => {
         const { location: { pathname } } = this.props
         const pathnames = pathname.split("/").filter(x => x)
         const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
@@ -48,6 +49,9 @@ class Goals extends Component {
                     })
                 }
             )
+    }
+    componentDidMount() {
+        this.loadPageData()
         axios.get(`${DEFAULT_URL}/${ADAPTATION_GOALS}`)
             .then(
                 (response) => {
@@ -67,102 +71,149 @@ class Goals extends Component {
             )
     }
 
-    render() {
-        const {
-            items,
-            editModal,
-            modalData,
-            documentSelection,
-            modalData: { goal_name },
-            selectedGoals,
-            addGoalsModal,
-            goals
-        } = this.state
-
-        const handleEdit = (data) => {
-            this.setState({
-                editModal: true,
-                documentSelection: false,
-                modalData: data
-            })
-        }
-
-        const handleInputChange = (value, id) => {
-            this.setState({
-                modalData: {...modalData, [id]: value}
-            })
-        }
-
-        const openGoalSelection = () => this.setState({
-            documentSelection: !documentSelection
+    handleEdit = (data) => {
+        this.setState({
+            editModal: true,
+            documentSelection: false,
+            modalData: data
         })
-
-        const saveEditGoal = ({goal_name}) => {
-            const { modalData } = this.state
-            const { location: { pathname } } = this.props
-            const pathnames = pathname.split("/").filter(x => x)
-            axios.put(`${DEFAULT_URL}/${ADAPTATION_GOALS}/${pathnames[2]}/`, {...modalData, goal_name})
+    }
+    handleInputChange = (value, id) => {
+        const { modalData } = this.state
+        this.setState({
+            modalData: {...modalData, [id]: value}
+        })
+    }
+     openGoalSelection = () => {
+        const { documentSelection } = this.state
+         this.setState({
+             documentSelection: !documentSelection
+         })
+     }
+     saveEditGoal = ({goal_name}) => {
+        const { modalData } = this.state
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_GOALS}/${pathnames[2]}/`, {...modalData, goal_name})
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoaded: true,
+                        data: response.data
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+         this.loadPageData()
+         this.setState({
+             editModal: false
+         })
+    }
+    saveNewGoals = () => {
+        const {
+            location: { pathname }
+        } = this.props
+        const { programData, selectedGoals } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const idGoal = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
+        const newData = { ...programData, goals: selectedGoals}
+        if (selectedGoals.length) {
+            axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idGoal}`, newData)
                 .then(
                     (response) => {
+                        const {data: {goals_detail}, data} = response
                         this.setState({
                             isLoaded: true,
-                            data: response.data
+                            programData: data,
+                            items: goals_detail
+                        })
+                        this.setState({
+                            addGoalsModal: false
                         })
                     },
                     (error) => {
+                        console.log(error)
                         this.setState({
                             isLoaded: true,
                             error
                         })
                     }
                 )
-        }
-
-        const toggleModal = () => this.setState({
-            editModal: !editModal
-        })
-
-        const checkDocument = (value, id) => {
             this.setState({
-                [id]: value
+                selectedDocuments: []
             })
         }
-
-        const saveNewGoals = () => {
-            const {
-                location: { pathname }
-            } = this.props
-            const { programData, selectedGoals } = this.state
-            const pathnames = pathname.split("/").filter(x => x)
-            const idGoal = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
-            const newData = { ...programData, goals: selectedGoals}
-            if (selectedGoals.length) {
-                axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idGoal}`, newData)
-                    .then(
-                        (response) => {
-                            const {data: {goals_detail}, data} = response
-                            this.setState({
-                                isLoaded: true,
-                                programData: data,
-                                items: goals_detail
-                            })
-                            this.setState({
-                                addGoalsModal: false
-                            })
-                        },
-                        (error) => {
-                            console.log(error)
-                            this.setState({
-                                isLoaded: true,
-                                error
-                            })
-                        }
-                    )
-                this.setState({
-                    selectedDocuments: []
-                })
-            }
+    }
+    toggleModal = () => {
+        const { editModal } = this.state
+        this.setState({
+            editModal: !editModal
+        })
+    }
+    checkDocument = (value, id) => {
+        this.setState({
+            [id]: value
+        })
+    }
+    tierUp = () => {
+        const {  modalData, modalData: { tier } } = this.state
+        this.setState({
+            modalData: { ...modalData, tier: tier + 1}
+        })
+    }
+    tierDown = () => {
+        const {  modalData, modalData: { tier } } = this.state
+        this.setState({
+            modalData: { ...modalData, tier: tier > 1 ? tier - 1 : tier}
+        })
+    }
+    actionButtonTierUp = (data) => {
+        const { id, tier } = data
+        const newData = { ...data, tier: tier + 1 }
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_GOALS}/${id}/`, newData)
+        this.loadPageData()
+    }
+    actionButtonTierDown = (data) => {
+        const { id, tier } = data
+        if (tier > 1) {
+            const newData = { ...data, tier: tier - 1 }
+            axios.put(`${DEFAULT_URL}/${ADAPTATION_GOALS}/${id}/`, newData)
+            this.loadPageData()
         }
+    }
+
+    render() {
+        const {
+            items,
+            editModal,
+            modalData,
+            documentSelection,
+            modalData: { goal_name, tier },
+            selectedGoals,
+            addGoalsModal,
+            goals
+        } = this.state
+
+        const {
+            handleEdit,
+            handleInputChange,
+            openGoalSelection,
+            saveEditGoal,
+            toggleModal,
+            checkDocument,
+            saveNewGoals,
+            tierUp,
+            tierDown,
+            actionButtonTierUp,
+            actionButtonTierDown
+        } = this
+
+
 
         return (
             <div>
@@ -193,9 +244,19 @@ class Goals extends Component {
                     >
                         Номер п.п.
                     </span>
-                            <Input
-                                className="mt-2"
-                            />
+                            <div
+                                className="relative"
+                            >
+                                <ArrowInput
+                                    id="tier"
+                                    key="tier"
+                                    value={tier}
+                                    top="20px"
+                                    arrowUp={tierUp}
+                                    arrowDown={tierDown}
+                                    className="mt-2"
+                                />
+                            </div>
                         </div>
                     </div>
                 </Modal>
@@ -215,9 +276,11 @@ class Goals extends Component {
                         </div>
                     </ModalTableHeader>
                     {
-                        items.map(({goal_name, description, id}, index) => {
+                       items && items.map(({goal_name, description, id}, index) => {
                             return (
-                                <ModalTableBody>
+                                <ModalTableBody
+                                    key={`${id}${index}`}
+                                >
                                     <div className="flex items-center">
                                         {index + 1}
                                     </div>
@@ -264,7 +327,9 @@ class Goals extends Component {
                     {
                         goals.map(({goal_name, description, id}, index) => {
                             return (
-                                <ModalTableBody>
+                                <ModalTableBody
+                                    key={`${id}${index}`}
+                                >
                                     <div className="flex items-center">
                                         {index + 1}
                                     </div>
@@ -306,7 +371,7 @@ class Goals extends Component {
                     </button>
                 </div>
                 <AppList
-                    settings={settings(editModal, toggleModal, handleEdit)}
+                    settings={settings(editModal, toggleModal, handleEdit, actionButtonTierUp, actionButtonTierDown)}
                     data={items}
                 />
             </div>

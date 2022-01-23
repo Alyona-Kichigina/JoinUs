@@ -14,10 +14,12 @@ const ActionsButtons = ({handleEdit, data, dataKey, arrowUp, arrowDown, deleteIt
                 />
                 <div className="flex a-i-center j-c-center ml-7">
                     <div
+                        onClick={() => arrowUp(data)}
                         className="arrow-icon"
                         dangerouslySetInnerHTML={{__html: ArrowUP}}
                     />
                     <div
+                        onClick={() => arrowDown(data)}
                         style={{"fill": "var(--color-light-blue-2)", "opacity": iconColor}}
                         className="arrow-icon arrow-down"
                         dangerouslySetInnerHTML={{__html: ArrowUP}}
