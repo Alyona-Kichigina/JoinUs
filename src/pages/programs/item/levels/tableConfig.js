@@ -15,7 +15,7 @@ const ActiveIndicator = ({ data } ) => data ? (
     </div>
 ) : ""
 
-export const settings = (editStage) => {
+export const settings = (editStage, deleteButton) => {
     return [
         {
             id: 1,
@@ -53,6 +53,7 @@ export const settings = (editStage) => {
             size: "25%",
             component: (props) => (
                 <Actions
+                    deleteButton={deleteButton}
                     {...props}
                     editButton={editStage}
                 />)

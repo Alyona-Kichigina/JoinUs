@@ -3,10 +3,11 @@ import AppList from "../../../../components/AppList";
 import axios from "axios";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
-import {DEFAULT_URL, ADAPTATION_STAGE} from "../../../../components/APIList";
+import {DEFAULT_URL, ADAPTATION_STAGE, ADAPTATION_LEVELS} from "../../../../components/APIList";
 import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "./style";
 import {settings} from "./tableConfig";
+import ArrowInput from "../../../../components/ArrowsInput";
 
 class levelStages extends Component {
 
@@ -16,19 +17,39 @@ class levelStages extends Component {
             error: false,
             editModal: false,
             isLoaded: false,
+            addStageModal: false,
+            levelData: {},
             selectedStage: [],
             modalData: {},
+            stages: [],
             items: []
         }
     }
 
-    componentDidMount() {
+    loadStages = () => {
         axios.get(`${DEFAULT_URL}/${ADAPTATION_STAGE}`)
+            .then((response) => {
+                const { data } = response
+                this.setState({
+                    stages: data
+                })
+            })
+    }
+
+    loadPageData = () => {
+        const {
+            location: { pathname }
+        } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const idLevel = pathnames[1] !== "new_program" ? `/${pathnames[3]}/` : ""
+        axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`)
             .then(
                 (response) => {
+                    const { data, data: { stages } } = response
                     this.setState({
                         isLoaded: true,
-                        items: response.data
+                        levelData: data,
+                        items: stages
                     })
                 },
                 (error) => {
@@ -39,42 +60,115 @@ class levelStages extends Component {
                     })
                 }
             )
+        this.loadStages()
+    }
+
+    componentDidMount() {
+        this.loadPageData()
+    }
+    tierUp = () => {
+        const {  modalData, modalData: { tier } } = this.state
+        this.setState({
+            modalData: { ...modalData, tier: tier + 1}
+        })
+    }
+    tierDown = () => {
+        const {  modalData, modalData: { tier } } = this.state
+        this.setState({
+            modalData: { ...modalData, tier: tier > 1 ? tier - 1 : tier}
+        })
+    }
+    toggleModal = () => {
+        const { editModal } = this.state
+        this.setState({
+            editModal: !editModal
+        })
+    }
+    handleEdit = (data) => {
+        this.setState({
+            editModal: true,
+            StageSelection: false,
+            modalData: data
+        })
+    }
+    handleInputChange = (value, id) => {
+        const { modalData } = this.state
+        this.setState({
+            modalData: { ...modalData, [id]: value}
+        })
+    }
+    saveEditStage = (data) => {
+        const { id } = data
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_STAGE}/${id}/`, data)
+            .then((response) => {
+                this.setState({
+                    isLoaded: true
+                })
+            })
+        this.loadPageData()
+    }
+
+    openDocumentSelection = () => {
+        const { StageSelection } = this.state
+        this.setState({
+            StageSelection: !StageSelection
+        })
+    }
+
+    checkStage = (value, id) => {
+        this.setState({
+            [id]: value
+        })
+    }
+    closeAddStageModal = () => {
+        this.setState({
+            addStageModal: false,
+            selectedStage: []
+        })
+    }
+    saveAddStages = (value) => {
+        const {
+            location: { pathname }
+        } = this.props
+        const { levelData, selectedStage, stages } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const selectedData = stages.filter(({id}) => selectedStage.some(i => i === id))
+        const idLevel = pathnames[1] !== "new_program" ? `/${pathnames[3]}/` : ""
+        const newData = { ...levelData, stages: stages.concat(selectedData.filter(item => !stages.some(a => a === item)))}
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`, newData)
+            .then((response) => {
+                const { data } = response
+                this.setState({
+                    isLoaded: true,
+                    items: data
+                })
+            })
     }
 
     render() {
-        const { items, editModal, modalData, documentSelection, modalData: { stage_name }, selectedStage } = this.state
+        const {
+            items,
+            editModal,
+            modalData,
+            StageSelection,
+            modalData: { stage_name, tier },
+            selectedStage,
+            addStageModal,
+            stages
+        } = this.state
 
-        const handleEdit = (data) => {
-            this.setState({
-                editModal: true,
-                documentSelection: false,
-                modalData: data
-            })
-        }
-
-        const handleInputChange = (value, id) => {
-            this.setState({
-                modalData: {[id]: value}
-            })
-        }
-
-        const openDocumentSelection = () => this.setState({
-            documentSelection: !documentSelection
-        })
-
-        const saveEditDocument = (data) => {
-            console.log(data)
-        }
-
-        const toggleModal = () => this.setState({
-            editModal: !editModal
-        })
-
-        const checkStage = (value, id) => {
-            this.setState({
-                [id]: value
-            })
-        }
+        const {
+            closeAddStageModal,
+            saveAddStages,
+            tierUp,
+            tierDown,
+            toggleModal,
+            handleEdit,
+            handleInputChange,
+            saveEditStage,
+            openDocumentSelection,
+            checkStage
+        } = this
 
         return (
             <div>
@@ -82,7 +176,7 @@ class levelStages extends Component {
                     isOpen={editModal}
                     title="редактирование этапа"
                     closeModal={() => this.setState({editModal: false})}
-                    handleSave={() => saveEditDocument(modalData)}
+                    handleSave={() => saveEditStage(modalData)}
                 >
                     <div>
                         <div className="pt-8">
@@ -105,17 +199,27 @@ class levelStages extends Component {
                     >
                         Номер п.п.
                     </span>
-                            <Input
-                                className="mt-2"
-                            />
+                            <div
+                                className="relative"
+                            >
+                                <ArrowInput
+                                    id="tier"
+                                    key="tier"
+                                    value={tier}
+                                    top="20px"
+                                    arrowUp={tierUp}
+                                    arrowDown={tierDown}
+                                    className="mt-2"
+                                />
+                            </div>
                         </div>
                     </div>
                 </Modal>
                 <Modal
-                    isOpen={documentSelection}
+                    isOpen={StageSelection}
                     title="Выбор этапа"
                     closeModal={openDocumentSelection}
-                    handleSave={() => saveEditDocument(selectedStage)}
+                    handleSave={() => saveEditStage(selectedStage)}
                 >
                     <ModalTableHeader>
                         <div>№</div>
@@ -155,9 +259,54 @@ class levelStages extends Component {
                         })
                     }
                 </Modal>
+                <Modal
+                    isOpen={addStageModal}
+                    title="Добавить этап"
+                    closeModal={() => {closeAddStageModal()}}
+                    handleSave={() => saveAddStages(selectedStage)}
+                >
+                    <ModalTableHeader>
+                        <div>№</div>
+                        <div>
+                            Наименование этапа
+                        </div>
+                        <div>
+                            Наименование уровня
+                        </div>
+                        <div>
+                            Наименование программы
+                        </div>
+                    </ModalTableHeader>
+                    {
+                        stages.map(({description, stage_name, id}, index) => {
+                            return (
+                                <ModalTableBody>
+                                    <div className="flex items-center">
+                                        {index + 1}
+                                    </div>
+                                    <div className="flex items-center">
+                                        {stage_name}
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            {description}
+                                        </div>
+                                        <ChekBox
+                                            id="selectedStage"
+                                            value={selectedStage}
+                                            checkBoxValue={id}
+                                            onInput={checkStage}
+                                        />
+                                    </div>
+                                </ModalTableBody>
+                            )
+                        })
+                    }
+                </Modal>
                 <div className="pt-8 pb-6 pl-4">
                     <button
                         className="blue btn width-m pt-1.5"
+                        onClick={() => this.setState({addStageModal: true})}
                     >
                         + Добавить этап
                     </button>

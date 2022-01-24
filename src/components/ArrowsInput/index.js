@@ -5,14 +5,18 @@ import { Arrows } from "./style";
 import PropTypes from 'prop-types';
 
 const ArrowInput = props => {
-    const { value, arrowUp, arrowDown } = props
+    const { value, arrowUp, arrowDown, right, top } = props
     const iconColor = value <= 1 ? "0.3" : ""
     return (
         <div className="flex">
             <Input
                 {...props}
             />
-            <Arrows className="flex">
+            <Arrows
+                right={right}
+                top={top}
+                className="flex"
+            >
                 <div
                     onClick={arrowUp}
                     style={{"fill": "var(--color-light-blue-2)"}}

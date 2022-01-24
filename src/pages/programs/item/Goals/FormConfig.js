@@ -16,7 +16,8 @@ const DocumentName = ({data}) => {
 }
 
 
-const DocumentActions = ({handleEdit, data}) => {
+const DocumentActions = ({handleEdit, data, actionButtonTierUp, actionButtonTierDown}) => {
+    const iconColor = data.tier <= 1 ? "0.3" : ""
     return (
         <div>
             <div className="icon-container transition-icon cursor items-center j-c-center flex">
@@ -27,10 +28,13 @@ const DocumentActions = ({handleEdit, data}) => {
                 />
                 <div className="flex a-i-center j-c-center ml-7">
                     <div
+                        onClick={() => actionButtonTierUp(data)}
                         className="arrow-icon"
                         dangerouslySetInnerHTML={{__html: ArrowUP}}
                     />
                     <div
+                        onClick={() => actionButtonTierDown(data)}
+                        style={{"fill": "var(--color-light-blue-2)", "opacity": iconColor}}
                         className="arrow-icon arrow-down"
                         dangerouslySetInnerHTML={{__html: ArrowUP}}
                     />
@@ -44,7 +48,7 @@ const DocumentActions = ({handleEdit, data}) => {
     )
 }
 
-export const settings = (editModal, closeModal, handleEdit) => [
+export const settings = (editModal, closeModal, handleEdit, actionButtonTierUp, actionButtonTierDown) => [
     {
         id: 1,
         key: "number",
@@ -66,6 +70,8 @@ export const settings = (editModal, closeModal, handleEdit) => [
         component: ({rowIndex, data}) => (
             <DocumentActions
                 data={data}
+                actionButtonTierUp={actionButtonTierUp}
+                actionButtonTierDown={actionButtonTierDown}
                 editModal={editModal}
                 closeModal={closeModal}
                 handleEdit={handleEdit}
