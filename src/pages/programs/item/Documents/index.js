@@ -6,7 +6,7 @@ import Modal from "../../../../components/ModalWindow";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
 import axios from "axios";
-import {ADAPTATION_PROGRAM, ADAPTATION_DOCUMENT, DEFAULT_URL, ADAPTATION_GOALS} from "../../../../components/APIList";
+import {ADAPTATION_PROGRAM, ADAPTATION_DOCUMENT, DEFAULT_URL} from "../../../../components/APIList";
 import {ModalTableHeader, ModalTableBody, FileImage} from "./style";
 import ArrowInput from "../../../../components/ArrowsInput";
 import { settings } from "./tableConfig";
