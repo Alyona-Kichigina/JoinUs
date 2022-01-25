@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useMemo} from 'react';
 import CardIconAndTitle from "../../../../components/CardIconAndTitle";
 import AppList from "../../../../components/AppList";
 import {settings} from "./tableConfig";
 import axios from "axios";
 import {CANDIDATE_LIST, DEFAULT_URL} from "../../../../components/APIList";
-
-//levels_detail
+import memoizeOne from "memoize-one"
 
 class AdaptationProgress extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class AdaptationProgress extends Component {
       isLoaded: false,
       data: [],
       adaptation_status: [],
-      program_details: []
+      program_details: [],
     }
   }
 
@@ -33,7 +32,7 @@ class AdaptationProgress extends Component {
             return levels_detail
           }).flat(),
           adaptation_status: response.data.adaptation_status,
-          program_details: response.data.program_details
+          program_details: response.data.program_details,
         })
       },
       (error) => {
@@ -43,40 +42,54 @@ class AdaptationProgress extends Component {
         })
       }
     )
+
   }
+
+  getPoint = memoizeOne((data = []) => {
+    let sum = 0
+    data.forEach(({stages}) => {
+      for(let i = 0; i < stages.length; i++){
+        sum = sum + parseInt(stages[i].point)
+      }
+    })
+    return sum
+  })
+
+  getNewData = memoizeOne((data = [], adaptation_status, program_details) => {
+    return data.reduce((acc, item = {}) => {
+      acc.push(
+        {
+          ...item,
+          stages: item.stages.map((i) => ({
+            ...i,
+            STATUS: {
+              adaptation_status: adaptation_status,
+              program_details: program_details
+            }
+          }))
+        }
+      )
+      return acc
+    }, [])
+  })
+
   render() {
-    const { data = [], adaptation_status, program_details  } = this.state
-    const newData = data.map((item ) => ({
-        STATUS: {
-          adaptation_status: adaptation_status,
-          program_details: program_details
-        },
-        ...item
-      })
-    )
-    // const newData = data.map((item) => {
-    //   item.stages.map((i) => {
-    //     STATUS: {
-    //       adaptation_status: adaptation_status,
-    //         program_details: program_details
-    //     },
-    //     ...i
-    //   })
-    //   ...item
-    // })
-    console.log(newData)
+    const { data, adaptation_status, program_details  } = this.state
+    const newData = this.getNewData(data, adaptation_status, program_details)
+    const point = this.getPoint(data)
+
     return (
       <div className="flex-container hidden">
         <div className="flex p-t-16 p-r-16 p-l-16">
           <CardIconAndTitle
             title="Заработано баллов:"
-            value="800"
+            value={point}
             icon="points"
             className="m-r-16"
           />
           <CardIconAndTitle
             title="Пройдено уровней:"
-            value="1/3"
+            value={[2, 3]}
             icon="levels"
           />
         </div>

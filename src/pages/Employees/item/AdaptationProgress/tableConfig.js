@@ -1,4 +1,5 @@
 import Status from "../../../../components/ComponentStatus";
+import DisplayDate from "../../../../components/Fields/DisplayDate";
 
 export const settings = [
   {
@@ -23,10 +24,11 @@ export const settings = [
   },
   {
     id: 4,
-    key: "point",
+    key: "create_date",
     name: "Дата прохождения",
     nestedLevel: 1,
-    size: "1fr"
+    size: "1fr",
+    component: DisplayDate
   },
   {
     id: 5,
@@ -38,7 +40,7 @@ export const settings = [
   },
   {
     id: 5,
-    key: "point",
+    key: "comment",
     name: "Комментарий",
     nestedLevel: 1,
     size: "1fr"

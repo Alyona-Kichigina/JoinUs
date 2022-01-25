@@ -37,7 +37,11 @@ const CardIconAndTitle = ({title, icon, value, className}) => {
           {title}
         </div>
         <div className="fs-16 fw-700 ls-01">
-          {value}
+          {
+            Array.isArray(value)
+            ? `${value[0]}/${value[1]}`
+            : value
+          }
         </div>
       </div>
     </ContainerCard>
@@ -46,7 +50,7 @@ const CardIconAndTitle = ({title, icon, value, className}) => {
 
 CardIconAndTitle.propTypes = {
   title: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array,]),
   className: PropTypes.string,
   icon: PropTypes.string,
 }

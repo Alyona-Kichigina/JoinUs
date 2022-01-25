@@ -24,7 +24,7 @@ class Documents extends Component {
       (response) => {
         this.setState({
           isLoaded: true,
-          items: response.data.program_details.map(({documents_detail}) => {
+          data: response.data.program_details.map(({documents_detail}) => {
             return documents_detail
           }).flat()
         })
@@ -38,7 +38,7 @@ class Documents extends Component {
     )
   }
   render() {
-    const { items = [] } = this.state
+    const { data = [] } = this.state
     return (
       <div className="flex-container hidden">
         <div className="flex p-t-16 p-r-16 p-l-16">
@@ -50,13 +50,13 @@ class Documents extends Component {
           />
           <CardIconAndTitle
             title="Всего документов:"
-            value="3"
+            value={data.length}
             icon="documents"
           />
         </div>
         <AppList
           settings={settings}
-          data={items}
+          data={data}
         />
       </div>
     );

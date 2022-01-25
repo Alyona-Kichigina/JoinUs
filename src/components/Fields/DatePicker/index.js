@@ -8,6 +8,7 @@ import {PRESENT_DATE_FORMAT} from "@constants"
 import { Calendar, Select, Col, Row } from 'antd';
 import moment from "moment";
 import Sel from "@Components/Fields/Select";
+import DisplayDate from "../DisplayDate";
 
 const option = [{ID: 1, SYS_NAME: "aaa"}]
 
@@ -116,7 +117,9 @@ class DatePicker extends Component {
                            value.length > 0
                             ? (
                               <div className="m-t-a m-b-a fs-14 ls-02">
-                                {value}
+                                <DisplayDate
+                                  data={value}
+                                />
                               </div>
                             )
                             : (
