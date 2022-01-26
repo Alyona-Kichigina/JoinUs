@@ -8,38 +8,7 @@ import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
 import { FormContainer } from "../../item/General/style"
 import axios from "axios";
-import {
-    ADAPTATION_CUSTOMER,
-    ADAPTATION_EMPLOYEE, ADAPTATION_LEVELS, ADAPTATION_PROGRAM,
-    DEFAULT_URL
-} from "../../../../components/APIList";
-
-const users = [
-    {
-        id: 1,
-        name: "Максимов И.И"
-    },
-    {
-        id: 2,
-        name: "Иванов И.И"
-    },
-    {
-        id: 3,
-        name: "Сидоров И.И"
-    },
-    {
-        id: 4,
-        name: "Максимов И.В"
-    },
-    {
-        id: 5,
-        name: "Иванов И.В"
-    },
-    {
-        id: 6,
-        name: "Сидоров И.В"
-    },
-]
+import { ADAPTATION_EMPLOYEE, ADAPTATION_LEVELS, ADAPTATION_PROGRAM, DEFAULT_URL } from "../../../../components/APIList";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
     .reduce((acc, c) => {
@@ -103,7 +72,7 @@ class LevelsGeneral extends Component {
                     })
                 }
             )
-        if (pathnames[1] !== "new_program") {
+        if (pathnames[1] !== "new_program" && pathnames[3] !== "level") {
             axios.get(`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`)
                 .then(
                     (response) => {
@@ -175,7 +144,7 @@ class LevelsGeneral extends Component {
     tierUp = () => {
         const { data: { tier }, data } = this.state
         this.setState({
-            data: { ...data, tier: tier + 1}
+            data: { ...data, tier: tier ? tier + 1 : 1}
         })
     }
     tierDown = () => {
@@ -184,22 +153,34 @@ class LevelsGeneral extends Component {
             data: { ...data, tier: tier > 1 ? tier - 1 : tier}
         })
     }
+    selectCreator = (value) => {
+        const { employees } = this.state
+        const employee = employees.find((a) => a.id === value)
+        this.setState({
+            modalState: employee.id
+        })
+    }
+    selectedCreator = (value) => {
+        const { employees, modalState } = this.state
+        const newValue = employees.find((a) => a.id === value)
+        return modalState ? modalState === newValue.id : false
+    }
     render() {
         const { history: { goBack } } = this.props
-        const { creatorModal, modalState, data, data: { CREATOR } } = this.state
+        const { creatorModal, modalState, employees, data, data: { id_employee } } = this.state
         const { tierUp, tierDown } = this
         const toggleCreatorModal = () => {
             this.setState({creatorModal: !creatorModal})
         }
-        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleCreatorModal, CREATOR, tierUp, tierDown))
+        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleCreatorModal, id_employee, tierUp, tierDown, employees))
         return (
-            <div>
+            <div className="h-full">
                 <ModalSidebar
                     title="Выбор создателя"
                     closeModal={toggleCreatorModal}
                     isOpen={creatorModal}
                     handleSave={() => this.setState({
-                        data: { ...data, CREATOR: modalState },
+                        data: { ...data, id_employee: modalState },
                         creatorModal: !creatorModal
                     })}
                 >
@@ -218,7 +199,8 @@ class LevelsGeneral extends Component {
                             </div>
                         </div>
                         {
-                            users.map(({name, id}, index) => {
+                            employees.map(({first_name, last_name, id}, index) => {
+                                const creatorName = `${first_name} ${last_name}`
                                 return (
                                     <div
                                         className="grid py-4 font-semibold fs-14 border-list"
@@ -230,9 +212,9 @@ class LevelsGeneral extends Component {
                                             {index + 1}
                                         </div>
                                         <RadioButton
-                                            inputValue={this.selectClient}
-                                            selected={(value) => modalState === value}
-                                            title={name}
+                                            inputValue={() => this.selectCreator(id)}
+                                            selected={() => this.selectedCreator(id)}
+                                            title={creatorName}
                                             id={id}
                                         />
                                     </div>
@@ -272,15 +254,19 @@ class LevelsGeneral extends Component {
                                 <div
                                     className="flex justify-end pb-20 pr-8"
                                 >
-                                    <div
+                                    <button
                                         onClick={() => goBack()}
-                                        className="white btn width-m mr-4"
+                                        name="cancel"
+                                        type="submit"
+                                        className="grey btn width-medium m-r-16"
                                     >
                                         Отмена
-                                    </div>
+                                    </button>
                                     <button
-                                        className="blue btn width-m"
                                         onClick={() => this.saveNewLevel()}
+                                        name="save"
+                                        type="submit"
+                                        className="blue btn width-medium"
                                     >
                                         Сохранить
                                     </button>

@@ -49,22 +49,24 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
         label: "Дата создания",
         id: "create_date",
         component: DatePicker,
-        dateFormat: CREATE_DATE_FORMAT,
         placeholder: "Выберите дату создания",
         formColumn: 1,
     },
     {
         label: "Создал",
         id: "creator",
-        component: ({onInput}) =>
+        component: ({onInput}) => {
+            const creatorName = creator ? `${creator.first_name} ${creator.last_name}` : ""
+            return (
             <ModalSelectInput
                 id="6"
                 key="creator"
-                value={creator}
+                value={creatorName}
                 onInput={onInput}
                 placeholder="Выберите создателя"
                 toggleModal={toggleCreatorModal}
-            />,
+            />
+        )},
         formColumn: 1,
     },
 ]

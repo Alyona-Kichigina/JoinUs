@@ -8,6 +8,7 @@ export const ADAPTATION_LEVELS = "adaptationlevel"
 export const ADAPTATION_STAGE = "adaptationstage"
 export const ADAPTATION_CUSTOMER = "customer"
 export const ADAPTATION_EMPLOYEE = "employee"
+export const ADAPTATION_STATUS = "adaptationstatus"
 
 export const CONTACTS =  "icontacts"
 export const DIRECTORY = "directory"
