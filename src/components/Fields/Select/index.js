@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react"
 import PropTypes from "prop-types"
-import IconClose from "../../Icon/IconClose";
 import ScrollBar from "@Components/ScrollBar"
 import memoizeOne from "memoize-one"
 import PureDeleteItems from "@Utils/Arrays/PureDeleteItems"
@@ -15,9 +14,8 @@ import {
   SelectContainer, InputSelectContainer, SelectInput, MultipleValuePrerenderContainer, NoOptionsLabel, ToggleIconContainer,
   RemoveIconContainer, SelectedOptionsScrollBar, SelectedOptions, MultipleValueInputContainer, OverlayItemsContainer
 } from "./styles"
-import IconToggleIndicator from "../../Icon/IconToggleIndicator";
-
-// todo сделать удаление валью в селекте
+import IconToggleIndicator from "../../Icon/IconToggleIndicator"
+import IconClose from "../../Icon/IconClose"
 
 const scrollOptions = { wheelPropagation: false }
 
@@ -387,6 +385,16 @@ class Select extends PureComponent {
                         ))
                       )}
                     </div>
+                    {clearable && !(Array.isArray(value) ? value.length === 0 : !value) && !disabled && (
+                      <RemoveIconContainer
+                        type="button"
+                        disabled={disabled}
+                        title="Delete"
+                        onMouseDown={this.clearSelection}
+                      >
+                        <IconClose />
+                      </RemoveIconContainer>
+                    )}
                     {showToggleButton && (
                       <ToggleIconContainer
                         onMouseDown={open ? this.closeSelect : null}

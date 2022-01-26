@@ -4,7 +4,13 @@ import axios from 'axios';
 import AppList from "../../../components/AppList";
 import {settings} from "./TableConfig"
 import {NavLink} from "react-router-dom";
-import {CANDIDATE_LIST, DEFAULT_URL} from "../../../components/APIList";
+import {CANDIDATE_LIST, DEFAULT_URL, CANDIDATE_FILTER} from "../../../components/APIList";
+import debounce from "@Utils/debounce"
+import memoizeOne from "memoize-one";
+import EditDateForSave from "../../../utils/Date/EditDateForSave";
+import {RELEASE_DATE_FORMAT, CREATE_DATE_FORMAT} from "@constants"
+
+// todo добавить пагинацию
 
 class Employees extends Component {
   constructor(props) {
@@ -15,11 +21,20 @@ class Employees extends Component {
       error: false,
     }
   }
-
-  // получаем данные для фильтра
-  onInputDate = (value, id) => {
+// todo сделать фильтрацию по статусам на фронте
+  onInputDate = (debounce((value, id) => {
     console.log(value, id)
-  }
+    axios.get(`${DEFAULT_URL}/${CANDIDATE_FILTER}`, {params: {
+        [id]: value
+    }})
+    .then((response) => {
+        this.setState({data: response.data})
+      },
+      (error) => {
+        this.setState({error})
+      }
+    )
+  }, 250))
 
   componentDidMount() {
     axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}`)
@@ -32,22 +47,25 @@ class Employees extends Component {
     )
   }
 
-  handleInput = (payload) => { this.setState(({ value }) => ({ value: { ...value, ...payload } })) }
-
-  render() {
-    const { state: {data} } = this
-    const newData = data.map((item) => ({
-      EMPLOYEES: {
-        name: `${item.last_name} ${item.first_name}`,
-        role: `${item.post}`
-      },
-      STATUS: {
-        adaptation_status: item.adaptation_status,
-        program_details: item.program_details
-      },
+  getNewData = memoizeOne((data) => {
+    return data.map((item) => ({
+        EMPLOYEES: {
+          name: `${item.last_name} ${item.first_name}`,
+          role: `${item.post}`
+        },
+        STATUS: {
+          adaptation_status: item.adaptation_status,
+          program_details: item.program_details
+        },
         ...item
       })
     )
+  })
+
+  render() {
+    const { state: {data} } = this
+    const newData = this.getNewData(data)
+
     return (
       <div className="flex-container">
         <div className="flex justify-between p-b-25">

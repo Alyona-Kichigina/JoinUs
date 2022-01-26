@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components"
 import PropTypes from "prop-types"
 
-const Icon = styled.div `
+ export const Icon = styled.div `
   position: relative;
   ${props => props.size && `height: ${props.size}px;`}
   ${props => props.size && `width: ${props.size}px;`}

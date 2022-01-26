@@ -61,15 +61,15 @@ class General extends Component {
     const { location: { pathname }, history: { push } } = this.props
     const pathnames = pathname.split("/").filter(x => x)
     const newEmploy = pathnames[1] === "new_employ"
-    const idEmploy = newEmploy ? "/" : `${pathnames[1]}/`
+    const idEmploy = newEmploy ? "" : `${pathnames[1]}/`
     axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`,
       newEmploy
         ?
         {
         ...payload,
         program: [payload.program],
-        release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
-        create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT),
+        release_date: payload.release_date,
+        create_date: payload.create_date,
         id_customer: 1,
         id_employee: 1,
         status: 1,
@@ -79,12 +79,12 @@ class General extends Component {
         {
           ...payload,
           program: [payload.program],
-          release_date: EditDateForSave(payload.release_date, RELEASE_DATE_FORMAT),
-          create_date: EditDateForSave(payload.create_date, CREATE_DATE_FORMAT),
+          release_date: payload.release_date,
+          create_date: payload.create_date,
           salary: Number(payload.salary)
         }
     )
-    .then((response) => {console.log(response)},
+    .then((response) => {},
       (error) => {
         this.setState({error})
       }

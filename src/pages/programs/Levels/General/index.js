@@ -92,7 +92,7 @@ class StagesGeneral extends Component {
         this.setState(({ data }) => ({ data: { ...data, ...value } }))
     }
     saveDataOfStage = (v) => {
-        console.log(v)
+        console.log(v, 56565)
     }
 
     tierUp = () => {
