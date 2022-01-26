@@ -9,39 +9,7 @@ import axios from "axios";
 import {ADAPTATION_PROGRAM, ADAPTATION_DOCUMENT, DEFAULT_URL} from "../../../../components/APIList";
 import {ModalTableHeader, ModalTableBody, FileImage} from "./style";
 import ArrowInput from "../../../../components/ArrowsInput";
-import ActionsButtons from "../../../../components/ActionsButtons";
-import DocumentName from "../../../../components/ComponentsForListTable/DocumentName";
-
-
-const settings = (editModal, closeModal, handleEdit) => [
-    {
-        id: 1,
-        key: "number",
-        name: "№",
-        size: "5%"
-    },
-    {
-        id: 2,
-        key: "document_name",
-        name: "Наименование",
-        component: DocumentName,
-        size: "30%"
-    },
-    {
-        id: 3,
-        key: "actions",
-        allData: true,
-        name: "Действия",
-        component: ({data}) => (
-            <ActionsButtons
-                data={data}
-                handleEdit={handleEdit}
-                dataKey="tier"
-            />
-        ),
-        size: "30%"
-    }
-]
+import { settings } from "./tableConfig";
 
 class Documents extends Component {
 
@@ -61,7 +29,7 @@ class Documents extends Component {
         }
     }
 
-    componentDidMount() {
+    loadPageData = () => {
         const { location: { pathname } } = this.props
         const pathnames = pathname.split("/").filter(x => x)
         const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
@@ -83,6 +51,10 @@ class Documents extends Component {
                     })
                 }
             )
+    }
+
+    componentDidMount() {
+        this.loadPageData()
         axios.get(`${DEFAULT_URL}/${ADAPTATION_DOCUMENT}`)
             .then(
                 (response) => {
@@ -129,61 +101,49 @@ class Documents extends Component {
                     })
                 }
             )
-        const { location: { pathname } } = this.props
-        const pathnames = pathname.split("/").filter(x => x)
-        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
-        axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
-            .then(
-                (response) => {
-                    const { data: { documents_detail } } = response
-                    this.setState({
-                        isLoaded: true,
-                        items: documents_detail
-                    })
-                    closeModal()
-                },
-                (error) => {
-                    console.log(error)
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    })
-                }
-            )
+        this.loadPageData()
+        this.setState({
+            editModal: false
+        })
     }
     saveSelectedDocuments = () => {
-        const { selectedDocuments } = this.state
-        console.log(selectedDocuments)
         this.setState({
             selectedDocuments: [],
             documentSelection: false
         })
     }
     saveNewDocuments = (closeModal) => {
-        const { location: { pathname } } = this.props
+        const {
+            location: { pathname }
+        } = this.props
         const { programData, programData: { documents }, selectedDocuments } = this.state
         const pathnames = pathname.split("/").filter(x => x)
-        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}` : ""
-        const newData = { ...programData, documents: documents.filter(a => a !== selectedDocuments.some(i => i === a))}
-        console.log(newData)
-        // axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
-        //     .then(
-        //         (response) => {
-        //             const { data: { documents_detail } } = response
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 items: documents_detail
-        //             })
-        //             closeModal()
-        //         },
-        //         (error) => {
-        //             console.log(error)
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 error
-        //             })
-        //         }
-        //     )
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
+        const newData = { ...programData, documents: documents.concat(selectedDocuments.filter(item => !documents.some(a => a === item))) }
+        if (selectedDocuments.length) {
+            axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newData)
+                .then(
+                    (response) => {
+                        const {data: {documents_detail}, data} = response
+                        this.setState({
+                            isLoaded: true,
+                            programData: data,
+                            items: documents_detail
+                        })
+                        closeModal()
+                    },
+                    (error) => {
+                        console.log(error)
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        })
+                    }
+                )
+            this.setState({
+                selectedDocuments: []
+            })
+        }
     }
     addDocument = () => {
         const { addNewDocument } = this.state
@@ -216,6 +176,47 @@ class Documents extends Component {
         })
     }
     closeModal = () => this.setState({editModal: false})
+    deleteItem = (id) => {
+        const {
+            location: { pathname }
+        } = this.props
+        const { programData, programData: { documents } } = this.state
+        const newData = {...programData, documents: documents.filter(item => item !== id)}
+        const pathnames = pathname.split("/").filter(x => x)
+        const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newData)
+            .then(
+                (response) => {
+                    const { data: { documents_detail }, data } = response
+                    this.setState({
+                        isLoaded: true,
+                        programData: data,
+                        items: documents_detail
+                    })
+                },
+                (error) => {
+                    console.log(error)
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+    }
+    actionButtonTierUp = (data) => {
+        const { id, tier } = data
+        const newData = { ...data, tier: tier + 1 }
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_DOCUMENT}/${id}/`, newData)
+        this.loadPageData()
+    }
+    actionButtonTierDown = (data) => {
+        const { id, tier } = data
+        if (tier > 1) {
+            const newData = { ...data, tier: tier - 1 }
+            axios.put(`${DEFAULT_URL}/${ADAPTATION_DOCUMENT}/${id}/`, newData)
+            this.loadPageData()
+        }
+    }
     render() {
         const {
             editModal,
@@ -231,6 +232,10 @@ class Documents extends Component {
             editModal: true,
             modalData: data
         })
+        const {
+            actionButtonTierUp,
+            actionButtonTierDown
+        } = this
         return (
             <div>
                 <Modal
@@ -303,7 +308,7 @@ class Documents extends Component {
                         </div>
                     </ModalTableHeader>
                        {
-                           items.map(({document_name, id}, index) => {
+                           items && items.map(({document_name, id}, index) => {
                                return (
                                    <ModalTableBody>
                                        <div className="flex items-center">
@@ -338,7 +343,9 @@ class Documents extends Component {
                     closeModal={() => {this.setState({
                         addNewDocument: !addNewDocument
                     })}}
-                    handleSave={() => this.saveNewDocuments(this.closeModal)}
+                    handleSave={() => this.saveNewDocuments(() => {this.setState({
+                        addNewDocument: !addNewDocument
+                    })})}
                 >
                     <ModalTableHeader>
                         <div>№</div>
@@ -394,7 +401,7 @@ class Documents extends Component {
                     </button>
                 </div>
                 <AppList
-                    settings={settings(editModal, this.closeModal, handleEdit)}
+                    settings={settings(editModal, this.closeModal, handleEdit, this.deleteItem, actionButtonTierUp, actionButtonTierDown)}
                     data={items}
                 />
             </div>

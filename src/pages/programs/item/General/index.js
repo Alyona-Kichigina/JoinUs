@@ -177,7 +177,7 @@ class General extends Component {
 
     render() {
         const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, modalState, data, customers, isLoaded, data: { customer = [], CREATOR } } = this.state
+        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], CREATOR } } = this.state
         const customerValue = isLoaded ? customers.find((a) => a.id === customer[0]) : {}
         const toggleModal = () => {
             this.setState({
@@ -263,7 +263,7 @@ class General extends Component {
                             </div>
                         </div>
                      {
-                         users.map(({name, id}, index) => {
+                         employees.map(({name, id}, index) => {
                              return (
                                  <div
                                      className="grid py-4 font-semibold fs-14 border-list"
