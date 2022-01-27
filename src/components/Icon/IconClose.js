@@ -2,18 +2,16 @@ import React from 'react';
 import styled from "styled-components"
 import PropTypes from "prop-types"
 
-const Icon = styled.div `
+ export const Icon = styled.div `
   position: relative;
   ${props => props.size && `height: ${props.size}px;`}
   ${props => props.size && `width: ${props.size}px;`}
-  opacity: 0.4;
   transition: opacity 150ms ease-in-out;
   &:hover {
     opacity: 1;
   }
   &:before, &:after {
     position: absolute;
-    left: 15px;
     content: ' ';
     ${props => props.size && `height: ${props.size}px;`}
     width: 1px;

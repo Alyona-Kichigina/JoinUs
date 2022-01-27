@@ -5,38 +5,13 @@ import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
 import { fieldMap, rules} from "./formConfig";
 import Form from "@Components/Forms/index"
+import {CREATE_DATE_FORMAT} from "@constants"
 import { FormContainer } from "./style"
 import memoizeOne from "memoize-one";
 import axios from "axios";
 import AvatarComponent from "../../../../components/AvtarComponent";
 import {ADAPTATION_CUSTOMER, ADAPTATION_PROGRAM, ADAPTATION_EMPLOYEE, DEFAULT_URL} from "../../../../components/APIList";
-
-const users = [
-    {
-        id: 1,
-        name: "Максимов И.И"
-    },
-    {
-        id: 2,
-        name: "Иванов И.И"
-    },
-    {
-        id: 3,
-        name: "Сидоров И.И"
-    },
-    {
-        id: 4,
-        name: "Максимов И.В"
-    },
-    {
-        id: 5,
-        name: "Иванов И.В"
-    },
-    {
-        id: 6,
-        name: "Сидоров И.В"
-    },
-]
+import EditDateForSave from "../../../../utils/Date/EditDateForSave";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
     .reduce((acc, c) => {
@@ -73,9 +48,10 @@ class General extends Component {
         axios.get(`${DEFAULT_URL}/${ADAPTATION_EMPLOYEE}`)
             .then(
                 (response) => {
+                    const { data } = response
                     this.setState({
                         isLoaded: true,
-                        employees: response.data
+                        employees: data
                     })
                 },
                 (error) => {
@@ -136,6 +112,13 @@ class General extends Component {
             modalState: [customer.id]
         })
     }
+    selectCreator = (value) => {
+        const { employees } = this.state
+        const employee = employees.find((a) => a.id === value)
+        this.setState({
+            modalState: [employee.id]
+        })
+    }
 
     saveNewProgram () {
         const { location: { pathname }, history: { push } } = this.props
@@ -143,7 +126,10 @@ class General extends Component {
         const pathnames = pathname.split("/").filter(x => x)
         const newProgram = pathnames[1] === "new_program"
         const idProgram = newProgram ? "/" : `/${pathnames[2]}/`
-        axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newProgram ? {...data, status: 1} : data)
+        axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newProgram ?
+            {...data, status: 1, create_date: EditDateForSave(data.create_date, CREATE_DATE_FORMAT)} :
+            {...data, create_date: EditDateForSave(data.create_date, CREATE_DATE_FORMAT)}
+        )
             .then(
                 (response) => {
                     const { data, data: { program_name, id } } = response
@@ -175,10 +161,17 @@ class General extends Component {
         return modalState[0] ? modalState[0] === newValue.id : false
     }
 
+    selectedCreator = (value) => {
+        const { employees, modalState } = this.state
+        const newValue = employees.find((a) => a.id === value)
+        return modalState[0] ? modalState[0] === newValue.id : false
+    }
+
     render() {
         const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], CREATOR } } = this.state
+        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], employee = [] } } = this.state
         const customerValue = isLoaded ? customers.find((a) => a.id === customer[0]) : {}
+        const employeeValue = isLoaded ? employee && employees.find((a) => a.id === employee[0]) : {}
         const toggleModal = () => {
             this.setState({
                 clientModal: !clientModal,
@@ -188,9 +181,11 @@ class General extends Component {
         const toggleCreatorModal = () => {
             this.setState({creatorModal: !creatorModal})
         }
-        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, customerValue, toggleCreatorModal, CREATOR))
+        const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, customerValue, toggleCreatorModal, employeeValue))
         return (
-            <div>
+            <div
+                className="h-full"
+            >
                 <ModalSidebar
                     title="Выбор заказчика"
                     closeModal={toggleModal}
@@ -228,7 +223,6 @@ class General extends Component {
                                      </div>
                                      <RadioButton
                                          inputValue={this.selectClient}
-                                         // selected={(value) => modalState === value}
                                          selected={(value) => this.selectedRadioButton(value)}
                                          title={customer_name}
                                          id={id}
@@ -244,7 +238,7 @@ class General extends Component {
                     closeModal={toggleCreatorModal}
                     isOpen={creatorModal}
                     handleSave={() => this.setState({
-                        data: { ...data, CREATOR: modalState },
+                        data: { ...data, employee: modalState },
                         creatorModal: !creatorModal
                     })}
                 >
@@ -263,7 +257,8 @@ class General extends Component {
                             </div>
                         </div>
                      {
-                         employees.map(({name, id}, index) => {
+                         employees.map(({first_name, last_name, id}, index) => {
+                             const creatorName = `${first_name} ${last_name}`
                              return (
                                  <div
                                      className="grid py-4 font-semibold fs-14 border-list"
@@ -275,9 +270,9 @@ class General extends Component {
                                          {index + 1}
                                      </div>
                                      <RadioButton
-                                         inputValue={this.selectClient}
-                                         selected={(value) => modalState === value}
-                                         title={name}
+                                         inputValue={() => this.selectCreator(id)}
+                                         selected={() => this.selectedCreator(id)}
+                                         title={creatorName}
                                          id={id}
                                      />
                                  </div>
@@ -318,14 +313,18 @@ class General extends Component {
                                     <div
                                     className="flex justify-end pb-20 pr-8"
                                     >
-                                        <div
+                                        <button
+                                            name="cancel"
+                                            type="submit"
                                             onClick={() => goBack()}
-                                            className="white btn width-m mr-4"
+                                            className="grey btn width-medium m-r-16"
                                         >
                                             Отмена
-                                        </div>
+                                        </button>
                                         <button
-                                             className="blue btn width-m"
+                                             name="save"
+                                             type="submit"
+                                             className="blue btn width-medium"
                                              onClick={() => this.saveNewProgram()}
                                         >
                                             Сохранить

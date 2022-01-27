@@ -6,29 +6,31 @@ const Status = ({data}) => {
   const [title, setTitle] = useState("")
 
   const getData = useCallback(() => {
-    const { adaptation_status, program_details: [detail]} = data
-    const status = detail.levels_detail.length === adaptation_status.length
-      ? "end"
-      : adaptation_status.length === 0
-        ? "wait"
-        : "work"
-    switch (status) {
-      case "end":
-        setIcon("/assets/icons/iconStatus/iconStatusEnd.svg")
-        setTitle("Завершена")
-        break;
-      case "wait":
-        setIcon("/assets/icons/iconStatus/iconStatusWait.svg")
-        setTitle("Ожидание")
-        break;
-      case "work":
-        setIcon("/assets/icons/iconStatus/iconStatusWorking.svg")
-        setTitle("В процессе")
-        break;
-      default:
-        setIcon("")
-        setTitle("Error")
-        break;
+    if (Object.keys(data).length > 0) {
+      const { adaptation_status, program_details: [detail]} = data
+      const status = detail.levels_detail.length === adaptation_status.length
+        ? "end"
+        : adaptation_status.length === 0
+          ? "wait"
+          : "work"
+      switch (status) {
+        case "end":
+          setIcon("/assets/icons/iconStatus/iconStatusEnd.svg")
+          setTitle("Завершена")
+          break;
+        case "wait":
+          setIcon("/assets/icons/iconStatus/iconStatusWait.svg")
+          setTitle("Ожидание")
+          break;
+        case "work":
+          setIcon("/assets/icons/iconStatus/iconStatusWorking.svg")
+          setTitle("В процессе")
+          break;
+        default:
+          setIcon("")
+          setTitle("Error")
+          break;
+      }
     }
   }, [icon, setIcon, title, setTitle, data])
 
@@ -44,7 +46,11 @@ const Status = ({data}) => {
 };
 
 Status.propTypes = {
-  data: PropTypes.string,
+  data: PropTypes.object,
+}
+
+Status.defaultProps = {
+  data: {}
 }
 
 export default Status;

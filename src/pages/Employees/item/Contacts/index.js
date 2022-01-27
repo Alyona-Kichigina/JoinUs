@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import AppList from "../../../../components/AppList";
-import {settings, data} from "./fieldMap";
+import {settings, data} from "./tableConfig";
 import axios from "axios";
-import {CONTACTS, DEFAULT_URL} from "../../../../components/APIList";
+import {ADAPTATION_CONTACTS, CANDIDATE_LIST, CONTACTS, DEFAULT_URL} from "../../../../components/APIList";
 
 class Contacts extends Component {
   constructor(props) {
@@ -14,13 +14,20 @@ class Contacts extends Component {
       items: []
     }
   }
+
   componentDidMount() {
-    axios.get(`${DEFAULT_URL}/${CONTACTS}`)
+    const { location: { pathname }, history: { push } } = this.props
+    const pathnames = pathname.split("/").filter(x => x)
+    const newEmploy = pathnames[1] === "new_employ"
+    const idEmploy = newEmploy ? "/" : `${pathnames[1]}/`
+    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`)
     .then(
       (response) => {
         this.setState({
           isLoaded: true,
-          items: response.data
+          items: response.data.program_details.map(({contacts_detail}) => {
+            return contacts_detail
+          }).flat()
         })
       },
       (error) => {
@@ -33,19 +40,17 @@ class Contacts extends Component {
   }
   render() {
     const { items = [] } = this.state
-    const newData = items.map(({ last_name, first_name, post, role }) =>
+    const newData = items.map(({ last_name, first_name, post, role, email, mobile_phone, illustration_link }) =>
       ({
         value: {
           name: `${last_name} ${first_name}`,
-          role: `${post}`
+          role: `${post}`,
+          img: illustration_link
         },
         role: `${role}`,
         contacts: {
-          mail: "petrova.darya@gmail.com",
-          phone: [
-            "+7 999 787 7868",
-            "+7 999 787 7868"
-          ]
+          mail: email,
+          phone: [mobile_phone]
         }
       })
     )
@@ -59,7 +64,6 @@ class Contacts extends Component {
         <AppList
           settings={settings}
           data={newData}
-          nestedKey="data"
         />
       </div>
     );

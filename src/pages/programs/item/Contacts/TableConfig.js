@@ -1,24 +1,5 @@
 import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
-import React from "react";
-
-const ContactsComp = ({data}) => {
-  return (
-    <div>
-      {
-        data.phone.map( a => (
-          <div
-            className="flex j-c-start mb-1"
-          >
-            { a }
-          </div>
-        ))
-      }
-      <div className="flex j-c-start text-xs font-semibold color-light-blue-2">
-        { data.mail }
-      </div>
-    </div>
-  )
-}
+import CardContact from "../../../../components/ComponentsForListTable/CardContact";
 
 export const settings = [
   {
@@ -38,7 +19,7 @@ export const settings = [
     id: 3,
     key: "contacts",
     name: "Контакты",
-    component: ContactsComp,
+    component: CardContact,
     size: "30%"
   }
 ]

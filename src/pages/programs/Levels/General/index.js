@@ -92,7 +92,7 @@ class StagesGeneral extends Component {
         this.setState(({ data }) => ({ data: { ...data, ...value } }))
     }
     saveDataOfStage = (v) => {
-        console.log(v)
+        console.log(v, 56565)
     }
 
     tierUp = () => {
@@ -142,14 +142,18 @@ class StagesGeneral extends Component {
                                 <div
                                     className="flex justify-end mt-auto"
                                 >
-                                    <div
+                                    <button
+                                        name="cancel"
+                                        type="submit"
                                         onClick={() => goBack()}
-                                        className="white btn width-m mr-4"
+                                        className="grey btn width-medium m-r-16"
                                     >
                                         Отмена
-                                    </div>
+                                    </button>
                                     <button
-                                        className="blue btn width-m"
+                                        name="save"
+                                        type="submit"
+                                        className="blue btn width-medium"
                                         onClick={() => this.saveStage()}
                                     >
                                         Сохранить

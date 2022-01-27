@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppList from "../../../../components/AppList";
-import {DEFAULT_URL, ADAPTATION_CONTACTS, ADAPTATION_PROGRAM} from "../../../../components/APIList";
+import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../../components/APIList";
 import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
 import CardContact from "../../../../components/ComponentsForListTable/CardContact";
 import axios from "axios";

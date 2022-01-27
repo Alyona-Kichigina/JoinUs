@@ -169,7 +169,7 @@ render() {
                       )
                   }
               </Modal>
-              <div className="pt-6 mb-4 ml-4">
+              <div className="pt-6 mb-4 ml-4 flex">
                   <NavLink
                     className="blue btn width-m pt-1.5"
                     to="level/general"

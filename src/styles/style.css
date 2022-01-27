@@ -284,6 +284,10 @@ select,
 textarea {
     font: inherit; /* Specify font inheritance of form elements */
 }
+input:focus-visible {
+    outline: none;
+}
+
 optgroup {
     font-weight: bold; /* Restore the font weight unset by the previous rule. */
 }

@@ -1,5 +1,3 @@
-//разобраться со стилями кнопки
-
 .btn {
   border-radius: 8px;
   padding: 8px 14px;
@@ -13,6 +11,9 @@
   transition: color, background-color;
   transition-duration: 250ms;
   min-height: var(--height-button);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &.blue {
     background: var(--blue-gradient);
     color: var(--color-white);

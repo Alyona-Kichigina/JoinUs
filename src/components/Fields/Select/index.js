@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react"
 import PropTypes from "prop-types"
-import IconClose from "../../Icon/IconClose";
 import ScrollBar from "@Components/ScrollBar"
 import memoizeOne from "memoize-one"
 import PureDeleteItems from "@Utils/Arrays/PureDeleteItems"
@@ -12,12 +11,21 @@ import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import Option from "./Option"
 import MultipleOption from "./MultipleOption"
 import {
-  ToggleIndicator,
-  SelectContainer, InputSelectContainer, SelectInput, MultipleValuePrerenderContainer, NoOptionsLabel, ToggleIconContainer,
-  RemoveIconContainer, SelectedOptionsScrollBar, SelectedOptions, MultipleValueInputContainer, OverlayItemsContainer
+  SelectContainer,
+  InputSelectContainer,
+  SelectInput,
+  MultipleValuePrerenderContainer,
+  NoOptionsLabel,
+  ToggleIconContainer,
+  RemoveIconContainer,
+  SelectedOptionsScrollBar,
+  SelectedOptions,
+  MultipleValueInputContainer,
+  OverlayItemsContainer,
+  MultipleValue
 } from "./styles"
-
-// todo сделать удаление валью в селекте
+import IconToggleIndicator from "../../Icon/IconToggleIndicator"
+import IconClose from "../../Icon/IconClose"
 
 const scrollOptions = { wheelPropagation: false }
 
@@ -236,12 +244,11 @@ class Select extends PureComponent {
     return opt ? opt[labelKey] : normalizedValue || ""
   }
 
-  selectOption = (optionValue) => {
-    // todo labelKey заменил valueKey, чтобы передавалось название, а не айди
-    const { props: { returnOption, valueKey, multiple, value = [], labelKey } } = this
+  selectOption = (optionValue, selected, index) => {
+    const { props: { returnOption, valueKey, multiple, value = [] } } = this
     const normalizeValue = returnOption ? optionValue : optionValue[valueKey]
     if (multiple) {
-      this.handleSelect([...value, normalizeValue])
+      this.handleSelect(!selected?[...value, normalizeValue]: PureDeleteItems(value, index))
     } else {
       this.handleSelect(normalizeValue)
       this.closeSelect()
@@ -341,7 +348,7 @@ class Select extends PureComponent {
         overflowMultipleItems, multipleData
       }
     } = this
-    // Object { ID: 1, SYS_NAME: "aaa" }
+
     return (
       <RenderOverlayMenu
         onOpenOverlayMenu={this.openSelect}
@@ -375,19 +382,48 @@ class Select extends PureComponent {
                         onKeyDown={this.onSearchKeyDown}
                         onFocus={onOpenOverlayMenu}
                       />
-                      {multiple && value && value.length > 0 && (
-                        value.map(({SYS_NAME, icon, ID}) => (
-                          <div className="flex items-center m-r-8" key={ID}>
-                            <img src={icon} alt="" className="p-r-8"/>
-                            <div
-                              className="p-r-15 fz14"
-                            >
-                              { SYS_NAME },
-                            </div>
-                          </div>
-                        ))
+
+                      {multiple && value && value.length > 0 && !open && (
+                        <MultipleValuePrerenderContainer style={multipleContainerStyles}>
+                          <MultipleValueInputContainer
+                            className="overflow-hidden"
+                            ref={refMultipleValueContainer}
+                          >
+                            {(value.map(({SYS_NAME, icon, ID}) => (
+                              <MultipleValue
+                                className="flex items-center m-l-8"
+                                key={ID}
+                              >
+                                <img src={icon} alt="" className="p-r-8"/>
+                                <div className="fz14">
+                                  {SYS_NAME}
+                                </div>
+                              </MultipleValue>
+                            )))}
+                          </MultipleValueInputContainer>
+                        </MultipleValuePrerenderContainer>
                       )}
+                      <OverlayItemsContainer ref={refSelectOverlayItems}>
+                        {clearable && !(Array.isArray(value) ? value.length === 0 : !value) && !disabled && (
+                          <RemoveIconContainer
+                            type="button"
+                            disabled={disabled}
+                            title="Delete"
+                            onMouseDown={this.clearSelection}
+                          >
+                            {open && multiple ? <div className="fs-12">Удалить все</div> : <IconClose size="16" />}
+                          </RemoveIconContainer>
+                        )}
+                      </OverlayItemsContainer>
                     </div>
+                    {showToggleButton && (
+                      <ToggleIconContainer
+                        onMouseDown={open ? this.closeSelect : null}
+                        type="button"
+                      >
+                        <IconToggleIndicator className={open ? "up" : "down"} />
+                      </ToggleIconContainer>
+                    )}
                     {children}
                   </InputSelectContainer>
                   <OverlayMenu

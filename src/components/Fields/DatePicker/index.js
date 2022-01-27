@@ -8,6 +8,8 @@ import {PRESENT_DATE_FORMAT} from "@constants"
 import { Calendar, Select, Col, Row } from 'antd';
 import moment from "moment";
 import Sel from "@Components/Fields/Select";
+import DisplayDate from "../DisplayDate";
+import withDatePickerHoc from "../../../Core/Decorators/withDatePicker";
 
 const option = [{ID: 1, SYS_NAME: "aaa"}]
 
@@ -79,6 +81,7 @@ class DatePicker extends Component {
       },
       state: { open, valueForCalendar, valueSelect }
     } = this
+
     return (
       <RenderOverlayMenu
         onOpenOverlayMenu={this.openCalendar}
@@ -270,4 +273,4 @@ DatePicker.defaultProps = {
   inputRef: () => null,
   onBlur: () => null,
 }
-export default DatePicker
+export default withDatePickerHoc(DatePicker)

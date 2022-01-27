@@ -4,5 +4,6 @@ export const FilterContainer = styled.div`
   --background-input: var(--color-white);
   --height-input: 32px;
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 320px 400px 1fr;
+  grid-column-gap: 24px;
 `
