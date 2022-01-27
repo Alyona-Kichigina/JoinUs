@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactPlayer from 'react-player/youtube'
 import PropTypes from 'prop-types';
 import FileInput from "../FileInput";
 import styled from "styled-components"
