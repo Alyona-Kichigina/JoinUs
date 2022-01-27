@@ -386,7 +386,7 @@ class Documents extends Component {
                            })
                        }
                 </Modal>
-                <div className="pt-8 pb-6 pl-4">
+                <div className="pt-8 pb-6 pl-4 flex">
                     <button
                         className="blue btn width-m pt-1.5"
                         onClick={this.addDocument}
