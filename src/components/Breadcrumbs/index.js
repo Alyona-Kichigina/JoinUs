@@ -4,10 +4,10 @@ import PropTypes from "prop-types"
 import {ArrowBack} from "../../pages/Constants";
 import { BreadcrumbsDot } from "./style";
 
-const BreadCrumbs = props => {
-    const { location: { pathname }, bredCrumbsConfig } = props
+const BreadCrumbs = ({location: { pathname }, bredCrumbsConfig}) => {
     const pathnames = pathname.split("/").filter(x => x)
     const pageName = pathnames[pathnames.length - 1]
+    console.log(pageName)
     const { config } = bredCrumbsConfig.find(a => pageName === a.page)
     return (
         <div className="flex ls-02">

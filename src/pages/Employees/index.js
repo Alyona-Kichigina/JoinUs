@@ -10,13 +10,12 @@ import {EMPLOYEES_TAB} from "./item/Constants";
 import PageHeader from "../../components/PageHeader";
 import {programsBreadcrumbs} from "./config";
 
-const pageData = {
-  pageName: "Новый сотрудник"
-}
 
 class RouterEmployees extends Component {
   render() {
   const { props: { location: { pathname } } } = this
+    const pathnames = pathname.split("/").filter(x => x)
+    const nameEmploy = pathnames[1] === "new_employ" ? "Новый сотрудник" : pathnames[2]
     return (
       <div className="flex-container">
         {
@@ -30,7 +29,7 @@ class RouterEmployees extends Component {
               <PageHeader
                 {...this.props}
                 bredCrumbsConfig={programsBreadcrumbs}
-                pageData={pageData}
+                pageData={nameEmploy}
                 url="employees"
                 links={EMPLOYEES_TAB}
               >
@@ -40,11 +39,11 @@ class RouterEmployees extends Component {
                 <Route path="/employees/new_employ/documents" component={Documents}/>
                 <Route path="/employees/new_employ/goals" component={Goals}/>
 
-                <Route path="/employees/:employID/general" component={General} />
-                <Route path="/employees/:employID/contacts" component={Contacts}/>
-                <Route path="/employees/:employID/adaptation_progress" component={AdaptationProgress}/>
-                <Route path="/employees/:employID/documents" component={Documents}/>
-                <Route path="/employees/:employID/goals" component={Goals}/>
+                <Route path="/employees/:employID/:employName/general" component={General} />
+                <Route path="/employees/:employID/:employName/contacts" component={Contacts}/>
+                <Route path="/employees/:employID/:employName/adaptation_progress" component={AdaptationProgress}/>
+                <Route path="/employees/:employID/:employName/documents" component={Documents}/>
+                <Route path="/employees/:employID/:employName/goals" component={Goals}/>
               </PageHeader>
             )
         }

@@ -14,7 +14,7 @@ class PageHeader extends Component {
               />
                 <div className="flex mb-6 mt-4">
                     <div className="text-2xl font-bold">
-                        { pageData.pageName === "new_program" ? "Новая программа" : `${pageData.pageName}` }
+                        { pageData }
                     </div>
                 </div>
                 <div

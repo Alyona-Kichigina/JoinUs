@@ -1,5 +1,18 @@
 export const programsBreadcrumbs = [
     {
+        page: "New_level",
+        config: [
+            {
+                name: "Програмы",
+                link: "programs"
+            },
+            {
+                name: "Новый уровень",
+                link: "/programs"
+            }
+        ]
+    },
+    {
         page: "general",
         config: [
             {
@@ -69,6 +82,40 @@ export const programsBreadcrumbs = [
 export const levelsBreadcrumbs = [
     {
         page: "general",
+        config:[
+            {
+                name: "Програмы",
+                link: "programs"
+            },
+            {
+                name: (pathname) =>`${pathname[1] === "new_program" ? "Новая програма" : pathname[1]}`,
+                link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
+            },
+            {
+                name: "Общие",
+                link: "/"
+            }
+        ]
+    },
+    {
+        page: "levelStages",
+        config:[
+            {
+                name: "Програмы",
+                link: "programs"
+            },
+            {
+                name: (pathname) =>`${pathname[1] === "new_program" ? "Новая програма" : pathname[1]}`,
+                link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
+            },
+            {
+                name: "Общие",
+                link: "/"
+            }
+        ]
+    },
+    {
+        page: "programs",
         config:[
             {
                 name: "Програмы",

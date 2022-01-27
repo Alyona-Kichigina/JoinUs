@@ -10,6 +10,7 @@ import {ADAPTATION_PROGRAM, ADAPTATION_DOCUMENT, DEFAULT_URL} from "../../../../
 import {ModalTableHeader, ModalTableBody, FileImage} from "./style";
 import ArrowInput from "../../../../components/ArrowsInput";
 import { settings } from "./tableConfig";
+import PhotoFiles from "../../../../components/Fields/Files/PhotoFiles";
 
 class Documents extends Component {
 
@@ -276,19 +277,9 @@ class Documents extends Component {
                         <div
                             className="pt-8"
                         >
-                            <div
-                                className="flex items-center bold color-blue"
-                            >
-                                <div
-                                    dangerouslySetInnerHTML={{__html: PlusIcon}}
-                                />
-                                Добавить документ
-                            </div>
-                            <FileImage>
-                                <img
-                                    src={document_link} alt=""
-                                />
-                            </FileImage>
+                            <PhotoFiles
+                                value={[document_link]}
+                            />
                         </div>
                     </div>
                 </Modal>

@@ -9,6 +9,7 @@ import {fieldMap, rules} from "./formConfig";
 import {FormContainer} from "../../item/General/style"
 import axios from "axios";
 import { ADAPTATION_EMPLOYEE, ADAPTATION_LEVELS, ADAPTATION_PROGRAM, DEFAULT_URL } from "../../../../components/APIList";
+import Avatar from "../../../../components/Avatar";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
   .reduce((acc, c) => {
@@ -113,7 +114,7 @@ class LevelsGeneral extends Component {
     const {location: {pathname}, history: {push}} = this.props
     const {data} = this.state
     const pathnames = pathname.split("/").filter(x => x)
-    const newProgram = pathnames[1] === "new_program"
+    const newProgram = pathnames[1] === "New_level"
     const idLevel = newProgram ? "/" : `/${pathnames[3]}/`
     axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`, {...data, illustration: "111"})
       .then(
@@ -144,7 +145,7 @@ class LevelsGeneral extends Component {
   tierUp = () => {
     const {data: {tier}, data} = this.state
     this.setState({
-      data: {...data, tier: tier + 1}
+      data: {...data, tier: tier ? tier + 1 : 1}
     })
   }
   tierDown = () => {
@@ -238,6 +239,9 @@ class LevelsGeneral extends Component {
                 <div
                   className="mx-8"
                 >
+                    <Avatar
+                        className="mt-6 ml-6 mb-6"
+                    />
                   <FormContainer>
                     <Form
                       {...formProps}
