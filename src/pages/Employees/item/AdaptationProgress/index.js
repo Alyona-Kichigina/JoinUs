@@ -57,10 +57,11 @@ class AdaptationProgress extends Component {
 
   getNewData = memoizeOne((data = [], adaptation_status, program_details) => {
     return data.reduce((acc, item = {}) => {
+      const { stages } = item
       acc.push(
         {
           ...item,
-          stages: item.stages.map((i) => ({
+          stages: stages.map((i) => ({
             ...i,
             STATUS: {
               adaptation_status: adaptation_status,

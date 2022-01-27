@@ -7,8 +7,7 @@ import {NavLink} from "react-router-dom";
 import {CANDIDATE_LIST, DEFAULT_URL, CANDIDATE_FILTER} from "../../../components/APIList";
 import debounce from "@Utils/debounce"
 import memoizeOne from "memoize-one";
-import EditDateForSave from "../../../utils/Date/EditDateForSave";
-import {RELEASE_DATE_FORMAT, CREATE_DATE_FORMAT} from "@constants"
+import List from "./list"
 
 // todo добавить пагинацию
 
@@ -19,21 +18,28 @@ class Employees extends Component {
       value: false,
       data: [],
       error: false,
+      search: ""
     }
   }
 // todo сделать фильтрацию по статусам на фронте
   onInputDate = (debounce((value, id) => {
-    console.log(value, id)
-    axios.get(`${DEFAULT_URL}/${CANDIDATE_FILTER}`, {params: {
-        [id]: value
-    }})
-    .then((response) => {
-        this.setState({data: response.data})
-      },
-      (error) => {
-        this.setState({error})
-      }
-    )
+    const { data } = this
+    // console.log(data)
+    // console.log(value, id)
+    if (id === "status") {
+      // search
+    } else {
+      axios.get(`${DEFAULT_URL}/${CANDIDATE_FILTER}`, {
+        params: {[id]: value}
+      })
+      .then((response) => {
+          this.setState({data: response.data})
+        },
+        (error) => {
+          this.setState({error})
+        }
+      )
+    }
   }, 250))
 
   componentDidMount() {
@@ -48,24 +54,27 @@ class Employees extends Component {
   }
 
   getNewData = memoizeOne((data) => {
-    return data.map((item) => ({
+    return data.map((item) => {
+      const { last_name, first_name, post, adaptation_status, program_details } = item
+      return {
         EMPLOYEES: {
-          name: `${item.last_name} ${item.first_name}`,
-          role: `${item.post}`
+          name: `${last_name} ${first_name}`,
+          role: `${post}`
         },
         STATUS: {
-          adaptation_status: item.adaptation_status,
-          program_details: item.program_details
+          adaptation_status: adaptation_status,
+          program_details: program_details
         },
+        // NEW_STATUS: "dd",
         ...item
-      })
+      }
+    }
     )
   })
 
   render() {
     const { state: {data} } = this
     const newData = this.getNewData(data)
-
     return (
       <div className="flex-container">
         <div className="flex justify-between p-b-25">

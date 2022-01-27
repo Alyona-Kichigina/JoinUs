@@ -34,9 +34,9 @@ const FilterForEmployees = ({handleInput}) => {
     handleInput(value, id)
   }, [setDataForInput])
 
-  const handleSelect = useCallback((value) => {
+  const handleSelect = useCallback((value, id) => {
     setValueSelect(value)
-    handleInput(value)
+    handleInput(value, id)
   }, [setValueSelect])
 
   const onInputDateFrom = useCallback((value, id) => {
@@ -73,7 +73,7 @@ const FilterForEmployees = ({handleInput}) => {
           returnOption
         />
       </div>
-      <div className="flex">
+      <div className="flex m-l-a">
         <div
           className="fs-12 color-light-blue-2 p-r-16 p-b-14 flex items-end"
         >
