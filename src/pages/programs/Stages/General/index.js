@@ -169,7 +169,7 @@ class LevelsGeneral extends Component {
 
   render() {
     const {history: {goBack}} = this.props
-    const {creatorModal, modalState, data, data: {id_employee}} = this.state
+    const {creatorModal, modalState, employees, data, data: {id_employee}} = this.state
     const {tierUp, tierDown} = this
     const toggleCreatorModal = () => {
       this.setState({creatorModal: !creatorModal})
