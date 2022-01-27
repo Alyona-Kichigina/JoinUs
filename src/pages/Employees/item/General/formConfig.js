@@ -28,6 +28,13 @@ export const fieldMap = [
     formColumn: 0,
   },
   {
+    label: "Телефон",
+    id: "mobile_phone",
+    component: Input,
+    placeholder: "Введите телефон",
+    formColumn: 0,
+  },
+  {
     label: "Должность",
     id: "post",
     component: RefSelect,
@@ -53,6 +60,13 @@ export const fieldMap = [
     id: "create_date",
     component: DatePicker,
     placeholder: "Выберите дату активации",
+    formColumn: 1,
+  },
+  {
+    label: "Почта",
+    id: "email",
+    component: Input,
+    placeholder: "Введите почту",
     formColumn: 1,
   },
   {
