@@ -4,7 +4,7 @@ import axios from 'axios';
 import AppList from "../../../components/AppList";
 import {settings} from "./TableConfig"
 import {NavLink} from "react-router-dom";
-import {CANDIDATE_LIST, DEFAULT_URL, CANDIDATE_FILTER} from "../../../components/APIList";
+import {CANDIDATE_LIST, DEFAULT_URL, CANDIDATE_FILTER, CANDIDATE_SEARCH} from "../../../components/APIList";
 import debounce from "@Utils/debounce"
 import memoizeOne from "memoize-one";
 import List from "./list"
@@ -24,16 +24,15 @@ class Employees extends Component {
 // todo сделать фильтрацию по статусам на фронте
   onInputDate = (debounce((value, id) => {
     const { data } = this
-    // console.log(data)
-    // console.log(value, id)
+    const newParams = id === "name" ? {search: value} : {[id]: value}
     if (id === "status") {
       // search
     } else {
-      axios.get(`${DEFAULT_URL}/${CANDIDATE_FILTER}`, {
-        params: {[id]: value}
+      axios.get(`${DEFAULT_URL}/candidate/${id === "name" ? "" : "filter/"}`, {
+        params: newParams
       })
       .then((response) => {
-          this.setState({data: response.data})
+          this.setState({ data: id === "name" ? response.data.results : response.data})
         },
         (error) => {
           this.setState({error})

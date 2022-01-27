@@ -1,11 +1,7 @@
 import styled from "styled-components"
 
-// разобраться с версткой
-// при открытии и закрытии дергается список
-// возможно из-за того что логотип пропадает
-
 export const LeftMenuItem = styled.div`
-  transition: all 0.5s ease 0s;
+  //transition: all 0.5s ease 0s;
   height: 48px;
   border-radius: 8px;
   margin: 0 16px 1px 16px;
@@ -26,7 +22,7 @@ export const LeftMenuContainer = styled.div`
   background: var(--color-white);
   height: 100%;
   flex: 0 0 auto;
-  transition: .3s;
+  //transition: .3s;
   color: var(--color-light-blue-2);
   font-weight: 700;
   border-right: 1px solid var(--color-light-grey-2);
@@ -49,6 +45,7 @@ export const LeftMenuLogo = styled.div`
 `
 
 export const OpenMenuItem = styled.div`
+  height: 42px;
    opacity: 0;
     transition: all .3s ease 0s;
     ${props => props.hideToolbar} {
