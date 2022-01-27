@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const PositionBadge = styled.div`
   width: 24px;
   height: 24px;
-  background: var(--blue-gradient);
+  background: var(--active-gradient);
   color: white;
   border-radius: 50%;
   display: flex;

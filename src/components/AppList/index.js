@@ -38,7 +38,7 @@ class AppList extends Component {
                         return (
                           <Row
                             settings={settings}
-                            key={i}
+                            key={`${i}-${index}`}
                             data={a}
                             nestedLevel={1}
                             rowIndex={index}

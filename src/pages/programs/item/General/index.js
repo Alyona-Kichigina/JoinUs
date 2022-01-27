@@ -9,9 +9,9 @@ import {CREATE_DATE_FORMAT} from "@constants"
 import { FormContainer } from "./style"
 import memoizeOne from "memoize-one";
 import axios from "axios";
-import AvatarComponent from "../../../../components/AvtarComponent";
 import {ADAPTATION_CUSTOMER, ADAPTATION_PROGRAM, ADAPTATION_EMPLOYEE, DEFAULT_URL} from "../../../../components/APIList";
 import EditDateForSave from "../../../../utils/Date/EditDateForSave";
+import Avatar from "../../../../components/Avatar";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
     .reduce((acc, c) => {
@@ -113,10 +113,10 @@ class General extends Component {
         })
     }
     selectCreator = (value) => {
-        const { employees } = this.state
+        const { employees, modalState } = this.state
         const employee = employees.find((a) => a.id === value)
         this.setState({
-            modalState: [employee.id]
+            modalState: modalState[0] === value ? [] : [employee.id]
         })
     }
 
@@ -290,45 +290,51 @@ class General extends Component {
                     {(formProps) => {
                         const { formValid, onSubmit, onInput } = formProps
                           return (
-                            <div className="h-full flex flex-col justify-between">
-                                {/*<AvatarComponent />*/}
+                            <div className="h-full flex flex-col">
+                                <Avatar
+                                    className="mt-6 ml-6 mb-6"
+                                />
                                 <div
-                                    className="mx-8"
+                                    className="h-full flex flex-col justify-between"
                                 >
-                                        <FormContainer>
-                                            <Form
-                                                {...formProps}
-                                                fields={firstForm}
-                                                value={data}
-                                                onInput={onInput}
-                                            />
-                                            <Form
-                                                {...formProps}
-                                                fields={SecondForm}
-                                                value={data}
-                                                onInput={onInput}
-                                            />
-                                        </FormContainer>
-                                    </div>
                                     <div
-                                    className="flex justify-end pb-20 pr-8"
+                                        className="mx-8"
                                     >
-                                        <button
-                                            name="cancel"
-                                            type="submit"
-                                            onClick={() => goBack()}
-                                            className="grey btn width-medium m-r-16"
+                                            <FormContainer>
+                                                <Form
+                                                    {...formProps}
+                                                    fields={firstForm}
+                                                    value={data}
+                                                    onInput={onInput}
+                                                />
+                                                <Form
+                                                    {...formProps}
+                                                    fields={SecondForm}
+                                                    value={data}
+                                                    onInput={onInput}
+                                                />
+                                            </FormContainer>
+                                        </div>
+                                        <div
+                                        className="flex justify-end pb-20 pr-8"
                                         >
-                                            Отмена
-                                        </button>
-                                        <button
-                                             name="save"
-                                             type="submit"
-                                             className="blue btn width-medium"
-                                             onClick={() => this.saveNewProgram()}
-                                        >
-                                            Сохранить
-                                        </button>
+                                            <button
+                                                name="cancel"
+                                                type="submit"
+                                                onClick={() => goBack()}
+                                                className="grey btn width-medium m-r-16"
+                                            >
+                                                Отмена
+                                            </button>
+                                            <button
+                                                 name="save"
+                                                 type="submit"
+                                                 className="blue btn width-medium"
+                                                 onClick={() => this.saveNewProgram()}
+                                            >
+                                                Сохранить
+                                            </button>
+                                    </div>
                                 </div>
                             </div>
                           )}}

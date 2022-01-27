@@ -7,12 +7,14 @@ export const LeftMenuItem = styled.div`
   margin: 0 16px 1px 16px;
   display: flex;
   align-items: center;
+
   ${props => !props.hideToolbar} {
     justify-content: center;
   }
+
   &:hover {
     color: var(--color-white);
-    background: var(--blue-gradient);
+    background: var(--active-gradient);
     --color-light-blue-2: var(--color-white);
   }
 `
@@ -26,11 +28,13 @@ export const LeftMenuContainer = styled.div`
   color: var(--color-light-blue-2);
   font-weight: 700;
   border-right: 1px solid var(--color-light-grey-2);
+
   .active {
     ${LeftMenuItem} {
-      background: var(--blue-gradient);
+      background: var(--active-gradient);
       color: var(--color-white);
       --color-light-blue-2: var(--color-white);
+
       &:hover {
         background: var(--color-blue-hover-gradient);
       }
