@@ -13,6 +13,7 @@ import LevelsGeneral from "../../pages/programs/Stages/General";
 import levelStages from "./Stages/Stages";
 import StagesGeneral from "./Levels/General"
 import Blocks from "./Levels/Blocks"
+import LevelsList from "./Levels/LevelsList"
 import { programsBreadcrumbs, levelsBreadcrumbs } from "./configs";
 
 const Programs = (props) => {
@@ -46,6 +47,7 @@ const Programs = (props) => {
                             <Route path="/programs/:programName/level/general" component={LevelsGeneral} />
                             <Route path="/programs/:programName/level/levelStages" component={levelStages}/>
                             <Route path="/programs/:programName/level/programs" component={ProgramsList}/>
+                            <Route path="/programs/new_program/level/New_level" component={LevelsGeneral}/>
                         </PageHeader>
                     ) : pathnames[4] ==="stage" ? (
                         <PageHeader
@@ -57,6 +59,7 @@ const Programs = (props) => {
                         >
                             <Route path="/programs/:programName/:programID/:stageID/stage/general" component={StagesGeneral} />
                             <Route path="/programs/:programName/:programID/:stageID/stage/blocks" component={Blocks} />
+                            <Route path="/programs/:programName/:programID/:stageID/stage/levels" component={LevelsList} />
                         </PageHeader>
                     ) : (
                         <PageHeader

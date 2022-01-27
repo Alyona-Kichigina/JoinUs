@@ -9,6 +9,7 @@ import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "../Documents/style";
 import { settings } from "./FormConfig";
 import ArrowInput from "../../../../components/ArrowsInput";
+import PhotoFiles from "../../../../components/Fields/Files/PhotoFiles";
 
 class Goals extends Component {
 
@@ -257,6 +258,13 @@ class Goals extends Component {
                                     className="mt-2"
                                 />
                             </div>
+                            {/*<div*/}
+                            {/*    className="pt-8"*/}
+                            {/*>*/}
+                            {/*    <PhotoFiles*/}
+                            {/*        className="pt-8"*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                         </div>
                     </div>
                 </Modal>
