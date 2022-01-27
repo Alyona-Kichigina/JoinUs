@@ -10,6 +10,7 @@ import axios from "axios";
 import {CANDIDATE_LIST, DEFAULT_URL} from "../../../../components/APIList";
 import {RELEASE_DATE_FORMAT, CREATE_DATE_FORMAT} from "@constants"
 import EditDateForSave from "../../../../utils/Date/EditDateForSave";
+import Avatar from "../../../../components/Avatar";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
 .reduce((acc, c) => {
@@ -105,6 +106,7 @@ class General extends Component {
             const { formValid, onSubmit, onInput } = formProps
             return (
               <>
+                <Avatar className="mt-6 ml-6"/>
                 <ScrollBar>
                   <TabContainer className="flex-container">
                     <FormContainer>

@@ -114,7 +114,7 @@ class StagesGeneral extends Component {
         const { tierUp, tierDown } = this
         const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(tierUp, tierDown))
         return (
-            <div>
+            <div className="p-l-24 p-r-24 p-t-24 flex flex-col h-full">
                 <WithValidationHocRenderPropAdapter
                     onInput={this.inputDataOfStage}
                     onSubmit={this.saveDataOfStage}
@@ -125,26 +125,22 @@ class StagesGeneral extends Component {
                         const { onInput } = formProps
                         return (
                             <div className="h-full flex flex-col justify-between">
+                                <FormContainer>
+                                    <Form
+                                        {...formProps}
+                                        fields={firstForm}
+                                        value={data}
+                                        onInput={onInput}
+                                    />
+                                    <Form
+                                        {...formProps}
+                                        fields={SecondForm}
+                                        value={data}
+                                        onInput={onInput}
+                                    />
+                                </FormContainer>
                                 <div
-                                    className="mx-8"
-                                >
-                                    <FormContainer>
-                                        <Form
-                                            {...formProps}
-                                            fields={firstForm}
-                                            value={data}
-                                            onInput={onInput}
-                                        />
-                                        <Form
-                                            {...formProps}
-                                            fields={SecondForm}
-                                            value={data}
-                                            onInput={onInput}
-                                        />
-                                    </FormContainer>
-                                </div>
-                                <div
-                                    className="flex justify-end pb-20 pr-8"
+                                    className="flex justify-end mt-auto"
                                 >
                                     <div
                                         onClick={() => goBack()}

@@ -12,13 +12,14 @@ import ProgramsList from "./list/ProgramsList";
 import LevelsGeneral from "../../pages/programs/Stages/General";
 import levelStages from "./Stages/Stages";
 import StagesGeneral from "./Levels/General"
+import Blocks from "./Levels/Blocks"
 import { programsBreadcrumbs, levelsBreadcrumbs } from "./configs";
 
 const Programs = (props) => {
     const { location: { pathname } } = props
     const pathnames = pathname.split("/").filter(x => x)
     const programName = pathnames[1] === "new_programm" ? "Новая программа"  : pathnames[1]
-    console.log(pathnames)
+
     return (
         <div className="flex-container">
             {
@@ -55,6 +56,7 @@ const Programs = (props) => {
                             links={STAGES_LINKS}
                         >
                             <Route path="/programs/:programName/:programID/:stageID/stage/general" component={StagesGeneral} />
+                            <Route path="/programs/:programName/:programID/:stageID/stage/blocks" component={Blocks} />
                         </PageHeader>
                     ) : (
                         <PageHeader

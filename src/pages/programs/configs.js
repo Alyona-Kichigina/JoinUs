@@ -85,7 +85,7 @@ export const levelsBreadcrumbs = [
         ]
     },
     {
-        page: "levelStages",
+        page: "blocks",
         config: [
             {
                 name: "Програмы",
@@ -96,13 +96,13 @@ export const levelsBreadcrumbs = [
                 link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
             },
             {
-                name: "Этапы",
+                name: "Блоки",
                 link: "/"
             }
         ]
     },
     {
-        page: "programs",
+        page: "levels",
         config: [
             {
                 name: "Програмы",
@@ -113,7 +113,7 @@ export const levelsBreadcrumbs = [
                 link: (pathname) => `programs/${pathname[1]}/${pathname[2]}/general`
             },
             {
-                name: "Програмы",
+                name: "Уровни",
                 link: "/"
             }
         ]

@@ -47,15 +47,15 @@ export const STAGES_LINKS = [
     {
         name: "Общие",
         link: "general"
+    },
+    {
+        name: "Блоки",
+        link: "blocks"
+    },
+    {
+        name: "Уровни",
+        link: "levels"
     }
-    // {
-    //     name: "Этапы",
-    //     link: "levelStages"
-    // },
-    // {
-    //     name: "Программы",
-    //     link: "programs"
-    // }
 ]
 export const NAV_BUTTON_LINKS = [
     {

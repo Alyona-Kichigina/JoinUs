@@ -8,6 +8,11 @@
 .arrow-icon {
     fill: var(--color-light-blue-2);
 }
+
+.arrow-icon:disabled {
+    fill: #cdd9e2!important;
+}
+
 .arrow-down {
     transform: rotate(180deg);
 }

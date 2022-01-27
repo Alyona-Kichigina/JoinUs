@@ -21,7 +21,7 @@ const NavigationDrawer = () => {
       setToggleArrow("default-open")
       setIconArrowStyle("default-open")
     }
-  }, [])
+  }, [getHidden])
   useEffect(() => {
     setLeftWidth(getHidden === "close" ? 84 : 256)
   }, [getHidden])
