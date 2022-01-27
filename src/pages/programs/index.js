@@ -33,7 +33,7 @@ const Programs = (props) => {
                         <PageHeader
                             {...props}
                             bredCrumbsConfig={levelsBreadcrumbs}
-                            pageData={{pageName: programName}}
+                            pageData={programName}
                             url="programs"
                             links={LEVELS_LINKS}
                         >
@@ -51,7 +51,7 @@ const Programs = (props) => {
                         <PageHeader
                             {...props}
                             bredCrumbsConfig={levelsBreadcrumbs}
-                            pageData={{pageName: programName}}
+                            pageData={programName}
                             url="programs"
                             links={STAGES_LINKS}
                         >
@@ -62,7 +62,7 @@ const Programs = (props) => {
                         <PageHeader
                             {...props}
                             bredCrumbsConfig={programsBreadcrumbs}
-                            pageData={{pageName: programName}}
+                            pageData={programName}
                             url="programs"
                             links={NAV_BUTTON_LINKS}
                         >

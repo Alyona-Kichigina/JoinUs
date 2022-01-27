@@ -59,10 +59,10 @@ export const settings = [
     // name: "",
     allData: true,
     size: "200px",
-    component: ({data: { id }}) => {
+    component: ({data: { id, EMPLOYEES: {name} }}) => {
       return (
         <NavLink
-          to={`/employees/${id}/general`}
+          to={`/employees/${id}/${name}/general`}
           className="btn width-m blue"
         >
           Просмотр
