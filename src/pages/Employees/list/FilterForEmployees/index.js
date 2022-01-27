@@ -19,7 +19,7 @@ const arrayStatus = [
   {
     ID: "statusWork",
     SYS_NAME: "В процессе",
-    icon: "/assets/icons/iconStatus/iconStatusWait.svg"
+    icon: "/assets/icons/iconStatus/iconStatusWorking.svg"
   }
 ]
 
@@ -51,7 +51,7 @@ const FilterForEmployees = ({handleInput}) => {
 
   return (
     <FilterContainer className="m-b-16">
-      <div className="p-r-24">
+      <div className="">
         <div className="fs-12 color-light-blue-2 p-b-5">ФИО/Должность</div>
         <Input
           id="name"
@@ -60,7 +60,7 @@ const FilterForEmployees = ({handleInput}) => {
           onInput={onInput}
         />
       </div>
-      <div className="p-r-24">
+      <div className="">
         <div className="fs-12 color-light-blue-2 p-b-5">Статус</div>
         <Select
           ComponentOption={ChoiceOfStatusOption}

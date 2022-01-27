@@ -20,15 +20,13 @@ export const SelectInput = styled.input`
   padding: var(--padding-input);
   width: 100%;
   flex: 1 1 auto;
-  //height: 100%;
   height: var(--height-input);
   padding-top: 0;
   padding-bottom: 0;
-  /*border-bottom: var(--validation-error-border-b);*/
   &:disabled {
     color: var(--pink);
     &::placeholder {
-      color: var(--color-red);
+      color: var(--color-light-blue-2);
     }
   }
   &::placeholder  {
@@ -37,6 +35,20 @@ export const SelectInput = styled.input`
     font-weight: 400;
     font-size: var(--plachodler-font-size);
     letter-spacing: 0.2px;
+  }
+`
+
+export const MultipleValue = styled.div`
+  position: relative;
+  &:before {
+    content: ',';
+    position: absolute;
+    right: -4px;
+  }
+  &:last-child {
+    &:before {
+      display: none;
+    }
   }
 `
 
@@ -93,7 +105,7 @@ export const OverlayItemsContainer = styled.div`
 
 export const RemoveIconContainer = styled.button`
   padding: 0 8px;
-  color: var(--pink);
+  color: var(--color-light-blue-2);
 `
 
 export const SelectedOptionsScrollBar = styled(ScrollBar)`
@@ -130,7 +142,6 @@ export const SelectContainer = styled.div`
 export const ToggleIconContainer = styled.button`
   padding: var(--padding-toggle-icon-select);
   position: relative;
-  color: var(--pink);
 `
 
 export const MultipleValueInputContainer = styled.div`
@@ -146,6 +157,5 @@ export const OptionContainer = styled.div`
   white-space: normal;
   cursor: pointer;
   transition: color, background-color ease-in-out 250ms;
-  ${props => props.selected && "color: var(--color-light-blue);"}
   ${props => props.highlited && "background-color: var(--color-light-blue);"}
 `

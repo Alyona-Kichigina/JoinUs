@@ -11,8 +11,18 @@ import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import Option from "./Option"
 import MultipleOption from "./MultipleOption"
 import {
-  SelectContainer, InputSelectContainer, SelectInput, MultipleValuePrerenderContainer, NoOptionsLabel, ToggleIconContainer,
-  RemoveIconContainer, SelectedOptionsScrollBar, SelectedOptions, MultipleValueInputContainer, OverlayItemsContainer
+  SelectContainer,
+  InputSelectContainer,
+  SelectInput,
+  MultipleValuePrerenderContainer,
+  NoOptionsLabel,
+  ToggleIconContainer,
+  RemoveIconContainer,
+  SelectedOptionsScrollBar,
+  SelectedOptions,
+  MultipleValueInputContainer,
+  OverlayItemsContainer,
+  MultipleValue
 } from "./styles"
 import IconToggleIndicator from "../../Icon/IconToggleIndicator"
 import IconClose from "../../Icon/IconClose"
@@ -372,29 +382,40 @@ class Select extends PureComponent {
                         onKeyDown={this.onSearchKeyDown}
                         onFocus={onOpenOverlayMenu}
                       />
-                      {multiple && value && value.length > 0 && (
-                        value.map(({SYS_NAME, icon, ID}) => (
-                          <div className="flex items-center m-r-8" key={ID}>
-                            <img src={icon} alt="" className="p-r-8"/>
-                            <div
-                              className="p-r-15 fz14"
-                            >
-                              { SYS_NAME },
-                            </div>
-                          </div>
-                        ))
+
+                      {multiple && value && value.length > 0 && !open && (
+                        <MultipleValuePrerenderContainer style={multipleContainerStyles}>
+                          <MultipleValueInputContainer
+                            className="overflow-hidden"
+                            ref={refMultipleValueContainer}
+                          >
+                            {(value.map(({SYS_NAME, icon, ID}) => (
+                              <MultipleValue
+                                className="flex items-center m-l-8"
+                                key={ID}
+                              >
+                                <img src={icon} alt="" className="p-r-8"/>
+                                <div className="fz14">
+                                  {SYS_NAME}
+                                </div>
+                              </MultipleValue>
+                            )))}
+                          </MultipleValueInputContainer>
+                        </MultipleValuePrerenderContainer>
                       )}
+                      <OverlayItemsContainer ref={refSelectOverlayItems}>
+                        {clearable && !(Array.isArray(value) ? value.length === 0 : !value) && !disabled && (
+                          <RemoveIconContainer
+                            type="button"
+                            disabled={disabled}
+                            title="Delete"
+                            onMouseDown={this.clearSelection}
+                          >
+                            {open && multiple ? <div className="fs-12">Удалить все</div> : <IconClose size="16" />}
+                          </RemoveIconContainer>
+                        )}
+                      </OverlayItemsContainer>
                     </div>
-                    {clearable && !(Array.isArray(value) ? value.length === 0 : !value) && !disabled && (
-                      <RemoveIconContainer
-                        type="button"
-                        disabled={disabled}
-                        title="Delete"
-                        onMouseDown={this.clearSelection}
-                      >
-                        <IconClose />
-                      </RemoveIconContainer>
-                    )}
                     {showToggleButton && (
                       <ToggleIconContainer
                         onMouseDown={open ? this.closeSelect : null}
