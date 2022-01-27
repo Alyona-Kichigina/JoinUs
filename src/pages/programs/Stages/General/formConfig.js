@@ -3,8 +3,11 @@ import Input from "@Components/Fields/Input"
 import DatePicker from "@Components/Fields/DatePicker"
 import ModalSelectInput from "../../../../components/ModalSelectInput";
 import ArrowInput from "../../../../components/ArrowsInput";
+import RefSelect from "@Components/Fields/RefSelect/index"
+import axios from "axios";
+import {DEFAULT_URL, ADAPTATION_PROGRAM, ADAPTATION_STATUS} from "../../../../components/APIList";
 
-export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown) => [
+export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown, employees) => [
     {
         label: "Наименование",
         id: "level_name",
@@ -14,10 +17,17 @@ export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown) => [
     },
     {
         label: "Программа",
-        id: "description",
-        component: Input,
+        id: "program_name",
+        component: RefSelect,
         placeholder: "программа",
         formColumn: 0,
+        labelKey: "program_name",
+        valueKey: "program_name",
+        preload: true,
+        async refLoader() {
+            const {data } = await axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}`)
+            return data
+        },
     },
     {
         label: "Номер п.п",
@@ -48,16 +58,20 @@ export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown) => [
     },
     {
         label: "Создал",
-        id: "creator",
-        component: ({onInput}) =>
-            <ModalSelectInput
+        id: "id_employee",
+        component: ({onInput}) => {
+            const employee = employees.find(({id}) => id === creator)
+            const creatorName = creator ? `${employee.first_name} ${employee.last_name}` : ""
+            return (
+                <ModalSelectInput
                 id="6"
-                key="creator"
-                value={creator}
+                key="id_employee"
+                value={creatorName}
                 onInput={onInput}
                 placeholder="Выберите создателя"
                 toggleModal={toggleCreatorModal}
-            />,
+            />
+            )},
         formColumn: 1,
     },
 ]

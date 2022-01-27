@@ -312,7 +312,7 @@ class levelStages extends Component {
                     </button>
                     <button
                         className="blue btn width-m pt-1.5 ml-4"
-                        onClick={openDocumentSelection}
+                        onClick={() => this.setState({addStageModal: true})}
                     >
                         Выбрать этап
                     </button>
