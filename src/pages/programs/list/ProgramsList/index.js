@@ -65,6 +65,7 @@ class ProgramsList extends Component {
               <AppList
                 settings={settings}
                 data={items}
+                className="m-b-16"
               />
             </div>
         );

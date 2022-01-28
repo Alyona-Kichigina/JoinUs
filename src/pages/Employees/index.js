@@ -6,7 +6,7 @@ import Documents from "./item/Documents";
 import Goals from "./item/Goals";
 import Employees from "./list";
 import General from "./item/General";
-import {EMPLOYEES_TAB} from "./item/Constants";
+import {EMPLOYEES_TAB, TAB_FOR_NEW_EMPLOY} from "./item/Constants";
 import PageHeader from "../../components/PageHeader";
 import {programsBreadcrumbs} from "./config";
 
@@ -15,7 +15,8 @@ class RouterEmployees extends Component {
   render() {
   const { props: { location: { pathname } } } = this
     const pathnames = pathname.split("/").filter(x => x)
-    const nameEmploy = pathnames[1] === "new_employ" ? "Новый сотрудник" : pathnames[2]
+    const newEmploy = pathnames[1] === "new_employ"
+    const nameEmploy = newEmploy ? "Новый сотрудник" : pathnames[2]
     return (
       <div className="flex-container">
         {
@@ -31,7 +32,7 @@ class RouterEmployees extends Component {
                 bredCrumbsConfig={programsBreadcrumbs}
                 pageData={nameEmploy}
                 url="employees"
-                links={EMPLOYEES_TAB}
+                links={newEmploy ? TAB_FOR_NEW_EMPLOY : EMPLOYEES_TAB}
               >
                 <Route path="/employees/new_employ/general" component={General} />
                 <Route path="/employees/new_employ/contacts" component={Contacts}/>

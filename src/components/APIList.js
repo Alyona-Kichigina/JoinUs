@@ -1,4 +1,3 @@
-// export const DEFAULT_URL = "http://localhost:9000/api"
 export const DEFAULT_URL = "http://51.250.15.127:9000/api-active"
 export const ADAPTATION_GOALS = "adaptationbgoal"
 export const UPLOADS = "uploads"
@@ -14,6 +13,5 @@ export const ADAPTATION_STATUS = "adaptationstatus"
 
 export const CONTACTS =  "icontacts"
 export const DIRECTORY = "directory"
-export const CANDIDATE_LIST = "candidate/"
-export const CANDIDATE_FILTER = "filter/"
-export const CANDIDATE_SEARCH = "candidate/search/"
+export const CANDIDATE_LIST = "candidate"
+

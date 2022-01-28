@@ -20,7 +20,7 @@ class Contacts extends Component {
     const pathnames = pathname.split("/").filter(x => x)
     const newEmploy = pathnames[1] === "new_employ"
     const idEmploy = newEmploy ? "/" : `${pathnames[1]}/`
-    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`)
+    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`)
     .then(
       (response) => {
         this.setState({

@@ -25,3 +25,11 @@ export const EMPLOYEES_TAB = [
     link: "goals"
   }
 ]
+
+export const TAB_FOR_NEW_EMPLOY = [
+  {
+    id: 1,
+    name: "Общие",
+    link: "general"
+  },
+]

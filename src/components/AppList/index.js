@@ -9,7 +9,7 @@ import ScrollBar from "@Components/ScrollBar"
 
 class AppList extends Component {
     render() {
-        const { data, settings, nestedKey, nestedData } = this.props
+        const { data, settings, nestedKey, nestedData, className } = this.props
 
         const gridRowsSize = `${settings.map(a => a.size ? `${a.size}` : "auto")}`.replace(/,/gi, " ")
         const gridStyle = {"gridTemplateColumns": gridRowsSize}
@@ -55,7 +55,7 @@ class AppList extends Component {
         }
 
         return (
-            <div className="bg-white flex-container border-radius-4 m-b-16 h-full m-b-16 hidden">
+            <div className={`${className} bg-white flex-container border-radius-4 h-full hidden`}>
                 <Header
                     settings={settings}
                     gridStyle={gridStyle}
@@ -72,12 +72,14 @@ AppList.propTypes = {
   data: PropTypes.array,
   settings: PropTypes.array,
   nestedKey: PropTypes.string,
+  className: PropTypes.string,
 };
 
 AppList.defaultProps = {
   data: [],
   settings: [],
-  nestedKey: ""
+  nestedKey: "",
+  className: ""
 }
 
 export default AppList;

@@ -4,12 +4,11 @@ import axios from 'axios';
 import AppList from "../../../components/AppList";
 import {settings} from "./TableConfig"
 import {NavLink} from "react-router-dom";
-import {CANDIDATE_LIST, DEFAULT_URL, CANDIDATE_FILTER, CANDIDATE_SEARCH} from "../../../components/APIList";
+import {CANDIDATE_LIST, DEFAULT_URL} from "../../../components/APIList";
 import debounce from "@Utils/debounce"
 import memoizeOne from "memoize-one";
 import List from "./list"
-
-// todo добавить пагинацию
+import Pagination from "@Components/Pagination"
 
 class Employees extends Component {
   constructor(props) {
@@ -18,21 +17,35 @@ class Employees extends Component {
       value: false,
       data: [],
       error: false,
-      search: ""
+      search: "",
+      countList: "",
+      page: 1,
+      limit: 11
     }
   }
 // todo сделать фильтрацию по статусам на фронте
-  onInputDate = (debounce((value, id) => {
+  filterList = (debounce((value, id) => {
     const { data } = this
-    const newParams = id === "name" ? {search: value} : {[id]: value}
     if (id === "status") {
       // search
-    } else {
-      axios.get(`${DEFAULT_URL}/candidate/${id === "name" ? "" : "filter/"}`, {
-        params: newParams
+    }
+    if (id === "name") {
+      axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}/`, {
+        params: {search: value}
       })
       .then((response) => {
-          this.setState({ data: id === "name" ? response.data.results : response.data})
+          this.setState({ data: response.data.results})
+        },
+        (error) => {
+          this.setState({error})
+        }
+      )
+    } else {
+      axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}/filter/`, {
+        params: {[id]: value}
+      })
+      .then((response) => {
+          this.setState({ data: response.data})
         },
         (error) => {
           this.setState({error})
@@ -42,15 +55,40 @@ class Employees extends Component {
   }, 250))
 
   componentDidMount() {
-    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}`)
+    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}/`)
     .then((response) => {
-        this.setState({data: response.data.results})
+        this.setState({
+          data: response.data.results,
+          countList: response.data.count
+        })
       },
       (error) => {
         this.setState({error})
       }
     )
   }
+
+  updateData = (value) => {
+    axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}/`, {
+      params: {page_size: value}
+    })
+    .then((response) => {
+        this.setState({ data: response.data.results})
+      },
+      (error) => {
+        this.setState({error})
+      }
+    )
+    this.setState({ page: value })
+  }
+
+  getPaginationState = memoizeOne((page, count, limit, data) => {
+    return {
+      currentPage: page,
+      totalPages:  Math.ceil(count / limit),
+      cupReached: data.length !== limit
+    }
+  })
 
   getNewData = memoizeOne((data) => {
     return data.map((item) => {
@@ -71,8 +109,9 @@ class Employees extends Component {
     )
   })
 
+
   render() {
-    const { state: {data} } = this
+    const { state: {data, countList, page, limit} } = this
     const newData = this.getNewData(data)
     return (
       <div className="flex-container">
@@ -86,12 +125,16 @@ class Employees extends Component {
           </NavLink>
         </div>
         <FilterForEmployees
-          handleInput={this.onInputDate}
+          handleInput={this.filterList}
         />
         <AppList
           settings={settings}
           data={newData}
           nestedKey="data"
+        />
+        <Pagination
+          paginationState={this.getPaginationState(page, countList, limit, data)}
+          emitPage={this.updateData}
         />
       </div>
     );

@@ -38,7 +38,7 @@ class General extends Component {
     const pathnames = pathname.split("/").filter(x => x)
     const idEmploy = pathnames[1] !== "new_employ" ? `${pathnames[1]}` : ""
     if (pathnames[1] !== "new_employ") {
-      axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`)
+      axios.get(`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`)
       .then(
         (response) => {
           this.setState({
@@ -55,6 +55,9 @@ class General extends Component {
       )
     }
   }
+  componentDidUpdate() {
+    console.log("componentDidUpdate")
+  }
   inputDataOfEmployee = (value) => {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
@@ -63,7 +66,7 @@ class General extends Component {
     const pathnames = pathname.split("/").filter(x => x)
     const newEmploy = pathnames[1] === "new_employ"
     const idEmploy = newEmploy ? "" : `${pathnames[1]}/`
-    axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}${idEmploy}`,
+    axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`,
       newEmploy
         ?
         {
@@ -92,7 +95,7 @@ class General extends Component {
     )
   }
   render() {
-    const { data } = this.state
+    const { state: { data }, props: { goBack } }= this
     const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap)
     return (
       <div className="flex-container hidden">
@@ -130,6 +133,7 @@ class General extends Component {
                   <button
                     name="cancel"
                     type="submit"
+                    onClick={() => goBack()}
                     className="grey btn width-medium m-r-16"
                   >
                     Отмена
