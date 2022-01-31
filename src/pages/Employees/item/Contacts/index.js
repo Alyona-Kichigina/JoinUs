@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import AppList from "../../../../components/AppList";
-import {settings, data} from "./tableConfig";
+import {settings} from "./tableConfig";
 import axios from "axios";
-import {ADAPTATION_CONTACTS, CANDIDATE_LIST, CONTACTS, DEFAULT_URL} from "../../../../components/APIList";
+import { CANDIDATE_LIST, DEFAULT_URL} from "../../../../components/APIList";
 
 class Contacts extends Component {
   constructor(props) {

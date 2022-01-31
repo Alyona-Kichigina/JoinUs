@@ -7,7 +7,6 @@ import {NavLink} from "react-router-dom";
 import {CANDIDATE_LIST, DEFAULT_URL} from "../../../components/APIList";
 import debounce from "@Utils/debounce"
 import memoizeOne from "memoize-one";
-import List from "./list"
 import Pagination from "@Components/Pagination"
 
 class Employees extends Component {
@@ -102,7 +101,6 @@ class Employees extends Component {
           adaptation_status: adaptation_status,
           program_details: program_details
         },
-        // NEW_STATUS: "dd",
         ...item
       }
     }

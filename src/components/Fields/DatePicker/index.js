@@ -8,10 +8,59 @@ import {PRESENT_DATE_FORMAT} from "@constants"
 import { Calendar, Select, Col, Row } from 'antd';
 import moment from "moment";
 import Sel from "@Components/Fields/Select";
-import DisplayDate from "../DisplayDate";
 import withDatePickerHoc from "../../../Core/Decorators/withDatePicker";
+import {arrowDown, arrowUp} from "../../../pages/Constants";
 
-const option = [{ID: 1, SYS_NAME: "aaa"}]
+const MonthNames = [
+  {
+    ID: 0,
+    SYS_NAME:  "January"
+  },
+  {
+    ID: 1,
+    SYS_NAME:  "February"
+  },
+  {
+    ID: 2,
+    SYS_NAME:  "March"
+  },
+  {
+    ID: 3,
+    SYS_NAME:  "April"
+  },
+  {
+    ID: 4,
+    SYS_NAME:  "May"
+  },
+  {
+    ID: 5,
+    SYS_NAME:  "June"
+  },
+  {
+    ID: 6,
+    SYS_NAME:  "July"
+  },
+  {
+    ID: 7,
+    SYS_NAME:  "August"
+  },
+  {
+    ID: 8,
+    SYS_NAME:  "September"
+  },
+  {
+    ID: 9,
+    SYS_NAME:  "October"
+  },
+  {
+    ID: 10,
+    SYS_NAME:  "November"
+  },
+  {
+    ID: 11,
+    SYS_NAME:  "December"
+  },
+]
 
 class DatePicker extends Component {
   constructor(props) {
@@ -19,7 +68,8 @@ class DatePicker extends Component {
     this.state = {
       open: false,
       valueForCalendar: moment(),
-      valueSelect: {}
+      valueSelect: {},
+      year: ""
     }
   }
 
@@ -48,8 +98,7 @@ class DatePicker extends Component {
   }
 
   onCalendarInput = (value) => {
-    const { id } = this.props
-    const { props: { onInput, dateFormat } } = this
+    const { props: { onInput, dateFormat, id } } = this
     onInput(dayjs(value._d).format(dateFormat), id)
     this.closeCalendar()
   }
@@ -61,15 +110,33 @@ class DatePicker extends Component {
     }
   }
   handleSelect = (value) => {
-    this.setState({valueSelect: value})
+    const month = moment().month(value)
+    this.setState({
+      valueSelect: value,
+      valueForCalendar: month
+    })
+    // console.log(month)
   }
-  onFocus = () => {
 
+  getToday = () => {
+    console.log(moment().month(0))
+    const { props: { onInput, dateFormat, id } } = this
+    onInput(moment(new Date()).format(dateFormat), id)
   }
 
-  toggleSearch = () => {
-
+  editYear = (val) => {
+    console.log(val)
+    console.log()
+    // const yearMoment = moment().month(value)
+    // this.setState({
+    //   valueSelect: value,
+    //   valueForCalendar: month
+    // })
   }
+
+//   {MonthNames.reduce((acc, item) => {
+//   return item[value]
+// }, "")}
 
   // не работают кнопки внутри календаря
 
@@ -79,7 +146,7 @@ class DatePicker extends Component {
         style, className, disabled, placeholder, children, tipMaxSize,
         value
       },
-      state: { open, valueForCalendar, valueSelect }
+      state: { open, valueForCalendar, valueSelect, year  }
     } = this
 
     return (
@@ -156,6 +223,7 @@ class DatePicker extends Component {
                       renderTip={false}
                     >
                       <DatePickerCalendarContainer>
+
                         <Calendar
                           value={valueForCalendar}
                           fullscreen={false}
@@ -191,30 +259,31 @@ class DatePicker extends Component {
                               <div style={{ padding: 8 }}>
                                 <Row gutter={8}>
                                   <Col>
-                                    {/*<Sel*/}
-                                    {/*  id="status"*/}
-                                    {/*  placeholder="Выберите статус"*/}
-                                    {/*  onInput={this.handleSelect}*/}
-                                    {/*  value={valueSelect}*/}
-                                    {/*  onFocus={this.onFocus}*/}
-                                    {/*  onBlur={this.toggleSearch}*/}
-                                    {/*  options={option}*/}
-                                    {/*  clearable={false}*/}
-                                    {/*/>*/}
-                                    <Select
-                                      size="small"
-                                      dropdownMatchSelectWidth={false}
-                                      value={String(month)}
-                                      onChange={selectedMonth => {
-                                        const newValue = value.clone();
-                                        newValue.month(parseInt(selectedMonth, 10));
-                                        onChange(newValue);
-                                      }}
-                                    >
-                                      {monthOptions}
-                                    </Select>
+                                    <Sel
+                                      id="month"
+                                      placeholder="Выберите месяц"
+                                      onInput={this.handleSelect}
+                                      value={valueSelect}
+                                      options={MonthNames}
+                                      clearable={false}
+                                    />
                                   </Col>
                                   <Col>
+                                    <div className="flex">
+                                      <div>
+                                        {year}
+                                      </div>
+                                      <div
+                                        className="edit-icon"
+                                        onClick={() => this.editYear("minus")}
+                                        dangerouslySetInnerHTML={{__html: arrowUp}}
+                                      />
+                                      <div
+                                        className="edit-icon"
+                                        onClick={() => this.editYear("plus")}
+                                        dangerouslySetInnerHTML={{__html: arrowDown}}
+                                      />
+                                    </div>
                                     <Select
                                       size="small"
                                       dropdownMatchSelectWidth={false}
@@ -234,6 +303,13 @@ class DatePicker extends Component {
                           }}
                           onSelect={this.onCalendarInput}
                         />
+                        <button
+                          type="button"
+                          onClick={this.getToday}
+                          className="m-l-a block m-t-10"
+                        >
+                          Today
+                        </button>
                       </DatePickerCalendarContainer>
                     </OverlayMenu>
                   </div>

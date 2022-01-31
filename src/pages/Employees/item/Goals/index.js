@@ -13,7 +13,8 @@ class Goals extends Component {
       isLoaded: false,
       data: [],
       adaptation_status: [],
-      program_details: []
+      program_details: [],
+      documents_detail: []
     }
   }
 
@@ -30,6 +31,9 @@ class Goals extends Component {
           data: response.data.program_details.map(({goals_detail}) => {
             return goals_detail
           }).flat(),
+          documents_detail: response.data.program_details.map(({documents_detail}) => {
+            return documents_detail
+          }).flat(),
           adaptation_status: response.data.adaptation_status,
           program_details: response.data.program_details
         })
@@ -43,7 +47,7 @@ class Goals extends Component {
     )
   }
   render() {
-    const { data = [], adaptation_status, program_details  } = this.state
+    const { data = [], adaptation_status, program_details, documents_detail  } = this.state
     const newData = data.map((item) => ({
         STATUS: {
           adaptation_status: adaptation_status,
@@ -52,19 +56,19 @@ class Goals extends Component {
         ...item
       })
     )
-
+// todo как понять сколько всего документов?
     return (
       <div className="flex-container hidden">
         <div className="flex p-t-16 p-r-16 p-l-16">
           <CardIconAndTitle
-            title="Выполнено целей:"
-            value="800"
+            title="Заработано баллов:"
+            value={data.length}
             icon="points"
             className="m-r-16"
           />
           <CardIconAndTitle
-            title="Всего документов:"
-            value="1/3"
+            title="Выполнено целей:"
+            value={[documents_detail.length, 3]}
             icon="goals"
           />
         </div>
