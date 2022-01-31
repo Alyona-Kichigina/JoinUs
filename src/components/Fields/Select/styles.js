@@ -23,6 +23,7 @@ export const SelectInput = styled.input`
   height: var(--height-input);
   padding-top: 0;
   padding-bottom: 0;
+  font-weight: var(--input-font-weight);
   &:disabled {
     color: var(--pink);
     &::placeholder {
@@ -64,7 +65,7 @@ export const MultipleValuePrerenderContainer = styled.div`
 `
 
 export const InputSelectContainer = styled.div`
-  border: 1px solid var(--border-color-input);
+  border: var(--border-with) solid var(--border-color-input);
   border-radius: var(--border-radius-input);
   min-height: var(--height-input);
   background: var(--background-input);

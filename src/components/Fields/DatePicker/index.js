@@ -1,7 +1,7 @@
 import React, {Component, useCallback} from 'react';
 import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import WithCloseWindow from "@Core/RenderProps/withCloseWindow"
-import { DatePickerCalendarContainer, ToggleIcon} from "./styles";
+import {BlockYear, ButtonContainer, DatePickerCalendarContainer, ToggleIcon} from "./styles";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import {PRESENT_DATE_FORMAT} from "@constants"
@@ -68,8 +68,8 @@ class DatePicker extends Component {
     this.state = {
       open: false,
       valueForCalendar: moment(),
-      valueSelect: {},
-      year: ""
+      valueSelect: moment().month(),
+      year: new Date().getFullYear()
     }
   }
 
@@ -125,13 +125,21 @@ class DatePicker extends Component {
   }
 
   editYear = (val) => {
+    const { year } = this.state
     console.log(val)
-    console.log()
-    // const yearMoment = moment().month(value)
-    // this.setState({
-    //   valueSelect: value,
-    //   valueForCalendar: month
-    // })
+    switch (val) {
+      case "minus":
+        this.setState({year: year - 1})
+        break
+      case "plus":
+        this.setState({year: year + 1})
+        break
+    }
+    console.log(year)
+    const yearMoment = moment().year(year)
+    this.setState({
+      valueForCalendar: yearMoment
+    })
   }
 
 //   {MonthNames.reduce((acc, item) => {
@@ -223,7 +231,6 @@ class DatePicker extends Component {
                       renderTip={false}
                     >
                       <DatePickerCalendarContainer>
-
                         <Calendar
                           value={valueForCalendar}
                           fullscreen={false}
@@ -245,7 +252,6 @@ class DatePicker extends Component {
                                 </Select.Option>,
                               );
                             }
-                            const month = value.month();
                             const year = value.year();
                             const options = [];
                             for (let i = year - 10; i < year + 10; i += 1) {
@@ -256,49 +262,33 @@ class DatePicker extends Component {
                               );
                             }
                             return (
-                              <div style={{ padding: 8 }}>
-                                <Row gutter={8}>
-                                  <Col>
-                                    <Sel
-                                      id="month"
-                                      placeholder="Выберите месяц"
-                                      onInput={this.handleSelect}
-                                      value={valueSelect}
-                                      options={MonthNames}
-                                      clearable={false}
+                              <ButtonContainer>
+                                <Sel
+                                  id="month"
+                                  placeholder="Выберите месяц"
+                                  onInput={this.handleSelect}
+                                  value={valueSelect}
+                                  options={MonthNames}
+                                  clearable={false}
+                                />
+                                <BlockYear className="flex items-center p-l-15 p-r-20 justify-between">
+                                  <div className="fw-700">
+                                    {year}
+                                  </div>
+                                  <div className="flex">
+                                    <div
+                                      className="p-r-4 cursor"
+                                      onClick={() => this.editYear("plus")}
+                                      dangerouslySetInnerHTML={{__html: arrowUp}}
                                     />
-                                  </Col>
-                                  <Col>
-                                    <div className="flex">
-                                      <div>
-                                        {year}
-                                      </div>
-                                      <div
-                                        className="edit-icon"
-                                        onClick={() => this.editYear("minus")}
-                                        dangerouslySetInnerHTML={{__html: arrowUp}}
-                                      />
-                                      <div
-                                        className="edit-icon"
-                                        onClick={() => this.editYear("plus")}
-                                        dangerouslySetInnerHTML={{__html: arrowDown}}
-                                      />
-                                    </div>
-                                    <Select
-                                      size="small"
-                                      dropdownMatchSelectWidth={false}
-                                      className="my-year-select"
-                                      onChange={newYear => {
-                                        const now = value.clone().year(newYear);
-                                        onChange(now);
-                                      }}
-                                      value={String(year)}
-                                    >
-                                      {options}
-                                    </Select>
-                                  </Col>
-                                </Row>
-                              </div>
+                                    <div
+                                      className="cursor"
+                                      onClick={() => this.editYear("minus")}
+                                      dangerouslySetInnerHTML={{__html: arrowDown}}
+                                    />
+                                  </div>
+                                </BlockYear>
+                              </ButtonContainer>
                             );
                           }}
                           onSelect={this.onCalendarInput}
@@ -306,7 +296,7 @@ class DatePicker extends Component {
                         <button
                           type="button"
                           onClick={this.getToday}
-                          className="m-l-a block m-t-10"
+                          className="m-l-a block m-t-10 m-r-16 p-b-8"
                         >
                           Today
                         </button>

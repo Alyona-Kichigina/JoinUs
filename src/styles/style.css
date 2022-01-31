@@ -80,6 +80,8 @@ body {
     --input-placeholder-color: var(--color-light-blue-2);
     --input-disabled-color: var(--color-red);
     --validation-error-border-b: 1px solid var(--pink);
+    --border-with: 1px;
+    --input-font-weight: 400;
 
     --check-box-size: 24px;
     --check-box-checked-bg: var(--color-blue);
