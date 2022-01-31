@@ -4,19 +4,25 @@ import CardContact from "../../../../components/ComponentsForListTable/CardConta
 export const settings = [
   {
     id: 1,
-    key: "value",
-    name: "Контакт",
-    component: CardForUser,
-    size: "50%"
+    key: "number",
+    name: "№",
+    size: "5%"
   },
   {
     id: 2,
+    key: "value",
+    name: "Контакт",
+    component: CardForUser,
+    size: "45%"
+  },
+  {
+    id: 3,
     key: "role",
     name: "Роль",
     size: "30%"
   },
   {
-    id: 3,
+    id: 4,
     key: "contacts",
     name: "Контакты",
     component: CardContact,

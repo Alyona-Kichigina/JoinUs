@@ -10,6 +10,9 @@ import {FormContainer} from "../../item/General/style"
 import axios from "axios";
 import { ADAPTATION_EMPLOYEE, ADAPTATION_LEVELS, ADAPTATION_PROGRAM, DEFAULT_URL } from "../../../../components/APIList";
 import Avatar from "../../../../components/Avatar";
+import { levelsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {LEVELS_LINKS, NEW_PROGRAM} from "../../Constants";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
   .reduce((acc, c) => {
@@ -167,17 +170,29 @@ class LevelsGeneral extends Component {
         const newValue = employees.find((a) => a.id === value)
         return modalState ? modalState === newValue.id : false
     }
-
+    pageHeaderTitle = (level_name) => {
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === NEW_PROGRAM
+        return newProgram ? "Новая программа" : level_name ? `Уровень "${level_name}"` : ""
+    }
   render() {
     const {history: {goBack}} = this.props
-    const {creatorModal, modalState, employees, data, data: {id_employee}} = this.state
-    const {tierUp, tierDown} = this
+    const {creatorModal, modalState, employees, data, data: {id_employee, level_name}} = this.state
+    const {tierUp, tierDown, pageHeaderTitle} = this
     const toggleCreatorModal = () => {
       this.setState({creatorModal: !creatorModal})
     }
     const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleCreatorModal, id_employee, tierUp, tierDown, employees))
     return (
-      <div className="h-full">
+      <ProgramsHeader
+          className="h-full"
+          {...this.props}
+          pageData={pageHeaderTitle(level_name)}
+          bredCrumbsConfig={levelsBreadcrumbs}
+          url="programs"
+          links={LEVELS_LINKS}
+      >
         <ModalSidebar
           title="Выбор создателя"
           closeModal={toggleCreatorModal}
@@ -281,7 +296,7 @@ class LevelsGeneral extends Component {
             )
           }}
         </WithValidationHocRenderPropAdapter>
-      </div>
+      </ProgramsHeader>
     );
   }
 }

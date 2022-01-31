@@ -7,6 +7,9 @@ import { fieldMap, rules} from "./formConfig";
 import { FormContainer } from "../../item/General/style"
 import axios from "axios";
 import { ADAPTATION_STAGE, DEFAULT_URL } from "../../../../components/APIList";
+import { levelsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {STAGES_LINKS, NEW_PROGRAM} from "../../Constants";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
     .reduce((acc, c) => {
@@ -107,62 +110,77 @@ class StagesGeneral extends Component {
             data: { ...data, tier: tier > 1 ? tier - 1 : tier}
         })
     }
+    pageHeaderTitle = (stage_name) => {
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === NEW_PROGRAM
+        return newProgram ? "Новая программа" : stage_name ? `Этап "${stage_name}"` : ""
+    }
 
     render() {
         const { history: { goBack } } = this.props
-        const { data } = this.state
-        const { tierUp, tierDown } = this
+        const { data, data: { stage_name } } = this.state
+        const { tierUp, tierDown, pageHeaderTitle } = this
         const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(tierUp, tierDown))
         return (
-            <div className="p-l-24 p-r-24 p-t-24 flex flex-col h-full">
-                <WithValidationHocRenderPropAdapter
-                    onInput={this.inputDataOfStage}
-                    onSubmit={this.saveDataOfStage}
-                    value={data}
-                    rules={rules}
-                >
-                    {(formProps) => {
-                        const { onInput } = formProps
-                        return (
-                            <div className="h-full flex flex-col justify-between">
-                                <FormContainer>
-                                    <Form
-                                        {...formProps}
-                                        fields={firstForm}
-                                        value={data}
-                                        onInput={onInput}
-                                    />
-                                    <Form
-                                        {...formProps}
-                                        fields={SecondForm}
-                                        value={data}
-                                        onInput={onInput}
-                                    />
-                                </FormContainer>
-                                <div
-                                    className="flex justify-end mt-auto"
-                                >
-                                    <button
-                                        name="cancel"
-                                        type="submit"
-                                        onClick={() => goBack()}
-                                        className="grey btn width-medium m-r-16"
+            <ProgramsHeader
+                className="p-l-24 p-r-24 p-t-24 flex flex-col h-full"
+                {...this.props}
+                pageData={pageHeaderTitle(stage_name)}
+                bredCrumbsConfig={levelsBreadcrumbs}
+                url="programs"
+                links={STAGES_LINKS}
+            >
+                <div className="p-l-24 p-r-24 p-t-24 flex flex-col h-full">
+                    <WithValidationHocRenderPropAdapter
+                        onInput={this.inputDataOfStage}
+                        onSubmit={this.saveDataOfStage}
+                        value={data}
+                        rules={rules}
+                    >
+                        {(formProps) => {
+                            const { onInput } = formProps
+                            return (
+                                <div className="h-full flex flex-col justify-between">
+                                    <FormContainer>
+                                        <Form
+                                            {...formProps}
+                                            fields={firstForm}
+                                            value={data}
+                                            onInput={onInput}
+                                        />
+                                        <Form
+                                            {...formProps}
+                                            fields={SecondForm}
+                                            value={data}
+                                            onInput={onInput}
+                                        />
+                                    </FormContainer>
+                                    <div
+                                        className="flex justify-end mt-auto"
                                     >
-                                        Отмена
-                                    </button>
-                                    <button
-                                        name="save"
-                                        type="submit"
-                                        className="blue btn width-medium"
-                                        onClick={() => this.saveStage()}
-                                    >
-                                        Сохранить
-                                    </button>
+                                        <button
+                                            name="cancel"
+                                            type="submit"
+                                            onClick={() => goBack()}
+                                            className="grey btn width-medium m-r-16"
+                                        >
+                                            Отмена
+                                        </button>
+                                        <button
+                                            name="save"
+                                            type="submit"
+                                            className="blue btn width-medium"
+                                            onClick={() => this.saveStage()}
+                                        >
+                                            Сохранить
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        )}}
-                </WithValidationHocRenderPropAdapter>
-            </div>
+                            )}}
+                    </WithValidationHocRenderPropAdapter>
+                </div>
+            </ProgramsHeader>
         );
     }
 }

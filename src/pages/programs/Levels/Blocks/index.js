@@ -11,6 +11,9 @@ import PureUpdateArrayItems from "../../../../utils/Arrays/PureUpdateArrayItems"
 import {DIRECTION_UP} from "../../../../constants";
 import PureDeleteItems from "../../../../utils/Arrays/PureDeleteItems";
 import NewBlock from "./Components/NewBlock";
+import { levelsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {STAGES_LINKS, NEW_PROGRAM} from "../../Constants";
 // http://51.250.15.127:9000/api-active/candidate/api-active/adaptationstage/
 const Blocks = () => {
 
@@ -89,32 +92,45 @@ const Blocks = () => {
   const handleCreate = useCallback((type) => {
     setData((prevData) => [...prevData, { type }])
   }, [])
-
+  const pageHeaderTitle = (stage_name) => {
+    const { location: { pathname } } = this.props
+    const pathnames = pathname.split("/").filter(x => x)
+    const newProgram = pathnames[1] === NEW_PROGRAM
+    return newProgram ? "Новая программа" : stage_name ? `Этап "${stage_name}"` : ""
+  }
   return (
-    <ScrollBar className="p-l-24 p-r-24 p-b-24 p-t-24">
-      {
-        data.map((value, index) => {
-          const Component = componentTypeList[value.type]
-          return (
-            <Component
-              key={index}
-              value={value}
-              position={index + 1}
-              onInput={handleInput}
-              className={index === 0 ? "" : "mt-10"}
-              onMove={handleMoveItem}
-              onDelete={handleDelete}
-              environmentState={data}
-            />
-          )
-        })
-      }
-      <NewBlock
-        className="mt-10"
-        position={data.length + 1}
-        onInput={handleCreate}
-      />
-    </ScrollBar>
+      // <ProgramsHeader
+      //     {...this.props}
+      //     // pageData={pageHeaderTitle(stage_name)}
+      //     bredCrumbsConfig={levelsBreadcrumbs}
+      //     url="programs"
+      //     links={STAGES_LINKS}
+      // >
+        <ScrollBar className="p-l-24 p-r-24 p-b-24 p-t-24">
+          {
+            data.map((value, index) => {
+              const Component = componentTypeList[value.type]
+              return (
+                <Component
+                  key={index}
+                  value={value}
+                  position={index + 1}
+                  onInput={handleInput}
+                  className={index === 0 ? "" : "mt-10"}
+                  onMove={handleMoveItem}
+                  onDelete={handleDelete}
+                  environmentState={data}
+                />
+              )
+            })
+          }
+          <NewBlock
+            className="mt-10"
+            position={data.length + 1}
+            onInput={handleCreate}
+          />
+        </ScrollBar>
+      // </ProgramsHeader>
   );
 };
 

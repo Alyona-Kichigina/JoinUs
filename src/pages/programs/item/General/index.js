@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ModalSidebar from "../../../../components/ModalSidebar";
 import RadioButton from "../../../../components/RadioButton";
 import { WithValidationHocRenderPropAdapter } from "../../../../Validator";
+import {NAV_BUTTON_LINKS} from "../../Constants";
 import { fieldMap, rules} from "./formConfig";
 import Form from "@Components/Forms/index"
 import {CREATE_DATE_FORMAT} from "@constants"
@@ -12,6 +13,10 @@ import axios from "axios";
 import {ADAPTATION_CUSTOMER, ADAPTATION_PROGRAM, ADAPTATION_EMPLOYEE, DEFAULT_URL} from "../../../../components/APIList";
 import EditDateForSave from "../../../../utils/Date/EditDateForSave";
 import Avatar from "../../../../components/Avatar";
+import { programsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {NEW_PROGRAM} from "../../Constants";
+
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
     .reduce((acc, c) => {
@@ -147,44 +152,53 @@ class General extends Component {
                 }
             )
     }
-
     inputDataOfProgram = (value) => {
         this.setState(({ data }) => ({ data: { ...data, ...value } }))
     }
     saveDataOfProgram = (v) => {
         console.log(v)
     }
-
     selectedRadioButton = (value) => {
         const { customers, modalState } = this.state
         const newValue = customers.find((a) => a.customer_name === value)
         return modalState[0] ? modalState[0] === newValue.id : false
     }
-
     selectedCreator = (value) => {
         const { employees, modalState } = this.state
         const newValue = employees.find((a) => a.id === value)
         return modalState[0] ? modalState[0] === newValue.id : false
     }
-
+    toggleModal = () => {
+        const { clientModal, data } = this.state
+        this.setState({
+            clientModal: !clientModal,
+            modalState: !!data.customer && data.customer
+        })
+    }
+    toggleCreatorModal = () => {
+        const { creatorModal } = this.state
+        this.setState({creatorModal: !creatorModal})
+    }
     render() {
-        const { history: { goBack } } = this.props
-        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], employee = [] } } = this.state
+        const { history: { goBack }, location: { pathname } } = this.props
+        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], employee = [], program_name } } = this.state
+        const { toggleModal, toggleCreatorModal } = this
         const customerValue = isLoaded ? customers.find((a) => a.id === customer[0]) : {}
         const employeeValue = isLoaded ? employee && employees.find((a) => a.id === employee[0]) : {}
-        const toggleModal = () => {
-            this.setState({
-                clientModal: !clientModal,
-                modalState: !!data.customer && data.customer
-            })
-        }
-        const toggleCreatorModal = () => {
-            this.setState({creatorModal: !creatorModal})
-        }
         const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, customerValue, toggleCreatorModal, employeeValue))
+        const pageHeaderTitle = () => {
+            const pathnames = pathname.split("/").filter(x => x)
+            const newProgram = pathnames[1] === NEW_PROGRAM
+            return newProgram ? "Новая программа" : program_name
+        }
         return (
-            <div
+            <ProgramsHeader
                 className="h-full"
+                {...this.props}
+                bredCrumbsConfig={programsBreadcrumbs}
+                pageData={pageHeaderTitle()}
+                url="programs"
+                links={NAV_BUTTON_LINKS}
             >
                 <ModalSidebar
                     title="Выбор заказчика"
@@ -339,7 +353,7 @@ class General extends Component {
                             </div>
                           )}}
                 </WithValidationHocRenderPropAdapter>
-            </div>
+            </ProgramsHeader>
         );
     }
 }

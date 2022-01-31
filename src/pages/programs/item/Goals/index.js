@@ -10,6 +10,9 @@ import {ModalTableBody, ModalTableHeader} from "../Documents/style";
 import { settings } from "./FormConfig";
 import ArrowInput from "../../../../components/ArrowsInput";
 import PhotoFiles from "../../../../components/Fields/Files/PhotoFiles";
+import { programsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {NAV_BUTTON_LINKS, NEW_PROGRAM} from "../../Constants";
 
 class Goals extends Component {
 
@@ -187,6 +190,12 @@ class Goals extends Component {
             this.loadPageData()
         }
     }
+    pageHeaderTitle = (program_name) => {
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === NEW_PROGRAM
+        return newProgram ? "Новая программа" : program_name
+    }
 
     render() {
         const {
@@ -197,6 +206,7 @@ class Goals extends Component {
             modalData: { goal_name, tier },
             selectedGoals,
             addGoalsModal,
+            programData: { program_name },
             goals
         } = this.state
 
@@ -211,13 +221,21 @@ class Goals extends Component {
             tierUp,
             tierDown,
             actionButtonTierUp,
-            actionButtonTierDown
+            actionButtonTierDown,
+            pageHeaderTitle
         } = this
 
 
 
         return (
-            <div>
+            <ProgramsHeader
+                className="h-full"
+                {...this.props}
+                pageData={pageHeaderTitle(program_name)}
+                bredCrumbsConfig={programsBreadcrumbs}
+                url="programs"
+                links={NAV_BUTTON_LINKS}
+            >
                 <Modal
                     isOpen={editModal}
                     title="редактирование цели"
@@ -382,7 +400,7 @@ class Goals extends Component {
                     settings={settings(editModal, toggleModal, handleEdit, actionButtonTierUp, actionButtonTierDown)}
                     data={items}
                 />
-            </div>
+            </ProgramsHeader>
         );
     }
 }
