@@ -10,5 +10,5 @@ export const FormContainer = styled.div`
 `
 
 export const TabContainer = styled.div`
-  padding: 24px;
+  padding: 24px 24px 0 24px;
 `

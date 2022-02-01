@@ -18,7 +18,7 @@ class PageHeader extends Component {
                     </div>
                 </div>
                 <div
-                    className="bg-white flex-container hidden m-b-24 p-b-24"
+                    className="bg-white flex-container hidden m-b-24"
                     style={{"borderRadius": "4px"}}
                 >
                     <NavContentBtn

@@ -22,7 +22,16 @@ export const settings = [
   {
     id: 1,
     key: "EMPLOYEES",
-    component: CardForUser,
+    allData: true,
+    component: ({data: { id, EMPLOYEES: {name}, EMPLOYEES }}) => {
+      return (
+        <NavLink
+          to={`/employees/${id}/${name}/general`}
+        >
+          <CardForUser data={EMPLOYEES} addHover/>
+        </NavLink>
+      )
+    },
     name: "Сотрудник",
     size: "2fr"
   },
@@ -53,22 +62,6 @@ export const settings = [
     name: "Прогресс",
     size: "1.2fr",
     component: Progress
-  },
-  {
-    id: 6,
-    // name: "",
-    allData: true,
-    size: "200px",
-    component: ({data: { id, EMPLOYEES: {name} }}) => {
-      return (
-        <NavLink
-          to={`/employees/${id}/${name}/general`}
-          className="btn width-m blue"
-        >
-          Просмотр
-        </NavLink>
-      )
-    }
   }
 ]
 

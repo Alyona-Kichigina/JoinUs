@@ -73,7 +73,7 @@ const FilterForEmployees = ({handleInput}) => {
           returnOption
         />
       </div>
-      <div className="flex m-l-a">
+      <div className="flex ml-auto">
         <div
           className="fs-12 color-light-blue-2 p-r-16 p-b-14 flex items-end"
         >

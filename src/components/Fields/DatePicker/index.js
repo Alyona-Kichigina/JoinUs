@@ -119,14 +119,13 @@ class DatePicker extends Component {
   }
 
   getToday = () => {
-    console.log(moment().month(0))
     const { props: { onInput, dateFormat, id } } = this
+    this.setState({valueForCalendar: moment()})
     onInput(moment(new Date()).format(dateFormat), id)
   }
 
   editYear = (val) => {
     const { year } = this.state
-    console.log(val)
     switch (val) {
       case "minus":
         this.setState({year: year - 1})
@@ -135,18 +134,17 @@ class DatePicker extends Component {
         this.setState({year: year + 1})
         break
     }
+    this.aaa()
+  }
+
+  aaa = (val) => {
+    const { year } = this.state
     console.log(year)
     const yearMoment = moment().year(year)
     this.setState({
       valueForCalendar: yearMoment
     })
   }
-
-//   {MonthNames.reduce((acc, item) => {
-//   return item[value]
-// }, "")}
-
-  // не работают кнопки внутри календаря
 
   render() {
     const {
@@ -296,7 +294,7 @@ class DatePicker extends Component {
                         <button
                           type="button"
                           onClick={this.getToday}
-                          className="m-l-a block m-t-10 m-r-16 p-b-8"
+                          className="ml-auto block m-t-10 m-r-16 p-b-8"
                         >
                           Today
                         </button>

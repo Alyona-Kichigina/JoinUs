@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types"
+import styled from "styled-components"
 
 const ImgStyle = {
   width: "24px",
@@ -8,10 +9,23 @@ const ImgStyle = {
   minHeight: "24px"
 }
 
-const CardForUser = ({data}) => {
+const Wrapper = styled.div`
+  .addHover {
+    transition-duration: 150ms;
+  }
+  ${props => props.addHover && `
+   &:hover {
+    .addHover{
+        color: var(--color-blue);
+      }
+    }
+  `}
+`
+
+const CardForUser = ({data, addHover}) => {
   const { role, name, img } = data
   return (
-    <div className="flex">
+    <Wrapper className="flex" addHover={addHover}>
       <div className="items-center flex">
         <img
           style={ImgStyle}
@@ -21,7 +35,7 @@ const CardForUser = ({data}) => {
       </div>
       <div className="p-l-12">
         <div
-          className="color-darken-blue fs-14 lh-19"
+          className="addHover color-darken-blue fs-14 lh-19"
         >
           {name}
         </div>
@@ -31,16 +45,18 @@ const CardForUser = ({data}) => {
           {role}
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
 CardForUser.propTypes = {
   data: PropTypes.object,
+  addHover: PropTypes.bool,
 }
 
 CardForUser.defaultProps = {
-  data: {}
+  data: {},
+  addHover: false
 }
 
 export default CardForUser;

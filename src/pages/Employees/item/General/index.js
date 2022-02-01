@@ -95,7 +95,7 @@ class General extends Component {
     )
   }
   render() {
-    const { state: { data }, props: { goBack } }= this
+    const { state: { data }, props: { history: { goBack } },  }= this
     const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap)
     return (
       <div className="flex-container hidden">
@@ -112,7 +112,7 @@ class General extends Component {
                 <Avatar className="mt-6 ml-6"/>
                 <ScrollBar>
                   <TabContainer className="flex-container">
-                    <FormContainer>
+                    <FormContainer className="m-b-24">
                       <Form
                         {...formProps}
                         fields={firstForm}
@@ -126,27 +126,26 @@ class General extends Component {
                         onInput={onInput}
                       />
                     </FormContainer>
+                    <div className="flex justify-end mt-auto p-b-24">
+                      <button
+                        name="cancel"
+                        type="submit"
+                        onClick={() => goBack()}
+                        className="grey btn width-m m-r-16"
+                      >
+                        Отмена
+                      </button>
+                      <button
+                        name="save"
+                        type="submit"
+                        className="blue btn width-m"
+                        onClick={onSubmit}
+                      >
+                        Сохранить
+                      </button>
+                    </div>
                   </TabContainer>
                 </ScrollBar>
-
-                <div className="flex justify-end m-r-24 m-t-24">
-                  <button
-                    name="cancel"
-                    type="submit"
-                    onClick={() => goBack()}
-                    className="grey btn width-medium m-r-16"
-                  >
-                    Отмена
-                  </button>
-                  <button
-                    name="save"
-                    type="submit"
-                    className="blue btn width-medium"
-                    onClick={onSubmit}
-                  >
-                    Сохранить
-                  </button>
-                </div>
               </>
             )
           }}
