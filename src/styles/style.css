@@ -65,7 +65,7 @@ body {
     --color-black-darken-1: #333333;
 
     --grey-gradient: linear-gradient(89.43deg, #000000 0.12%, rgba(0, 0, 0, 0) 99.82%);
-    --blue-gradient: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
+    --active-gradient: linear-gradient(94.2deg, #009BF6 0%, #3DC0FA 100%);
 
     --validation-color: var(--pink);
     --flex-input: 1 1 auto;
