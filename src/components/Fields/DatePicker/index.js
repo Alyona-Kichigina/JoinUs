@@ -5,7 +5,7 @@ import {BlockYear, ButtonContainer, DatePickerCalendarContainer, ToggleIcon} fro
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import {PRESENT_DATE_FORMAT} from "@constants"
-import { Calendar, Select, Col, Row } from 'antd';
+import { Calendar, Select } from 'antd';
 import moment from "moment";
 import Sel from "@Components/Fields/Select";
 import withDatePickerHoc from "../../../Core/Decorators/withDatePicker";
@@ -68,8 +68,8 @@ class DatePicker extends Component {
     this.state = {
       open: false,
       valueForCalendar: moment(),
-      valueSelect: moment().month(),
-      year: new Date().getFullYear()
+      month: moment().month(),
+      myYear: new Date().getFullYear()
     }
   }
 
@@ -112,10 +112,9 @@ class DatePicker extends Component {
   handleSelect = (value) => {
     const month = moment().month(value)
     this.setState({
-      valueSelect: value,
+      month: value,
       valueForCalendar: month
     })
-    // console.log(month)
   }
 
   getToday = () => {
@@ -125,25 +124,14 @@ class DatePicker extends Component {
   }
 
   editYear = (val) => {
-    const { year } = this.state
-    switch (val) {
-      case "minus":
-        this.setState({year: year - 1})
-        break
-      case "plus":
-        this.setState({year: year + 1})
-        break
+    const { myYear } = this.state
+    if (val === "minus") {
+      this.setState((prevState) => ({ myYear: prevState.myYear - 1 }));
+    } else {
+      this.setState((prevState) => ({ myYear: prevState.myYear + 1 }));
     }
-    this.aaa()
-  }
-
-  aaa = (val) => {
-    const { year } = this.state
-    console.log(year)
-    const yearMoment = moment().year(year)
-    this.setState({
-      valueForCalendar: yearMoment
-    })
+    const yearMoment = moment().year(myYear)
+    this.setState({valueForCalendar: yearMoment})
   }
 
   render() {
@@ -152,7 +140,7 @@ class DatePicker extends Component {
         style, className, disabled, placeholder, children, tipMaxSize,
         value
       },
-      state: { open, valueForCalendar, valueSelect, year  }
+      state: { open, valueForCalendar, month, myYear  }
     } = this
 
     return (
@@ -265,13 +253,13 @@ class DatePicker extends Component {
                                   id="month"
                                   placeholder="Выберите месяц"
                                   onInput={this.handleSelect}
-                                  value={valueSelect}
+                                  value={month}
                                   options={MonthNames}
                                   clearable={false}
                                 />
                                 <BlockYear className="flex items-center p-l-15 p-r-20 justify-between">
                                   <div className="fw-700">
-                                    {year}
+                                    {myYear}
                                   </div>
                                   <div className="flex">
                                     <div
@@ -330,7 +318,7 @@ DatePicker.propTypes = {
 DatePicker.defaultProps = {
   value: "",
   dateFormat: PRESENT_DATE_FORMAT,
-  tipMaxSize: "310",
+  tipMaxSize: "300",
   placeholder: "DD.MM.YYYY",
   className: "",
   onFocus: () => null,

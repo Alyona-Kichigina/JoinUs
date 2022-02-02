@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Oval, Container} from "./style"
 import PropTypes from "prop-types"
 
@@ -9,10 +9,21 @@ import PropTypes from "prop-types"
 // 3/4 - 0,75
 // 4/4 - 1
 
-
+// post это название программы
 const Progress = ({data}) => {
-  const { post, progress } = data
-  const result = progress/4
+  const [result, setResult] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const { post, adaptation_status, program_details: [detail, program] } = data
+
+  const getProgress = useCallback(() => {
+    if (adaptation_status && adaptation_status.length > 0) {
+      setResult(Math.round(adaptation_status.length * 4 / detail.levels_detail.length))
+    }
+  }, [adaptation_status, detail])
+
+  useEffect(() => {
+    getProgress()
+  })
   return (
     <div>
       <div
@@ -21,14 +32,15 @@ const Progress = ({data}) => {
         {post}
       </div>
       <div className="flex">
+        {result}<br/>
         <Container>
-          <Oval active={result >= 0.25}/>
-          <Oval active={result >= 0.5}/>
-          <Oval active={result >= 0.75}/>
-          <Oval active={result >= 1}/>
+          <Oval active={result > 0}/>
+          <Oval active={result >= 2}/>
+          <Oval active={result >= 3}/>
+          <Oval active={result >= 4}/>
         </Container>
         <div className="fs-14 color-darken-blue fw-700 p-l-6">
-          {progress}/4
+          {progress}/{detail.levels_detail.length}
         </div>
       </div>
     </div>
@@ -41,7 +53,6 @@ Progress.propTypes = {
 
 Progress.defaultProps = {
   data: {
-    progress: 0,
     post: "no name"
   }
 }

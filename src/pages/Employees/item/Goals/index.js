@@ -50,8 +50,8 @@ class Goals extends Component {
     const { data = [], adaptation_status, program_details, documents_detail  } = this.state
     const newData = data.map((item) => ({
         STATUS: {
-          adaptation_status: adaptation_status,
-          program_details: program_details
+          adaptation_status,
+          program_details
         },
         ...item
       })

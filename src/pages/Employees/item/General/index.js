@@ -8,8 +8,6 @@ import {WithValidationHocRenderPropAdapter} from "../../../../Validator";
 import memoizeOne from "memoize-one";
 import axios from "axios";
 import {CANDIDATE_LIST, DEFAULT_URL} from "../../../../components/APIList";
-import {RELEASE_DATE_FORMAT, CREATE_DATE_FORMAT} from "@constants"
-import EditDateForSave from "../../../../utils/Date/EditDateForSave";
 import Avatar from "../../../../components/Avatar";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
@@ -61,39 +59,46 @@ class General extends Component {
   inputDataOfEmployee = (value) => {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
-  saveDataOfEmployee = (payload) => {
+  saveDataOfEmployee = async (payload) => {
     const { location: { pathname }, history: { push } } = this.props
     const pathnames = pathname.split("/").filter(x => x)
     const newEmploy = pathnames[1] === "new_employ"
     const idEmploy = newEmploy ? "" : `${pathnames[1]}/`
-    axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`,
-      newEmploy
-        ?
-        {
-        ...payload,
-        program: [payload.program],
-        release_date: payload.release_date,
-        create_date: payload.create_date,
-        id_customer: 1,
-        id_employee: 1,
-        status: 1,
-        salary: Number(payload.salary)
-      }
-    :
-        {
+    try {
+      await axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`,
+        newEmploy
+          ?
+          {
           ...payload,
           program: [payload.program],
           release_date: payload.release_date,
           create_date: payload.create_date,
+          id_customer: 1,
+          id_employee: 1,
+          status: 1,
           salary: Number(payload.salary)
         }
-    )
-    .then((response) => {},
-      (error) => {
-        this.setState({error})
+      :
+          {
+            ...payload,
+            program: [payload.program],
+            release_date: payload.release_date,
+            create_date: payload.create_date,
+            salary: Number(payload.salary)
+          }
+      )
+      if (newEmploy) {
+        push("/employees")
+      } else {
+        // push(`/employees/${program_name}/${id}/general`)
       }
-    )
+    } catch (err) {
+      throw new Error(
+        `Данные пользователя не добавлены или не редактированы.\n${err.message}`
+      );
+    }
   }
+
   render() {
     const { state: { data }, props: { history: { goBack } },  }= this
     const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap)

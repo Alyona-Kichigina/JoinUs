@@ -93,9 +93,12 @@ export const fieldMap = [
 ]
 
 export const rules = {
-  last_name: "required",
+  // last_name: "required",
   // first_name: "required",
+  // middle_name: "required",
   // program: "required",
   // create_date: "required",
-  // release_date: "required"
+  // release_date: "required",
+  // email: "required",
+  // mobile_phone: "required"
 }

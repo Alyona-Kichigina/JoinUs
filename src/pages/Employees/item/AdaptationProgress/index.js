@@ -64,8 +64,8 @@ class AdaptationProgress extends Component {
           stages: stages.map((i) => ({
             ...i,
             STATUS: {
-              adaptation_status: adaptation_status,
-              program_details: program_details
+              adaptation_status,
+              program_details
             }
           }))
         }
