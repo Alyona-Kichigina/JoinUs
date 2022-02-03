@@ -53,9 +53,6 @@ class General extends Component {
       )
     }
   }
-  componentDidUpdate() {
-    console.log("componentDidUpdate")
-  }
   inputDataOfEmployee = (value) => {
     this.setState(({ data }) => ({ data: { ...data, ...value } }))
   }
@@ -64,8 +61,9 @@ class General extends Component {
     const pathnames = pathname.split("/").filter(x => x)
     const newEmploy = pathnames[1] === "new_employ"
     const idEmploy = newEmploy ? "" : `${pathnames[1]}/`
+    // данные получаем по запросу и их сетоть в данные
     try {
-      await axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`,
+      const result = await axios[newEmploy ? "post" : "put"](`${DEFAULT_URL}/${CANDIDATE_LIST}/${idEmploy}`,
         newEmploy
           ?
           {
@@ -79,14 +77,15 @@ class General extends Component {
           salary: Number(payload.salary)
         }
       :
-          {
-            ...payload,
-            program: [payload.program],
-            release_date: payload.release_date,
-            create_date: payload.create_date,
-            salary: Number(payload.salary)
-          }
+        {
+          ...payload,
+          program: [payload.program],
+          release_date: payload.release_date,
+          create_date: payload.create_date,
+          salary: Number(payload.salary)
+        }
       )
+      this.setState({data: result.data})
       if (newEmploy) {
         push("/employees")
       } else {

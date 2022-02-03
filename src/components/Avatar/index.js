@@ -14,14 +14,17 @@ const Avatar = ({className, ...props}) => {
       className={`relative flex flex-row items-center justify-center ${className}`}
     >
       <FileInputController {...props} containerRef={refContainer}>
-        {({value: [avatar], onEdit}) => <>{avatar
-          ? <div className="flex flex-col w-full h-full overflow-hidden rounded-full">
-            <img src={avatar.src} alt=""/>
-          </div>
-          : <BaseAvatarContainer
-            dangerouslySetInnerHTML={{__html: BaseAvatar}}
-            className="overflow-hidden"
-          />}
+        {({value: [avatar], onEdit}) =>
+          <>
+          {avatar
+            ? <div className="flex flex-col w-full h-full overflow-hidden rounded-full">
+                <img src={avatar.src} alt=""/>
+            </div>
+            : <BaseAvatarContainer
+              dangerouslySetInnerHTML={{__html: BaseAvatar}}
+              className="overflow-hidden"
+            />
+          }
           <EditButton
             onClick={onEdit}
             className="edit-icon flex items-center justify-center"

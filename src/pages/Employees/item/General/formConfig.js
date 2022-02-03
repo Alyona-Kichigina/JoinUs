@@ -83,7 +83,6 @@ export const fieldMap = [
     placeholder: "Выберите программу адаптации",
     valueKey: "id",
     labelKey: "program_name",
-    preload: true,
     async refLoader() {
       const {data } = await axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}`)
       return data
@@ -93,12 +92,12 @@ export const fieldMap = [
 ]
 
 export const rules = {
-  // last_name: "required",
-  // first_name: "required",
-  // middle_name: "required",
-  // program: "required",
-  // create_date: "required",
-  // release_date: "required",
-  // email: "required",
-  // mobile_phone: "required"
+  last_name: "required",
+  first_name: "required",
+  middle_name: "required",
+  program: "required",
+  create_date: "required",
+  release_date: "required",
+  email: "required",
+  mobile_phone: "required"
 }

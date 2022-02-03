@@ -91,11 +91,12 @@ class Employees extends Component {
 
   getNewData = memoizeOne((data) => {
     return data.map((item) => {
-      const { last_name, first_name, post, adaptation_status, program_details, program } = item
+      const { last_name, first_name, post, adaptation_status, program_details, program, illustration, id } = item
       return {
         EMPLOYEES: {
           name: `${last_name} ${first_name}`,
-          role: `${post}`
+          role: `${post}`,
+          img: illustration
         },
         STATUS: {
           adaptation_status,
@@ -104,7 +105,8 @@ class Employees extends Component {
         PROGRESS: {
           adaptation_status,
           program_details,
-          program
+          program,
+          id
         },
         ...item
       }
