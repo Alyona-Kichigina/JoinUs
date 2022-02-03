@@ -8,6 +8,9 @@ import {ModalTableBody, ModalTableHeader} from "../Documents/style";
 import {DocumentIcon} from "../../../Constants";
 import ChekBox from "@Components/Fields/CheckBox"
 import Modal from "../../../../components/ModalWindow";
+import { programsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {NAV_BUTTON_LINKS, NEW_PROGRAM} from "../../Constants";
 
 class Levels extends Component {
     constructor(props) {
@@ -118,77 +121,92 @@ class Levels extends Component {
                 })
         }
     }
+
+    pageHeaderTitle = (program_name) => {
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === NEW_PROGRAM
+        return newProgram ? "Новая программа" : program_name
+    }
 render() {
-    const { items, editModal, selectedLevels, levels } = this.state
-        const { editStage, checkLevels, saveNewLevel, deleteItem } = this
+    const { items, editModal, selectedLevels, levels, programData: { program_name } } = this.state
+        const { editStage, checkLevels, saveNewLevel, deleteItem, pageHeaderTitle } = this
         return (
           <div className="flex-container">
-              <Modal
-                  isOpen={editModal}
-                  title="Выбор уровня"
-                  closeModal={this.toggleModal}
-                  handleSave={saveNewLevel}
+              <ProgramsHeader
+                  {...this.props}
+                  bredCrumbsConfig={programsBreadcrumbs}
+                  pageData={pageHeaderTitle(program_name)}
+                  url="programs"
+                  links={NAV_BUTTON_LINKS}
               >
-                  <ModalTableHeader>
-                      <div>№</div>
-                      <div>
-                          Наименование уровня
-                      </div>
-                      <div>
-                          Комментарии
-                      </div>
-                  </ModalTableHeader>
-                  {
-                      levels.map(({level_name, description, id}, index) =>  (
-                              <ModalTableBody
-                                  key={`${id}${index}`}
-                              >
-                                  <div className="flex items-center">
-                                      {index + 1}
-                                  </div>
-                                  <div className="flex items-center">
-                                      <div
-                                          className="pr-2"
-                                          dangerouslySetInnerHTML={{__html: DocumentIcon}}
-                                      />
-                                      {level_name}
-                                  </div>
-                                  <div className="flex items-center justify-between">
-                                      <div>
-                                          {description}
+                  <Modal
+                      isOpen={editModal}
+                      title="Выбор уровня"
+                      closeModal={this.toggleModal}
+                      handleSave={saveNewLevel}
+                  >
+                      <ModalTableHeader>
+                          <div>№</div>
+                          <div>
+                              Наименование уровня
+                          </div>
+                          <div>
+                              Комментарии
+                          </div>
+                      </ModalTableHeader>
+                      {
+                          levels.map(({level_name, description, id}, index) =>  (
+                                  <ModalTableBody
+                                      key={`${id}${index}`}
+                                  >
+                                      <div className="flex items-center">
+                                          {index + 1}
                                       </div>
-                                      <ChekBox
-                                          id="selectedLevels"
-                                          value={selectedLevels}
-                                          checkBoxValue={id}
-                                          onInput={checkLevels}
-                                      />
-                                  </div>
-                              </ModalTableBody>
+                                      <div className="flex items-center">
+                                          <div
+                                              className="pr-2"
+                                              dangerouslySetInnerHTML={{__html: DocumentIcon}}
+                                          />
+                                          {level_name}
+                                      </div>
+                                      <div className="flex items-center justify-between">
+                                          <div>
+                                              {description}
+                                          </div>
+                                          <ChekBox
+                                              id="selectedLevels"
+                                              value={selectedLevels}
+                                              checkBoxValue={id}
+                                              onInput={checkLevels}
+                                          />
+                                      </div>
+                                  </ModalTableBody>
+                              )
                           )
-                      )
-                  }
-              </Modal>
-              <div className="pt-6 mb-4 ml-4 flex">
-                  <NavLink
-                    className="blue btn width-m pt-1.5"
-                    to="level/general"
-                  >
-                      + Добавить уровень
-                  </NavLink>
-                  <button
-                    className="white btn width-m pt-1.5 ml-4"
-                    onClick={this.toggleModal}
-                  >
-                      Выбрать уровень
-                  </button>
-              </div>
-              <AppList
-                settings={settings(editStage, deleteItem)}
-                nestedData={true}
-                data={items}
-                nestedKey="stages"
-              />
+                      }
+                  </Modal>
+                  <div className="pt-6 mb-4 ml-4 flex">
+                      <NavLink
+                        className="blue btn width-m pt-1.5"
+                        to="level/general"
+                      >
+                          + Добавить уровень
+                      </NavLink>
+                      <button
+                        className="white btn width-m pt-1.5 ml-4"
+                        onClick={this.toggleModal}
+                      >
+                          Выбрать уровень
+                      </button>
+                  </div>
+                  <AppList
+                    settings={settings(editStage, deleteItem)}
+                    nestedData={true}
+                    data={items}
+                    nestedKey="stages"
+                  />
+              </ProgramsHeader>
           </div>
         );
     }

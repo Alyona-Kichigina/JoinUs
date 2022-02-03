@@ -8,6 +8,9 @@ import Modal from "../../../../components/ModalWindow";
 import {ModalTableBody, ModalTableHeader} from "./style";
 import {settings} from "./tableConfig";
 import ArrowInput from "../../../../components/ArrowsInput";
+import { levelsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {LEVELS_LINKS, NEW_PROGRAM} from "../../Constants";
 
 class levelStages extends Component {
 
@@ -126,7 +129,7 @@ class levelStages extends Component {
             selectedStage: []
         })
     }
-    saveAddStages = (value) => {
+    saveAddStages = () => {
         const {
             location: { pathname }
         } = this.props
@@ -144,7 +147,12 @@ class levelStages extends Component {
                 })
             })
     }
-
+    pageHeaderTitle = (level_name) => {
+        const { location: { pathname } } = this.props
+        const pathnames = pathname.split("/").filter(x => x)
+        const newProgram = pathnames[1] === NEW_PROGRAM
+        return newProgram ? "Новая программа" : level_name ? `Уровень "${level_name}"` : ""
+    }
     render() {
         const {
             items,
@@ -154,7 +162,8 @@ class levelStages extends Component {
             modalData: { stage_name, tier },
             selectedStage,
             addStageModal,
-            stages
+            stages,
+            levelData: { level_name }
         } = this.state
 
         const {
@@ -167,11 +176,19 @@ class levelStages extends Component {
             handleInputChange,
             saveEditStage,
             openDocumentSelection,
-            checkStage
+            checkStage,
+            pageHeaderTitle
         } = this
 
         return (
-            <div>
+            <ProgramsHeader
+                className="h-full"
+                {...this.props}
+                pageData={pageHeaderTitle(level_name)}
+                bredCrumbsConfig={levelsBreadcrumbs}
+                url="programs"
+                links={LEVELS_LINKS}
+            >
                 <Modal
                     isOpen={editModal}
                     title="редактирование этапа"
@@ -321,7 +338,7 @@ class levelStages extends Component {
                     settings={settings(editModal, toggleModal, handleEdit)}
                     data={items}
                 />
-            </div>
+            </ProgramsHeader>
         );
     }
 }

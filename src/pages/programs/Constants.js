@@ -79,3 +79,5 @@ export const NAV_BUTTON_LINKS = [
         link: "goals"
     }
 ]
+
+export const NEW_PROGRAM = "new_program"

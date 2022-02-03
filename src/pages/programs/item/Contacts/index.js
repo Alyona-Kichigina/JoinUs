@@ -1,38 +1,11 @@
 import React, {Component} from 'react';
 import AppList from "../../../../components/AppList";
 import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../../components/APIList";
-import CardForUser from "../../../../components/ComponentsForListTable/CardForUser";
-import CardContact from "../../../../components/ComponentsForListTable/CardContact";
 import axios from "axios";
-
-const settings = [
-    {
-        id: 1,
-        key: "number",
-        name: "№",
-        size: "5%"
-    },
-    {
-        id: 2,
-        key: "value",
-        name: "Контакт",
-        component: CardForUser,
-        size: "45%"
-    },
-    {
-        id: 3,
-        key: "role",
-        name: "Роль",
-        size: "30%"
-    },
-    {
-        id: 4,
-        key: "contacts",
-        name: "Контакты",
-        component: CardContact,
-        size: "30%"
-    }
-]
+import {settings} from "./TableConfig";
+import { programsBreadcrumbs } from "../../configs";
+import ProgramsHeader from "../../ProgramsHeader"
+import {NAV_BUTTON_LINKS, NEW_PROGRAM} from "../../Constants";
 
 class Contacts extends Component {
     constructor(props) {
@@ -40,6 +13,7 @@ class Contacts extends Component {
         this.state = {
             error: false,
             isLoaded: false,
+            programData: {},
             items: []
         }
     }
@@ -50,9 +24,11 @@ class Contacts extends Component {
         axios.get(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`)
             .then(
                 (response) => {
+                    const { data, data: { contacts_detail }} = response
                     this.setState({
                         isLoaded: true,
-                        items: response.data.contacts_detail
+                        items: contacts_detail,
+                        programData: data
                     })
                 },
                 (error) => {
@@ -65,7 +41,8 @@ class Contacts extends Component {
     }
 
     render() {
-        const { items = [] } = this.state
+        const { items = [], programData: { program_name } } = this.state
+        const { location: { pathname } } = this.props
         const newData = items.map(({ last_name, first_name, post, role, email, mobile_phone, illustration_link }) =>
             ({
                 value: {
@@ -80,8 +57,20 @@ class Contacts extends Component {
                 }
             })
         )
+        const pageHeaderTitle = () => {
+            const pathnames = pathname.split("/").filter(x => x)
+            const newProgram = pathnames[1] === NEW_PROGRAM
+            return newProgram ? "Новая программа" : program_name
+        }
         return (
             <>
+                <ProgramsHeader
+                    {...this.props}
+                    bredCrumbsConfig={programsBreadcrumbs}
+                    pageData={pageHeaderTitle()}
+                    url="programs"
+                    links={NAV_BUTTON_LINKS}
+                >
                     <div
                         className="pt-6 pl-4"
                     >
@@ -97,6 +86,7 @@ class Contacts extends Component {
                              data={newData}
                          />
                      </div>
+                </ProgramsHeader>
             </>
         );
     }
