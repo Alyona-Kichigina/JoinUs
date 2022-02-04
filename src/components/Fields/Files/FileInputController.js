@@ -8,12 +8,17 @@ import uniqueId from "lodash/uniqueId";
 import Pipe from '../../../utils/FunctionsCall/pipe'
 import {DEFAULT_DATE_FORMAT} from '../../../constants'
 import {isMimeTypeAllowed, isFileSizeAllowed} from "../../../utils/Files/FileValidation"
+import PureDeleteItems from "../../../utils/Arrays/PureDeleteItems";
 
 const FileInputController = ({
  containerRef, id, multiple, allowedTypes, unAllowedMimeTypes, value, onInput, children, onFileInput
 }) => {
+  const [position, setPosition] = useState(0)
   const fileInputRef = useRef()
-  const focusInput = useCallback(() => {
+  const focusInput = useCallback((position) => {
+    if (typeof position === "number") {
+      setPosition(position)
+    }
     fileInputRef.current.click()
   }, [])
 
@@ -42,18 +47,35 @@ const FileInputController = ({
 
   const uploadFiles = useCallback(async (files) => {
     try {
+      const uploadedFiles = (await Promise.all(files.map(({fileData}) => {
       const FData = new FormData()
-      files.forEach(({fileData}) => {
-        FData.append(fileData.VALUE || fileData.name, fileData, fileData.VALUE || fileData.name)
+        FData.append("file", fileData);
+        FData.append("remark", fileData.remark);
+        return axios.post(`${DEFAULT_URL}/${UPLOADS}/`, FData, {
+        // return axios.post(`http://localhost/api-active/${UPLOADS}/`, FData, {
+          onUploadProgress: progressUpload(files),
+        })
+      }))).map(v => v.data)
+      setTempFiles((prevTempFiles) => {
+        const nextTempFiles = [...prevTempFiles]
+        let position
+        files.forEach((file) => {
+          position = [nextTempFiles.splice(nextTempFiles.indexOf(file), 1)].position - files.length - 1;
+        })
+        if (position !== 0) {
+          const nextValue = [...value]
+          nextValue.splice(position, files.length, ...uploadedFiles)
+          updateValue(nextValue)
+        } else {
+          updateValue(multiple ? [...value, ...uploadedFiles] : uploadedFiles)
+        }
+        return nextTempFiles
       })
-      const downloadedFiles = await axios.post(`${DEFAULT_URL}/${UPLOADS}/`, FData, {
-        onUploadProgress: progressUpload(files),
-      })
-      updateValue(multiple ? [...value, ...downloadedFiles] : downloadedFiles)
+
       fileInputRef.current.value = ""
     } catch (e) {
       setTempFiles((prevTempFiles) => prevTempFiles
-        .map((item) => (item.id ? {...item, progress: undefined, fail: true} : item
+        .map((item) => (item.id ? {...item, progress: 0, fail: true} : item
         )))
     }
   }, [multiple, updateValue, value, progressUpload])
@@ -62,13 +84,13 @@ const FileInputController = ({
     const {allowed, rejected} = Object.values(files).reduce((acc, file) => {
         new Pipe(file, value => acc.allowed.push(value), value => acc.rejected.push(value)).apply([
           f => {
-            f.VALUE = f.name
+            f.remark = f.name
             return f
           },
           f => {
-            const [name, ext] = f.VALUE.split(/\.(?=[^.]+$)/)
+            const [name, ext] = f.remark.split(/\.(?=[^.]+$)/)
             if (!name) {
-              f.VALUE = `new file ${dayjs().format(DEFAULT_DATE_FORMAT)}.${ext}`
+              f.remark = `new file ${dayjs().format(DEFAULT_DATE_FORMAT)}.${ext}`
             }
             return f
           },
@@ -90,26 +112,29 @@ const FileInputController = ({
 
     if (middlewareInputResult.length === 0) return
 
-    const f = await Promise.all(middlewareInputResult.map((cur) => new Promise((resolve) => {
+    const f = await Promise.all(middlewareInputResult.map((cur, i) => new Promise((resolve) => {
       const reader = new FileReader();
       reader.readAsDataURL(cur);
       reader.onloadend = () => {
 
         resolve({
           fileData: cur,
-          VALUE: cur.VALUE,
+          remark: cur.remark,
           id: uniqueId(),
           progress: 0,
           fail: false,
           size: cur.size,
-          src: reader.result
+          file: reader.result,
+          position: position + i
         })
       }
     })))
-
+    if (position > 0) {
+      updateValue(PureDeleteItems(value, position, f.length))
+    }
     setTempFiles((prevTempFiles) => multiple ? [...prevTempFiles, ...f] : f)
-    // await uploadFiles(f)
-  }, [allowedTypes, multiple, unAllowedMimeTypes, uploadFiles, onFileInput])
+    await uploadFiles(f)
+  }, [onFileInput, position, uploadFiles, allowedTypes, unAllowedMimeTypes, updateValue, value, multiple])
 
   useEffect(() => {
     if (containerRef.current) {
@@ -134,8 +159,8 @@ const FileInputController = ({
             files.push(item.getAsFile())
           }
         }
-        handleInput({target: {files}})
         setOverflowedStatus(false)
+        return handleInput({target: {files}})
       }
       return () => {
         if (containerRef.current) {
@@ -148,7 +173,7 @@ const FileInputController = ({
   }, [handleInput, containerRef])
 
   const mergedValue = useMemo(() => {
-    const tempVal = value.map((i) => ({src: i}))
+    const tempVal = [...value]
 
     tempFiles.forEach((item) => {
       if (item.position) {
@@ -157,9 +182,26 @@ const FileInputController = ({
         tempVal.push(item)
       }
     })
-    return tempVal
-
+    // return tempVal.map((v) => ({...v, file: `http://localhost/${v.file}`}))
+    return tempVal.map((v) => ({...v, file: `${DEFAULT_URL}/${v.file}`}))
   }, [tempFiles, value])
+
+  const onDelete = useCallback((index) => {
+    const deletedValue = mergedValue[index]
+    updateValue(PureDeleteItems(value, value.findIndex(v=> v.remark === deletedValue.remark)))
+  },[mergedValue, updateValue, value])
+
+  const onDeleteTempFile = useCallback((index) => {
+    const deletedValue = mergedValue[index]
+    setTempFiles( (prevTempFiles) => PureDeleteItems(prevTempFiles, prevTempFiles.findIndex(v=> v.id === deletedValue.id)))
+  },[mergedValue])
+
+
+  const onReUpload = useCallback((index) => {
+    const deletedValue = mergedValue[index]
+    return uploadFiles([tempFiles.findIndex(v=> v.id === deletedValue.id)])
+  },[mergedValue, tempFiles, uploadFiles])
+
 
   return (
     <>
@@ -167,6 +209,9 @@ const FileInputController = ({
         value: mergedValue,
         rejectedFiles: rejectedFiles,
         onEdit: focusInput,
+        onDelete,
+        onDeleteTempFile,
+        onReUpload
       })}
       <input
         className="hidden"

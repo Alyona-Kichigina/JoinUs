@@ -11,28 +11,31 @@ const PhotoContainer = styled.img`
 const PhotoFiles = (props) => {
   return (
     <FileInput title="фото" {...props}>
-      {({value}) => (
-        <div className="flex">
-          {value.map(({src}) => (
-            <div className="flex items-center flex-col mr-2">
+      {({value, onDelete, onEdit, onDeleteTempFile, onReUpload}) => (
+        <div className="flex flex-wrap">
+          {value.map(({file, progress, fail}, index) => (
+            <div className="flex items-center flex-col mr-2 mb-2">
               <PhotoContainer
                 className="rounded-2xl overflow-hidden"
-                src={src}
+                src={file}
               />
-              <div className="flex items-center mt-1.5">
-                <div
+              {progress === undefined && <div className="flex items-center mt-1.5">
+                <button
                   className="edit-icon"
                   dangerouslySetInnerHTML={{__html: EditIcon}}
+                  onClick={() => onEdit(index)}
                 />
-                <div
+                <button
                   className="trash-icon ml-7"
                   dangerouslySetInnerHTML={{__html: Trash}}
+                  onClick={() => onDelete(index)}
                 />
-                <div
+                <button
                   className="trash-icon ml-7"
                   dangerouslySetInnerHTML={{__html: RotateIcon}}
                 />
               </div>
+              }
             </div>
           ))}
         </div>
@@ -41,8 +44,6 @@ const PhotoFiles = (props) => {
   );
 };
 
-PhotoFiles.propTypes = {
-
-};
+PhotoFiles.propTypes = {};
 
 export default PhotoFiles;

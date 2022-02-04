@@ -15,11 +15,11 @@ const VideoFiles = (props) => {
     <FileInput title="видео" {...props}>
       {({value}) => (
         <div className="flex">
-          {value.map(({src}) => (
-            <div className="flex items-center flex-col mr-2" key={src}>
+          {value.map(({file}) => (
+            <div className="flex items-center flex-col mr-2" key={file}>
               <VideoContainer className="rounded-2xl overflow-hidden">
                 <video
-                  src={src}
+                  src={file}
                   controls
                 />
               </VideoContainer>
