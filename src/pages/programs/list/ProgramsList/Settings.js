@@ -40,20 +40,5 @@ export const settings  = [
             key: "description",
             name: "Комментарии",
             size: "40%"
-        },
-        {
-            id: 5,
-            key: "button",
-            name: "",
-            allData: true,
-            component: ({data: { program_name, id }}) => (
-                    <NavLink
-                        className="btn width-m blue"
-                        to={`/programs/${program_name}/${id}/general`}
-                    >
-                        Просмотр
-                    </NavLink>
-                ),
-            size: "15%"
         }
     ]

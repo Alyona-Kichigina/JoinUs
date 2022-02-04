@@ -72,5 +72,6 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
 ]
 
 export const rules = {
-    // SURNAME: "required",
+    program_name: "required",
+    create_date: "required",
 }

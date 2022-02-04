@@ -23,7 +23,7 @@ const PhotoBlock = ({onInput, value, value: {entity}, position, className, onMov
           <span className="fs-16 fw-700">Фото</span>
         </div>
         <PhotoFiles
-          id="text"
+          id="entity"
           className="mt-2.5"
           placeholder="Как мы работаем"
           type="textarea"
@@ -31,6 +31,7 @@ const PhotoBlock = ({onInput, value, value: {entity}, position, className, onMov
           minHeight={150}
           value={entity}
           onInput={handleInput}
+          multiple
         />
       </div>
     </div>

@@ -11,6 +11,7 @@ import ArrowInput from "../../../../components/ArrowsInput";
 import { levelsBreadcrumbs } from "../../configs";
 import ProgramsHeader from "../../ProgramsHeader"
 import {LEVELS_LINKS, NEW_PROGRAM} from "../../Constants";
+import ScrollBar from "@Components/ScrollBar"
 
 class levelStages extends Component {
 
@@ -63,11 +64,11 @@ class levelStages extends Component {
                     })
                 }
             )
-        this.loadStages()
-    }
 
+    }
     componentDidMount() {
         this.loadPageData()
+        this.loadStages()
     }
     tierUp = () => {
         const {  modalData, modalData: { tier } } = this.state
@@ -78,7 +79,7 @@ class levelStages extends Component {
     tierDown = () => {
         const {  modalData, modalData: { tier } } = this.state
         this.setState({
-            modalData: { ...modalData, tier: tier > 1 ? tier - 1 : tier}
+            modalData: {...modalData, tier: tier > 1 ? tier - 1 : tier}
         })
     }
     toggleModal = () => {
@@ -100,14 +101,17 @@ class levelStages extends Component {
             modalData: { ...modalData, [id]: value}
         })
     }
-    saveEditStage = (data) => {
-        const { id } = data
-        axios.put(`${DEFAULT_URL}/${ADAPTATION_STAGE}/${id}/`, data)
+    saveEditStage = ({id, stage_name, tier, point, status, create_date, id_employee, duration_day}) => {
+        const newData = { id, stage_name, tier, point, status, create_date, id_employee, duration_day }
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_STAGE}/${id}/`, newData)
             .then((response) => {
                 this.setState({
                     isLoaded: true
                 })
             })
+        this.setState({
+            editModal: false
+        })
         this.loadPageData()
     }
 
@@ -133,19 +137,25 @@ class levelStages extends Component {
         const {
             location: { pathname }
         } = this.props
-        const { levelData, selectedStage, stages } = this.state
+        const { levelData: {id, level_name, tier, status, create_date, id_employee}, selectedStage, stages } = this.state
         const pathnames = pathname.split("/").filter(x => x)
         const selectedData = stages.filter(({id}) => selectedStage.some(i => i === id))
         const idLevel = pathnames[1] !== "new_program" ? `/${pathnames[3]}/` : ""
-        const newData = { ...levelData, stages: stages.concat(selectedData.filter(item => !stages.some(a => a === item)))}
+        const newData = {
+            id, level_name, tier, status, create_date, id_employee,
+            stages: stages.concat(selectedData.filter(item => !stages.some(a => a === item)))
+        }
         axios.put(`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`, newData)
             .then((response) => {
-                const { data } = response
+                const { data: { stages } } = response
                 this.setState({
                     isLoaded: true,
-                    items: data
+                    items: stages
                 })
             })
+        this.setState({
+            addStageModal: false
+        })
     }
     pageHeaderTitle = (level_name) => {
         const { location: { pathname } } = this.props
@@ -250,35 +260,35 @@ class levelStages extends Component {
                             Наименование программы
                         </div>
                     </ModalTableHeader>
-                    {
-                        items.map(({description, stage_name}, index) => {
-                            return (
-                                <ModalTableBody>
-                                    <div className="flex items-center">
-                                        {index + 1}
-                                    </div>
-                                    <div className="flex items-center">
-                                        {stage_name}
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            {description}
-                                        </div>
-                                        <ChekBox
-                                            id="selectedStage"
-                                            value={selectedStage}
-                                            checkBoxValue={stage_name}
-                                            onInput={checkStage}
-                                        />
-                                    </div>
-                                </ModalTableBody>
-                            )
-                        })
-                    }
+                    {/*{*/}
+                    {/*    items && items.map(({description, stage_name}, index) => {*/}
+                    {/*        return (*/}
+                    {/*            <ModalTableBody>*/}
+                    {/*                <div className="flex items-center">*/}
+                    {/*                    {index + 1}*/}
+                    {/*                </div>*/}
+                    {/*                <div className="flex items-center">*/}
+                    {/*                    {stage_name}*/}
+                    {/*                </div>*/}
+                    {/*                <div className="flex items-center justify-between">*/}
+                    {/*                    <div>*/}
+                    {/*                        {description}*/}
+                    {/*                    </div>*/}
+                    {/*                    <ChekBox*/}
+                    {/*                        id="selectedStage"*/}
+                    {/*                        value={selectedStage}*/}
+                    {/*                        checkBoxValue={stage_name}*/}
+                    {/*                        onInput={checkStage}*/}
+                    {/*                    />*/}
+                    {/*                </div>*/}
+                    {/*            </ModalTableBody>*/}
+                    {/*        )*/}
+                    {/*    })*/}
+                    {/*}*/}
                 </Modal>
                 <Modal
                     isOpen={addStageModal}
-                    title="Добавить этап"
+                    title="Выбор этапа"
                     closeModal={() => {closeAddStageModal()}}
                     handleSave={() => saveAddStages(selectedStage)}
                 >
@@ -294,36 +304,39 @@ class levelStages extends Component {
                             Наименование программы
                         </div>
                     </ModalTableHeader>
-                    {
-                        stages.map(({description, stage_name, id}, index) => {
-                            return (
-                                <ModalTableBody>
-                                    <div className="flex items-center">
-                                        {index + 1}
-                                    </div>
-                                    <div className="flex items-center">
-                                        {stage_name}
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            {description}
+                    <ScrollBar>
+                        {
+                            stages.map(({description, stage_name, id}, index) => {
+                                return (
+                                    <ModalTableBody>
+                                        <div className="flex items-center">
+                                            {index + 1}
                                         </div>
-                                        <ChekBox
-                                            id="selectedStage"
-                                            value={selectedStage}
-                                            checkBoxValue={id}
-                                            onInput={checkStage}
-                                        />
-                                    </div>
-                                </ModalTableBody>
-                            )
-                        })
-                    }
+                                        <div className="flex items-center">
+                                            {stage_name}
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                {description}
+                                            </div>
+                                            <ChekBox
+                                                id="selectedStage"
+                                                className="p-r-14"
+                                                value={selectedStage}
+                                                checkBoxValue={id}
+                                                onInput={checkStage}
+                                            />
+                                        </div>
+                                    </ModalTableBody>
+                                )
+                            })
+                        }
+                    </ScrollBar>
                 </Modal>
                 <div className="pt-8 pb-6 pl-4 flex">
                     <button
                         className="blue btn width-m pt-1.5"
-                        onClick={() => this.setState({addStageModal: true})}
+                        onClick={() => ({})}
                     >
                         + Добавить этап
                     </button>

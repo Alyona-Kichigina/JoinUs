@@ -16,7 +16,7 @@ const DocumentName = ({data}) => {
 }
 
 
-const DocumentActions = ({handleEdit, data, actionButtonTierUp, actionButtonTierDown}) => {
+const DocumentActions = ({handleEdit, data, actionButtonTierUp, actionButtonTierDown, actionsDelete}) => {
     const iconColor = data.tier <= 1 ? "0.3" : ""
     return (
         <div>
@@ -40,6 +40,7 @@ const DocumentActions = ({handleEdit, data, actionButtonTierUp, actionButtonTier
                     />
                 </div>
                 <div
+                    onClick={() => actionsDelete(data)}
                     className="trash-icon ml-7"
                     dangerouslySetInnerHTML={{__html: Trash}}
                 />
@@ -48,7 +49,7 @@ const DocumentActions = ({handleEdit, data, actionButtonTierUp, actionButtonTier
     )
 }
 
-export const settings = (editModal, closeModal, handleEdit, actionButtonTierUp, actionButtonTierDown) => [
+export const settings = (editModal, closeModal, handleEdit, actionButtonTierUp, actionButtonTierDown, actionsDeleteItem) => [
     {
         id: 1,
         key: "number",
@@ -72,6 +73,7 @@ export const settings = (editModal, closeModal, handleEdit, actionButtonTierUp, 
                 data={data}
                 actionButtonTierUp={actionButtonTierUp}
                 actionButtonTierDown={actionButtonTierDown}
+                actionsDelete={actionsDeleteItem}
                 editModal={editModal}
                 closeModal={closeModal}
                 handleEdit={handleEdit}

@@ -26,10 +26,6 @@ const withValidationHoc = (OriginalComponent) => {
       // this.context(this.handleSubmit)
     }
 
-    // componentWillUnmount() {
-    //   this.context()
-    // }
-
     validate = (values) => {
       const { props: { rules, alerts, validators }, state: { validator } } = this
       const errors = validator.validate(values, rules, validators)
