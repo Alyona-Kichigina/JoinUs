@@ -2,7 +2,7 @@ import Input from "@Components/Fields/Input"
 import DatePicker from "@Components/Fields/DatePicker"
 import ModalSelectInput from "../../../../components/ModalSelectInput";
 import React from "react";
-import {CREATE_DATE_FORMAT} from "@constants"
+import MonthInput from "../../../../components/Fields/monthInput";
 
 export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => [
     {
@@ -24,7 +24,7 @@ export const fieldMap = (toggleModal, customer, toggleCreatorModal, creator) => 
     {
         label: "Срок программы",
         id: "duration_day",
-        component: Input,
+        component: MonthInput,
         placeholder: "Выберите срок программы",
         formColumn: 1,
     },

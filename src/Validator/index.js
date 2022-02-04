@@ -83,13 +83,6 @@ const withValidationHoc = (OriginalComponent) => {
       }
     }
 
-    setFormSubmitFlag = () => {
-      this.setState({
-        submitFailed: true,
-        formHasSubmitted: true,
-      })
-    }
-
     resetForm = () => {
       this.setState({
         validationErrors: {},

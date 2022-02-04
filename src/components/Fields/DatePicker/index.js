@@ -1,66 +1,17 @@
 import React, {Component, useCallback} from 'react';
 import RenderOverlayMenu from "@Components/OverlayMenu/RenderOverlayMenu"
 import WithCloseWindow from "@Core/RenderProps/withCloseWindow"
-import {BlockYear, ButtonContainer, DatePickerCalendarContainer, ToggleIcon} from "./styles";
+import { DatePickerCalendarContainer, ToggleIcon} from "./styles";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import {PRESENT_DATE_FORMAT} from "@constants"
-import { Calendar, Select } from 'antd';
+import { Calendar, Select, Col, Row } from 'antd';
 import moment from "moment";
 import Sel from "@Components/Fields/Select";
+import DisplayDate from "../DisplayDate";
 import withDatePickerHoc from "../../../Core/Decorators/withDatePicker";
-import {arrowDown, arrowUp} from "../../../pages/Constants";
 
-const MonthNames = [
-  {
-    ID: 0,
-    SYS_NAME:  "January"
-  },
-  {
-    ID: 1,
-    SYS_NAME:  "February"
-  },
-  {
-    ID: 2,
-    SYS_NAME:  "March"
-  },
-  {
-    ID: 3,
-    SYS_NAME:  "April"
-  },
-  {
-    ID: 4,
-    SYS_NAME:  "May"
-  },
-  {
-    ID: 5,
-    SYS_NAME:  "June"
-  },
-  {
-    ID: 6,
-    SYS_NAME:  "July"
-  },
-  {
-    ID: 7,
-    SYS_NAME:  "August"
-  },
-  {
-    ID: 8,
-    SYS_NAME:  "September"
-  },
-  {
-    ID: 9,
-    SYS_NAME:  "October"
-  },
-  {
-    ID: 10,
-    SYS_NAME:  "November"
-  },
-  {
-    ID: 11,
-    SYS_NAME:  "December"
-  },
-]
+const option = [{ID: 1, SYS_NAME: "aaa"}]
 
 class DatePicker extends Component {
   constructor(props) {
@@ -68,8 +19,7 @@ class DatePicker extends Component {
     this.state = {
       open: false,
       valueForCalendar: moment(),
-      month: moment().month(),
-      myYear: new Date().getFullYear()
+      valueSelect: {}
     }
   }
 
@@ -98,7 +48,8 @@ class DatePicker extends Component {
   }
 
   onCalendarInput = (value) => {
-    const { props: { onInput, dateFormat, id } } = this
+    const { id } = this.props
+    const { props: { onInput, dateFormat } } = this
     onInput(dayjs(value._d).format(dateFormat), id)
     this.closeCalendar()
   }
@@ -110,29 +61,17 @@ class DatePicker extends Component {
     }
   }
   handleSelect = (value) => {
-    const month = moment().month(value)
-    this.setState({
-      month: value,
-      valueForCalendar: month
-    })
+    this.setState({valueSelect: value})
+  }
+  onFocus = () => {
+
   }
 
-  getToday = () => {
-    const { props: { onInput, dateFormat, id } } = this
-    this.setState({valueForCalendar: moment()})
-    onInput(moment(new Date()).format(dateFormat), id)
+  toggleSearch = () => {
+
   }
 
-  editYear = (val) => {
-    const { myYear } = this.state
-    if (val === "minus") {
-      this.setState((prevState) => ({ myYear: prevState.myYear - 1 }));
-    } else {
-      this.setState((prevState) => ({ myYear: prevState.myYear + 1 }));
-    }
-    const yearMoment = moment().year(myYear)
-    this.setState({valueForCalendar: yearMoment})
-  }
+  // не работают кнопки внутри календаря
 
   render() {
     const {
@@ -140,7 +79,7 @@ class DatePicker extends Component {
         style, className, disabled, placeholder, children, tipMaxSize,
         value
       },
-      state: { open, valueForCalendar, month, myYear  }
+      state: { open, valueForCalendar, valueSelect }
     } = this
 
     return (
@@ -238,6 +177,7 @@ class DatePicker extends Component {
                                 </Select.Option>,
                               );
                             }
+                            const month = value.month();
                             const year = value.year();
                             const options = [];
                             for (let i = year - 10; i < year + 10; i += 1) {
@@ -248,44 +188,52 @@ class DatePicker extends Component {
                               );
                             }
                             return (
-                              <ButtonContainer>
-                                <Sel
-                                  id="month"
-                                  placeholder="Выберите месяц"
-                                  onInput={this.handleSelect}
-                                  value={month}
-                                  options={MonthNames}
-                                  clearable={false}
-                                />
-                                <BlockYear className="flex items-center p-l-15 p-r-20 justify-between">
-                                  <div className="fw-700">
-                                    {myYear}
-                                  </div>
-                                  <div className="flex">
-                                    <div
-                                      className="p-r-4 cursor"
-                                      onClick={() => this.editYear("plus")}
-                                      dangerouslySetInnerHTML={{__html: arrowUp}}
-                                    />
-                                    <div
-                                      className="cursor"
-                                      onClick={() => this.editYear("minus")}
-                                      dangerouslySetInnerHTML={{__html: arrowDown}}
-                                    />
-                                  </div>
-                                </BlockYear>
-                              </ButtonContainer>
+                              <div style={{ padding: 8 }}>
+                                <Row gutter={8}>
+                                  <Col>
+                                    {/*<Sel*/}
+                                    {/*  id="status"*/}
+                                    {/*  placeholder="Выберите статус"*/}
+                                    {/*  onInput={this.handleSelect}*/}
+                                    {/*  value={valueSelect}*/}
+                                    {/*  onFocus={this.onFocus}*/}
+                                    {/*  onBlur={this.toggleSearch}*/}
+                                    {/*  options={option}*/}
+                                    {/*  clearable={false}*/}
+                                    {/*/>*/}
+                                    <Select
+                                      size="small"
+                                      dropdownMatchSelectWidth={false}
+                                      value={String(month)}
+                                      onChange={selectedMonth => {
+                                        const newValue = value.clone();
+                                        newValue.month(parseInt(selectedMonth, 10));
+                                        onChange(newValue);
+                                      }}
+                                    >
+                                      {monthOptions}
+                                    </Select>
+                                  </Col>
+                                  <Col>
+                                    <Select
+                                      size="small"
+                                      dropdownMatchSelectWidth={false}
+                                      className="my-year-select"
+                                      onChange={newYear => {
+                                        const now = value.clone().year(newYear);
+                                        onChange(now);
+                                      }}
+                                      value={String(year)}
+                                    >
+                                      {options}
+                                    </Select>
+                                  </Col>
+                                </Row>
+                              </div>
                             );
                           }}
                           onSelect={this.onCalendarInput}
                         />
-                        <button
-                          type="button"
-                          onClick={this.getToday}
-                          className="ml-auto block m-t-10 m-r-16 p-b-8"
-                        >
-                          Today
-                        </button>
                       </DatePickerCalendarContainer>
                     </OverlayMenu>
                   </div>
@@ -318,7 +266,7 @@ DatePicker.propTypes = {
 DatePicker.defaultProps = {
   value: "",
   dateFormat: PRESENT_DATE_FORMAT,
-  tipMaxSize: "300",
+  tipMaxSize: "310",
   placeholder: "DD.MM.YYYY",
   className: "",
   onFocus: () => null,

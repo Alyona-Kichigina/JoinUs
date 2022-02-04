@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import {Oval, Container} from "./style"
 import PropTypes from "prop-types"
 
@@ -8,30 +8,11 @@ import PropTypes from "prop-types"
 // 2/4 - 0,5
 // 3/4 - 0,75
 // 4/4 - 1
-const getPoint = (data = []) => {
-  let sum = 0
-  data.forEach(({stages}) => {
-    sum = sum + stages.length
-  })
-  return sum
-}
-// post это название программы
+
+
 const Progress = ({data}) => {
-  const [result, setResult] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const { post, adaptation_status, program_details: [detail, program] } = data
-
-  const getProgress = useCallback(() => {
-    if (adaptation_status && adaptation_status.length > 0) {
-      setResult(adaptation_status.length / getPoint(detail.levels_detail))
-      setProgress(result >= 4 ? aaa : result)
-    }
-  }, [adaptation_status, detail])
-
-  useEffect(() => {
-    getProgress()
-  })
-  const aaa = getPoint(detail.levels_detail)
+  const { post, progress } = data
+  const result = progress/4
   return (
     <div>
       <div
@@ -40,17 +21,14 @@ const Progress = ({data}) => {
         {post}
       </div>
       <div className="flex">
-        {adaptation_status.length}<br/>
-        {aaa}<br/>
-        {result}<br/>
         <Container>
-          <Oval active={result > 0}/>
           <Oval active={result >= 0.25}/>
           <Oval active={result >= 0.5}/>
+          <Oval active={result >= 0.75}/>
           <Oval active={result >= 1}/>
         </Container>
         <div className="fs-14 color-darken-blue fw-700 p-l-6">
-          {progress}/{detail.levels_detail.length}
+          {progress}/4
         </div>
       </div>
     </div>
@@ -58,11 +36,12 @@ const Progress = ({data}) => {
 };
 
 Progress.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.string,
 }
 
 Progress.defaultProps = {
   data: {
+    progress: 0,
     post: "no name"
   }
 }

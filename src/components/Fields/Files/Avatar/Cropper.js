@@ -86,7 +86,7 @@ const CropperComponent = ({ options, bindSubmitFunction, userStartRatio }) => {
         className="max-width-100 display-block"
       />
       <div className="m-t-20 display-flex">
-        <CropperZoomBar onInput={editZoom} value={zoom} className="ml-auto mr-auto" />
+        <CropperZoomBar onInput={editZoom} value={zoom} className="m-l-a m-r-a" />
       </div>
     </div>
   )
