@@ -12,7 +12,7 @@ import { ADAPTATION_EMPLOYEE, ADAPTATION_LEVELS, ADAPTATION_PROGRAM, DEFAULT_URL
 import Avatar from "../../../../components/Avatar";
 import { levelsBreadcrumbs } from "../../configs";
 import ProgramsHeader from "../../ProgramsHeader"
-import {LEVELS_LINKS, NEW_PROGRAM} from "../../Constants";
+import {LEVELS_LINKS} from "../../Constants";
 
 const withSetDisabledFieldsConfigAndSplitByColumns = memoizeOne((config, readOnlyFields = []) => readOnlyFields
   .reduce((acc, c) => {
@@ -114,20 +114,30 @@ class LevelsGeneral extends Component {
   }
 
   saveNewLevel() {
-    const {location: {pathname}, history: {push}} = this.props
+    const {location: {pathname}, history: { push }} = this.props
     const {data} = this.state
+    const { level_name, tier, status, create_date, id_employee, duration_day } = data
     const pathnames = pathname.split("/").filter(x => x)
-    const newProgram = pathnames[1] === "New_level"
-    const idLevel = newProgram ? "/" : `/${pathnames[3]}/`
-    axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`, {...data, illustration: "111"})
+    const newLevel = pathnames[3] === "level"
+    const idLevel = newLevel ? "/" : `/${pathnames[3]}/`
+    const newData = {
+        level_name,
+        tier,
+        status,
+        create_date,
+        id_employee,
+        duration_day
+    }
+    console.log(`${pathnames[0]}/${pathnames[1]}/${pathnames[2]}/${pathnames[3]}/${pathnames[4]}`)
+    axios[newLevel ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_LEVELS}${idLevel}`, newData)
       .then(
         (response) => {
-          const {data, data: {program_name, id}} = response
+          const {data, data: {id}} = response
           this.setState({
             isLoaded: true,
             data: data
           })
-          // push(`/programs/${program_name}/${id}/general`)
+            newLevel && push(`/${pathnames[0]}/${pathnames[1]}/${pathnames[2]}/${id}/${pathnames[3]}/${pathnames[4]}`)
         },
         (error) => {
           this.setState({
@@ -173,8 +183,8 @@ class LevelsGeneral extends Component {
     pageHeaderTitle = (level_name) => {
         const { location: { pathname } } = this.props
         const pathnames = pathname.split("/").filter(x => x)
-        const newProgram = pathnames[1] === NEW_PROGRAM
-        return newProgram ? "Новая программа" : level_name ? `Уровень "${level_name}"` : ""
+        const newLevel = pathnames[3] === "level"
+        return newLevel ? "Новый уровень" : level_name ? `Уровень "${level_name}"` : ""
     }
   render() {
     const {history: {goBack}} = this.props
@@ -279,7 +289,7 @@ class LevelsGeneral extends Component {
                     onClick={() => goBack()}
                     name="cancel"
                     type="submit"
-                    className="white btn width-m mr-4"
+                    className="grey btn width-m m-r-16"
                   >
                     Отмена
                   </div>
@@ -287,7 +297,7 @@ class LevelsGeneral extends Component {
                     onClick={() => this.saveNewLevel()}
                     name="save"
                     type="submit"
-                    className="blue btn width-medium"
+                    className="blue btn width-m"
                   >
                     Сохранить
                   </button>

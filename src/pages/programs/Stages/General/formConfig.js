@@ -4,8 +4,9 @@ import DatePicker from "@Components/Fields/DatePicker"
 import ModalSelectInput from "../../../../components/ModalSelectInput";
 import ArrowInput from "../../../../components/ArrowsInput";
 import RefSelect from "@Components/Fields/RefSelect/index"
+import Select from "../../../../components/Fields/Select";
 import axios from "axios";
-import {DEFAULT_URL, ADAPTATION_PROGRAM, ADAPTATION_STATUS} from "../../../../components/APIList";
+import {DEFAULT_URL, ADAPTATION_PROGRAM} from "../../../../components/APIList";
 
 export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown, employees) => [
     {
@@ -45,7 +46,19 @@ export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown, employ
     {
         label: "Статус",
         id: "status",
-        component: Input,
+        component: Select,
+        valueKey: "status",
+        labelKey: "title",
+        options: [
+            {
+                title: "Активен",
+                status: 1
+            },
+            {
+                title: "Неактивен",
+                status: 0
+            },
+        ],
         placeholder: "Выберите статус",
         formColumn: 1,
     },
@@ -60,8 +73,8 @@ export const fieldMap = (toggleCreatorModal, creator, arrowUp, arrowDown, employ
         label: "Создал",
         id: "id_employee",
         component: ({onInput}) => {
-            const employee = employees.find(({id}) => id === creator)
-            const creatorName = creator ? `${employee.first_name} ${employee.last_name}` : ""
+            const employee = employees && employees.find(({id}) => id === creator)
+            const creatorName = employee && creator ? `${employee.first_name} ${employee.last_name}` : ""
             return (
                 <ModalSelectInput
                 id="6"

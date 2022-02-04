@@ -121,19 +121,29 @@ class General extends Component {
         const { employees, modalState } = this.state
         const employee = employees.find((a) => a.id === value)
         this.setState({
-            modalState: modalState[0] === value ? [] : [employee.id]
+            modalState: modalState === value ? null : employee.id
         })
     }
 
     saveNewProgram () {
         const { location: { pathname }, history: { push } } = this.props
-        const { data } = this.state
+        const { data, data: { program_name, description, duration_day, tier, status, create_date, employee, contact, customer } } = this.state
         const pathnames = pathname.split("/").filter(x => x)
         const newProgram = pathnames[1] === "new_program"
         const idProgram = newProgram ? "/" : `/${pathnames[2]}/`
         axios[newProgram ? "post" : "put"](`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newProgram ?
             {...data, status: 1, create_date: EditDateForSave(data.create_date, CREATE_DATE_FORMAT)} :
-            {...data, create_date: EditDateForSave(data.create_date, CREATE_DATE_FORMAT)}
+            {
+                create_date: EditDateForSave(create_date, CREATE_DATE_FORMAT),
+                program_name,
+                duration_day,
+                description,
+                tier: tier || 1,
+                status,
+                employee,
+                contact,
+                customer
+            }
         )
             .then(
                 (response) => {
@@ -142,7 +152,10 @@ class General extends Component {
                         isLoaded: true,
                         data: data
                     })
-                    push(`/programs/${program_name}/${id}/general`)
+                    newProgram ?
+                        push("/programs") :
+                        push(`/programs/${program_name}/${id}/general`)
+
                 },
                 (error) => {
                     this.setState({
@@ -166,7 +179,7 @@ class General extends Component {
     selectedCreator = (value) => {
         const { employees, modalState } = this.state
         const newValue = employees.find((a) => a.id === value)
-        return modalState[0] ? modalState[0] === newValue.id : false
+        return modalState ? modalState === newValue.id : false
     }
     toggleModal = () => {
         const { clientModal, data } = this.state
@@ -181,10 +194,10 @@ class General extends Component {
     }
     render() {
         const { history: { goBack }, location: { pathname } } = this.props
-        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], employee = [], program_name } } = this.state
+        const { clientModal, creatorModal, modalState, data, customers, employees, isLoaded, data: { customer = [], employee, program_name } } = this.state
         const { toggleModal, toggleCreatorModal } = this
         const customerValue = isLoaded ? customers.find((a) => a.id === customer[0]) : {}
-        const employeeValue = isLoaded ? employee && employees.find((a) => a.id === employee[0]) : {}
+        const employeeValue = isLoaded ? employee && employees.find((a) => a.id === employee) : {}
         const [firstForm, SecondForm] = withSetDisabledFieldsConfigAndSplitByColumns(fieldMap(toggleModal, customerValue, toggleCreatorModal, employeeValue))
         const pageHeaderTitle = () => {
             const pathnames = pathname.split("/").filter(x => x)
@@ -336,14 +349,14 @@ class General extends Component {
                                                 name="cancel"
                                                 type="submit"
                                                 onClick={() => goBack()}
-                                                className="grey btn width-medium m-r-16"
+                                                className="grey btn width-m m-r-16"
                                             >
                                                 Отмена
                                             </button>
                                             <button
                                                  name="save"
                                                  type="submit"
-                                                 className="blue btn width-medium"
+                                                 className="blue btn width-m"
                                                  onClick={() => this.saveNewProgram()}
                                             >
                                                 Сохранить

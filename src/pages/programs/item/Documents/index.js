@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AppList from "../../../../components/AppList";
 import "../levels/style.css"
-import {PlusIcon, DocumentIcon} from "../../../Constants";
+import {DocumentIcon} from "../../../Constants";
 import Modal from "../../../../components/ModalWindow";
 import Input from "@Components/Fields/Input"
 import ChekBox from "@Components/Fields/CheckBox"
@@ -14,6 +14,7 @@ import PhotoFiles from "../../../../components/Fields/Files/PhotoFiles";
 import { programsBreadcrumbs } from "../../configs";
 import ProgramsHeader from "../../ProgramsHeader"
 import {NAV_BUTTON_LINKS, NEW_PROGRAM} from "../../Constants";
+import ScrollBar from "@Components/ScrollBar"
 
 class Documents extends Component {
 
@@ -121,10 +122,20 @@ class Documents extends Component {
         const {
             location: { pathname }
         } = this.props
-        const { programData, programData: { documents }, selectedDocuments } = this.state
+        const { programData: { documents, program_name, create_date, id, status, tier, employee, duration_day, description }, selectedDocuments } = this.state
         const pathnames = pathname.split("/").filter(x => x)
         const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
-        const newData = { ...programData, documents: documents.concat(selectedDocuments.filter(item => !documents.some(a => a === item))) }
+        const newData = {
+            program_name,
+            create_date,
+            id,
+            status,
+            tier,
+            employee,
+            duration_day,
+            description,
+            documents: documents.concat(selectedDocuments.filter(item => !documents.some(a => a === item)))
+        }
         if (selectedDocuments.length) {
             axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newData)
                 .then(
@@ -181,12 +192,21 @@ class Documents extends Component {
         })
     }
     closeModal = () => this.setState({editModal: false})
-    deleteItem = (id) => {
+    deleteItem = (deleteItemId) => {
         const {
             location: { pathname }
         } = this.props
-        const { programData, programData: { documents } } = this.state
-        const newData = {...programData, documents: documents.filter(item => item !== id)}
+        const { programData: { documents, program_name, create_date, id, status, tier, employee, duration_day, description  } } = this.state
+        const newData = {
+            program_name,
+            create_date,
+            id,
+            status,
+            tier,
+            employee,
+            duration_day,
+            description,
+            documents: documents.filter(item => item !== deleteItemId)}
         const pathnames = pathname.split("/").filter(x => x)
         const idProgram = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
         axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idProgram}`, newData)
@@ -304,7 +324,7 @@ class Documents extends Component {
                     </Modal>
                     <Modal
                         isOpen={documentSelection}
-                        title="Выбор документа"
+                        title="Добавить документ"
                         closeModal={this.openDocumentSelection}
                         handleSave={() => this.saveSelectedDocuments()}
                     >
@@ -317,6 +337,7 @@ class Documents extends Component {
                                 Наименование программы
                             </div>
                         </ModalTableHeader>
+                        <ScrollBar>
                            {
                                items && items.map(({document_name, id}, index) => {
                                    return (
@@ -346,10 +367,11 @@ class Documents extends Component {
                                    )
                                })
                            }
+                        </ScrollBar>
                     </Modal>
                     <Modal
                         isOpen={addNewDocument}
-                        title="Добавить документ"
+                        title="Выбор документа"
                         closeModal={() => {this.setState({
                             addNewDocument: !addNewDocument
                         })}}
@@ -366,6 +388,7 @@ class Documents extends Component {
                                 Наименование программы
                             </div>
                         </ModalTableHeader>
+                        <ScrollBar>
                            {
                                documents.map(({document_name, id}, index) => {
                                    return (
@@ -395,17 +418,18 @@ class Documents extends Component {
                                    )
                                })
                            }
+                        </ScrollBar>
                     </Modal>
                     <div className="pt-8 pb-6 pl-4 flex">
                         <button
                             className="blue btn width-m pt-1.5"
-                            onClick={this.addDocument}
+                            onClick={this.openDocumentSelection}
                         >
                             + Добавить документ
                         </button>
                         <button
                             className="blue btn width-m pt-1.5 ml-4"
-                            onClick={this.openDocumentSelection}
+                            onClick={this.addDocument}
                         >
                             Выбрать документ
                         </button>

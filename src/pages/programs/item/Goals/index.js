@@ -13,6 +13,7 @@ import PhotoFiles from "../../../../components/Fields/Files/PhotoFiles";
 import { programsBreadcrumbs } from "../../configs";
 import ProgramsHeader from "../../ProgramsHeader"
 import {NAV_BUTTON_LINKS, NEW_PROGRAM} from "../../Constants";
+import ScrollBar from "@Components/ScrollBar"
 
 class Goals extends Component {
 
@@ -122,10 +123,21 @@ class Goals extends Component {
         const {
             location: { pathname }
         } = this.props
-        const { programData, selectedGoals } = this.state
+        const { programData: { documents, goals, program_name, create_date, id, status, tier, employee, duration_day, description }, selectedGoals } = this.state
         const pathnames = pathname.split("/").filter(x => x)
         const idGoal = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
-        const newData = { ...programData, goals: selectedGoals}
+        const newData = {
+            documents,
+            program_name,
+            create_date,
+            id,
+            status,
+            tier: tier || 1,
+            employee,
+            duration_day,
+            description,
+            goals: goals.concat(selectedGoals.filter(item => !goals.some(a => a === item)))
+        }
         if (selectedGoals.length) {
             axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idGoal}`, newData)
                 .then(
@@ -149,7 +161,7 @@ class Goals extends Component {
                     }
                 )
             this.setState({
-                selectedDocuments: []
+                selectedGoals: []
             })
         }
     }
@@ -196,6 +208,45 @@ class Goals extends Component {
         const newProgram = pathnames[1] === NEW_PROGRAM
         return newProgram ? "Новая программа" : program_name
     }
+    actionsDeleteItem = ({id: deleteItemID}) => {
+        const { location: { pathname } } = this.props
+        const { programData: { documents, program_name, goals, create_date, id, status, tier, employee, duration_day, description } } = this.state
+        const pathnames = pathname.split("/").filter(x => x)
+        const idGoal = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
+        const newData = {
+            documents,
+            program_name,
+            create_date,
+            id,
+            status,
+            tier,
+            employee,
+            duration_day,
+            description,
+            goals: goals.filter(item => item !== deleteItemID)
+        }
+        axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idGoal}`, newData)
+            .then(
+                (response) => {
+                    const {data: {goals_detail}, data} = response
+                    this.setState({
+                        isLoaded: true,
+                        programData: data,
+                        items: goals_detail
+                    })
+                    this.setState({
+                        addGoalsModal: false
+                    })
+                },
+                (error) => {
+                    console.log(error)
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+    }
 
     render() {
         const {
@@ -222,7 +273,8 @@ class Goals extends Component {
             tierDown,
             actionButtonTierUp,
             actionButtonTierDown,
-            pageHeaderTitle
+            pageHeaderTitle,
+            actionsDeleteItem
         } = this
 
 
@@ -238,7 +290,7 @@ class Goals extends Component {
             >
                 <Modal
                     isOpen={editModal}
-                    title="редактирование цели"
+                    title="Редактирование цели"
                     closeModal={() => this.setState({editModal: false})}
                     handleSave={() => saveEditGoal(modalData)}
                 >
@@ -288,7 +340,7 @@ class Goals extends Component {
                 </Modal>
                 <Modal
                     isOpen={documentSelection}
-                    title="Выбор цели"
+                    title="Добавить цель"
                     closeModal={openGoalSelection}
                     handleSave={() => saveEditGoal(selectedGoals)}
                 >
@@ -301,41 +353,43 @@ class Goals extends Component {
                             Наименование программы
                         </div>
                     </ModalTableHeader>
-                    {
-                       items && items.map(({goal_name, description, id}, index) => {
-                            return (
-                                <ModalTableBody
-                                    key={`${id}${index}`}
-                                >
-                                    <div className="flex items-center">
-                                        {index + 1}
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div
-                                            className="pr-2"
-                                            dangerouslySetInnerHTML={{__html: DocumentIcon}}
-                                        />
-                                        {goal_name}
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            {description}
+                    <ScrollBar>
+                        {
+                           items && items.map(({goal_name, description, id}, index) => {
+                                return (
+                                    <ModalTableBody
+                                        key={`${id}${index}`}
+                                    >
+                                        <div className="flex items-center">
+                                            {index + 1}
                                         </div>
-                                        <ChekBox
-                                            id="selectedGoals"
-                                            value={selectedGoals}
-                                            checkBoxValue={id}
-                                            onInput={checkDocument}
-                                        />
-                                    </div>
-                                </ModalTableBody>
-                            )
-                        })
-                    }
+                                        <div className="flex items-center">
+                                            <div
+                                                className="pr-2"
+                                                dangerouslySetInnerHTML={{__html: DocumentIcon}}
+                                            />
+                                            {goal_name}
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                {description}
+                                            </div>
+                                            <ChekBox
+                                                id="selectedGoals"
+                                                value={selectedGoals}
+                                                checkBoxValue={id}
+                                                onInput={checkDocument}
+                                            />
+                                        </div>
+                                    </ModalTableBody>
+                                )
+                            })
+                        }
+                    </ScrollBar>
                 </Modal>
                 <Modal
                     isOpen={addGoalsModal}
-                    title="Добавить цель"
+                    title="Выбор цели"
                     closeModal={() => this.setState({
                         addGoalsModal: false
                     })}
@@ -350,54 +404,57 @@ class Goals extends Component {
                             Наименование программы
                         </div>
                     </ModalTableHeader>
-                    {
-                        goals.map(({goal_name, description, id}, index) => {
-                            return (
-                                <ModalTableBody
-                                    key={`${id}${index}`}
-                                >
-                                    <div className="flex items-center">
-                                        {index + 1}
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div
-                                            className="pr-2"
-                                            dangerouslySetInnerHTML={{__html: DocumentIcon}}
-                                        />
-                                        {goal_name}
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            {description}
+                    <ScrollBar>
+                        {
+                            goals.map(({goal_name, description, id}, index) => {
+                                return (
+                                    <ModalTableBody
+                                        key={`${id}${index}`}
+                                    >
+                                        <div className="flex items-center">
+                                            {index + 1}
                                         </div>
-                                        <ChekBox
-                                            id="selectedGoals"
-                                            value={selectedGoals}
-                                            checkBoxValue={id}
-                                            onInput={checkDocument}
-                                        />
-                                    </div>
-                                </ModalTableBody>
-                            )
-                        })
-                    }
+                                        <div className="flex items-center">
+                                            <div
+                                                className="pr-2"
+                                                dangerouslySetInnerHTML={{__html: DocumentIcon}}
+                                            />
+                                            {goal_name}
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                {description}
+                                            </div>
+                                            <ChekBox
+                                                id="selectedGoals"
+                                                value={selectedGoals}
+                                                checkBoxValue={id}
+                                                onInput={checkDocument}
+                                            />
+                                        </div>
+                                    </ModalTableBody>
+                                )
+                            })
+                        }
+                    </ScrollBar>
                 </Modal>
                 <div className="pt-8 pb-6 pl-4 flex">
                     <button
                         className="blue btn width-m pt-1.5"
-                        onClick={() => this.setState({addGoalsModal: true})}
+                        // onClick={openGoalSelection}
+                        onClick={() => ({})}
                     >
                         + Добавить цель
                     </button>
                     <button
                         className="blue btn width-m pt-1.5 ml-4"
-                        onClick={openGoalSelection}
+                        onClick={() => this.setState({addGoalsModal: true})}
                     >
                         Выбрать цель
                     </button>
                 </div>
                 <AppList
-                    settings={settings(editModal, toggleModal, handleEdit, actionButtonTierUp, actionButtonTierDown)}
+                    settings={settings(editModal, toggleModal, handleEdit, actionButtonTierUp, actionButtonTierDown, actionsDeleteItem)}
                     data={items}
                 />
             </ProgramsHeader>

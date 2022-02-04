@@ -20,34 +20,34 @@ export const settings = (editStage, deleteButton) => {
         {
             id: 1,
             key: ["level_name", "stage_name"],
-            name: "уровень/этап",
+            name: "Уровень/этап",
             size: "30%"
         },
         {
             id: 2,
             key: "duration_day",
-            name: "дней этапа",
+            name: "Дней этапа",
             nestedLevel: 1,
             size: "15%"
         },
         {
             id: 3,
             key: "point",
-            name: "баллов",
+            name: "Баллов",
             nestedLevel: 1,
             size: "15%"
         },
         {
             id: 4,
             key: "status",
-            name: "статус",
+            name: "Статус",
             component: ActiveIndicator,
             nestedLevel: 1,
             size: "15%"
         },
         {
             id: 5,
-            name: "действия",
+            name: "Действия",
             // nestedLevel: 1,
             allData: true,
             size: "25%",

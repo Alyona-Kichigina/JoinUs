@@ -11,6 +11,7 @@ import Modal from "../../../../components/ModalWindow";
 import { programsBreadcrumbs } from "../../configs";
 import ProgramsHeader from "../../ProgramsHeader"
 import {NAV_BUTTON_LINKS, NEW_PROGRAM} from "../../Constants";
+import ScrollBar from "@Components/ScrollBar"
 
 class Levels extends Component {
     constructor(props) {
@@ -75,13 +76,23 @@ class Levels extends Component {
         })
     }
     saveNewLevel = () => {
-        const { selectedLevels, programData, programData: { levels } } = this.state
+        const { selectedLevels, programData: { levels, program_name, create_date, id, status, tier, employee, duration_day, description } } = this.state
         const {
             location: { pathname }
         } = this.props
         const pathnames = pathname.split("/").filter(x => x)
         const idLevel = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
-        const newData = { ...programData, levels: levels.concat(selectedLevels.filter(item => !levels.some(a => a === item)))}
+        const newData = {
+            levels: levels.concat(selectedLevels.filter(item => !levels.some(a => a === item))),
+            create_date,
+            program_name,
+            id,
+            status,
+            tier,
+            employee,
+            duration_day,
+            description
+        }
         this.setState({
                     editModal: false,
                     selectedLevels: []
@@ -102,15 +113,25 @@ class Levels extends Component {
             })
         }
     }
-    deleteItem = ({ id }, nestedLevel) => {
+    deleteItem = ({ id: deleteItemID }, nestedLevel) => {
         if (!nestedLevel) {
-            const { programData, programData: { levels } } = this.state
+            const { programData: { levels, program_name, create_date, id, status, tier, employee, duration_day, description } } = this.state
             const {
                 location: { pathname }
             } = this.props
             const pathnames = pathname.split("/").filter(x => x)
             const idLevel = pathnames[1] !== "new_program" ? `/${pathnames[2]}/` : ""
-            const newData = {...programData, levels: levels.filter(item => item !== id)}
+            const newData = {
+                levels: levels.filter(item => item !== deleteItemID),
+                program_name,
+                create_date,
+                id,
+                status,
+                tier,
+                employee,
+                duration_day,
+                description
+            }
             axios.put(`${DEFAULT_URL}/${ADAPTATION_PROGRAM}${idLevel}`, newData)
                 .then((response) => {
                     const { data, data: { levels_detail } } = response
@@ -155,11 +176,13 @@ render() {
                               Комментарии
                           </div>
                       </ModalTableHeader>
-                      {
-                          levels.map(({level_name, description, id}, index) =>  (
+                      <ScrollBar>
+                          {
+                              levels.map(({level_name, description, id}, index) =>  (
                                   <ModalTableBody
                                       key={`${id}${index}`}
                                   >
+
                                       <div className="flex items-center">
                                           {index + 1}
                                       </div>
@@ -175,16 +198,19 @@ render() {
                                               {description}
                                           </div>
                                           <ChekBox
+                                              className="p-r-14"
                                               id="selectedLevels"
                                               value={selectedLevels}
                                               checkBoxValue={id}
                                               onInput={checkLevels}
                                           />
                                       </div>
+
                                   </ModalTableBody>
+                                  )
                               )
-                          )
-                      }
+                          }
+                      </ScrollBar>
                   </Modal>
                   <div className="pt-6 mb-4 ml-4 flex">
                       <NavLink
